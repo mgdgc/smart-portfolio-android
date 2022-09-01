@@ -1,0 +1,38 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.SmartPortfolio" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryVariant">@color/color_primary_variant</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/color_secondary</item>
+        <item name="colorSecondaryVariant">@color/color_secondary</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/transparent</item>
+        <!-- Customize your theme here. -->
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="Theme.SmartPortfolio.Toolbar" parent="Theme.SmartPortfolio">
+        <item name="android:textColor">@color/white</item>
+        <item name="titleTextColor">@color/white</item>
+    </style>
+
+    <style name="Theme.SmartPortfolio.ViewGroup" parent="Theme.SmartPortfolio">
+        <item name="android:background">@color/bg_secondary</item>
+    </style>
+
+    <style name="Theme.SmartPortfolio.Title" parent="Theme.SmartPortfolio">
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <style name="Theme.SmartPortfolio.ImageButton" parent="Theme.SmartPortfolio">
+        <item name="android:background">@drawable/bg_image_button</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="background">@drawable/bg_image_button</item>
+        <item name="tint">@color/text_primary</item>
+    </style>
+</resources>

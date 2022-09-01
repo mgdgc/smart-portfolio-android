@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="lottie_url">
+        <item>https://assets4.lottiefiles.com/packages/lf20_hb6rm9XPRL.json</item>
+        <item>https://assets4.lottiefiles.com/packages/lf20_k16e3v8M0m.json</item>
+        <item>https://assets10.lottiefiles.com/packages/lf20_M2hPv9zXfi.json</item>
+        <item>https://assets10.lottiefiles.com/packages/lf20_HYT6fPzDT0.json</item>
+        <item>https://assets10.lottiefiles.com/packages/lf20_KsCtY1Tqb9.json</item>
+    </string-array>
+    <string-array name="lottie_license_url">
+        <item>https://lottiefiles.com/117901-lf30-editor-kn37zxkm</item>
+        <item>https://lottiefiles.com/117887-bounce-animation-downsize</item>
+        <item>https://lottiefiles.com/117791-animation-1</item>
+        <item>https://lottiefiles.com/117702-circle-loading</item>
+        <item>https://lottiefiles.com/117698-lf30-editor-t1cyjl03</item>
+    </string-array>
+</resources>

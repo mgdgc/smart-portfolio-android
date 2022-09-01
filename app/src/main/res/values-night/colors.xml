@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary">#29B6F6</color>
+    <color name="color_primary_variant">#0277BD</color>
+    <color name="color_secondary">#66BB6A</color>
+    <color name="color_secondary_variant">#43A047</color>
+
+    <color name="bg_primary">#0A0C0E</color>
+    <color name="bg_secondary">#1A1B1D</color>
+    <color name="bg_tertiary">#38393B</color>
+    <color name="text_primary">#DEffffff</color>
+    <color name="text_secondary">#BFFFFFFF</color>
+    <color name="text_tertiary">#ADFFFFFF</color>
+
+    <color name="ripple">#4Dffffff</color>
+
+</resources>

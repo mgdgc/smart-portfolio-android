@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">SmartPortfolio</string>
+
+    <!--  LoginActivity  -->
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_start">Start</string>
+    <string name="navigation_drawer_close_button">내비게이션 드로어 닫기 버튼</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

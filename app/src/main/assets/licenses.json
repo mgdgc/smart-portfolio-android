@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Material View Pager Dots Indicator",
+    "url": "https://github.com/tommybuonomo/dotsindicator",
+    "user": "tommybuonomo",
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "Gson",
+    "url": "https://github.com/google/gson",
+    "user": "Google",
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "Material View Pager Dots Indicator",
+    "url": "http://airbnb.io/lottie/#/android",
+    "user": "airbnb",
+    "license": "MIT"
+  }
+]
