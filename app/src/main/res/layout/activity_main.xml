@@ -5,7 +5,8 @@
     android:id="@+id/drawer_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    tools:openDrawer="start">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -65,6 +66,7 @@
                     style="@style/Theme.SmartPortfolio.ImageButton"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
+                    android:contentDescription="@string/main_image_button_prev"
                     android:src="@drawable/ic_baseline_arrow_left_24">
 
                 </ImageView>
@@ -87,6 +89,7 @@
                     style="@style/Theme.SmartPortfolio.ImageButton"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
+                    android:contentDescription="@string/main_image_button_next"
                     android:src="@drawable/ic_baseline_arrow_right_24">
 
                 </ImageView>
@@ -101,8 +104,7 @@
         android:id="@+id/nav_main"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/menu_nav_main">
+        android:layout_gravity="start">
 
     </com.google.android.material.navigation.NavigationView>
 

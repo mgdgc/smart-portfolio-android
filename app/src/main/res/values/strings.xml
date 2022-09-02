@@ -6,6 +6,17 @@
     <string name="login_password">Password</string>
     <string name="login_start">Start</string>
     <string name="navigation_drawer_close_button">내비게이션 드로어 닫기 버튼</string>
+
+    <!--  MainActivity  -->
+    <string name="main_image_button_prev">이전 페이지 버튼</string>
+    <string name="main_image_button_next">다음 페이지 버튼</string>
+    <string name="main_nav_submenu_portfolio">포트폴리오</string>
+    <string name="main_nav_submenu_title">소개</string>
+    <string name="main_nav_menu_index">Index</string>
+    <string name="main_nav_submenu_app">애플리케이션</string>
+    <string name="main_nav_menu_license">오픈소스 라이선스</string>
+    <string name="main_nav_menu_info">애플리케이션 정보</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

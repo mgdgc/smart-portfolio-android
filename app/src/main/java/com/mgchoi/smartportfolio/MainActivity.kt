@@ -2,6 +2,7 @@ package com.mgchoi.smartportfolio
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -15,6 +16,13 @@ import com.mgchoi.smartportfolio.frament.TimelineFragment
 import com.mgchoi.smartportfolio.model.Member
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        private const val ACTION_INDEX = 2000
+        private const val ACTION_PORTFOLIO = 1000
+        private const val ACTION_LICENSE = 2001
+        private const val ACTION_INFO = 2002
+    }
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var headerBinding: HeaderNavMainBinding
@@ -46,9 +54,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        // Attach header view
-        binding.navMain.addHeaderView(headerBinding.root)
-
         // Set listeners
         binding.imgBtnMainPrev.setOnClickListener {
             if (binding.pagerMain.currentItem > 0) {
@@ -62,9 +67,40 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.navMain.setNavigationItemSelectedListener { item ->
+            binding.drawerMain.closeDrawer(GravityCompat.START)
+
+            when (item.itemId) {
+                in ACTION_PORTFOLIO until ACTION_INDEX -> {
+                    val memberId = item.itemId - ACTION_PORTFOLIO
+                    for (i in 0 until this.data.size) {
+                        if (this.data[i].id == memberId) {
+                            binding.pagerMain.currentItem = i + 1
+                            return@setNavigationItemSelectedListener true
+                        }
+                    }
+                }
+                ACTION_INDEX -> {
+                    binding.pagerMain.currentItem = 0
+                }
+                ACTION_LICENSE -> {
+
+                }
+                ACTION_INFO -> {
+
+                }
+                else -> return@setNavigationItemSelectedListener false
+
+            }
+            true
+        }
+
     }
 
     private fun initHeaderView() {
+        // Attach header view
+        binding.navMain.addHeaderView(headerBinding.root)
+
         // Set listeners
         headerBinding.imgBtnNavClose.setOnClickListener {
             binding.drawerMain.closeDrawer(GravityCompat.START)
@@ -75,6 +111,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             this@MainActivity.finish()
         }
+
     }
 
     private fun initData() {
@@ -92,6 +129,25 @@ class MainActivity : AppCompatActivity() {
                 Member(5, "5", 5, "5", ViewStyle.MESSAGE, true)
             )
         )
+
+        // Add menu to navigation drawer
+        // Index menu
+        binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_title)
+            .add(0, ACTION_INDEX, 0, R.string.main_nav_menu_index)
+            .setIcon(R.drawable.ic_round_home_24)
+
+        // Portfolio menu
+        val portfolioGroup = binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_portfolio)
+        for (d in this.data) {
+            portfolioGroup.add(0, (ACTION_PORTFOLIO + d.id), 0, d.name)
+        }
+
+        // Application menu
+        val appGroup = binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_title)
+        appGroup.add(0, ACTION_LICENSE, 0, R.string.main_nav_menu_license)
+            .setIcon(R.drawable.ic_round_folder_open_24)
+        appGroup.add(0, ACTION_INFO, 0, R.string.main_nav_menu_info)
+            .setIcon(R.drawable.ic_round_info_24)
     }
 
     private fun initFragments() {
@@ -128,5 +184,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        // Close drawer if opened
+        if (binding.drawerMain.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerMain.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 }
