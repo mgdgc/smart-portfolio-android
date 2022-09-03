@@ -2,17 +2,14 @@ package com.mgchoi.smartportfolio
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import com.mgchoi.smartportfolio.adapter.MainAdapter
 import com.mgchoi.smartportfolio.databinding.ActivityMainBinding
 import com.mgchoi.smartportfolio.databinding.HeaderNavMainBinding
-import com.mgchoi.smartportfolio.db.MemberDAO
-import com.mgchoi.smartportfolio.frament.CardFragment
 import com.mgchoi.smartportfolio.frament.IndexFragment
-import com.mgchoi.smartportfolio.frament.MessageFragment
-import com.mgchoi.smartportfolio.frament.TimelineFragment
+import com.mgchoi.smartportfolio.frament.PortfolioFragment
 import com.mgchoi.smartportfolio.model.Member
 
 class MainActivity : AppCompatActivity() {
@@ -158,13 +155,7 @@ class MainActivity : AppCompatActivity() {
         // Add fragments to adapter
         adapter.addFragments(IndexFragment.newInstance())
         for (member in data) {
-            adapter.addFragments(
-                when (member.viewStyle) {
-                    ViewStyle.TIMELINE -> TimelineFragment(member)
-                    ViewStyle.MESSAGE -> MessageFragment(member)
-                    ViewStyle.CARD -> CardFragment(member)
-                }
-            )
+            adapter.addFragments(PortfolioFragment(member))
         }
 
         // Attach indicator

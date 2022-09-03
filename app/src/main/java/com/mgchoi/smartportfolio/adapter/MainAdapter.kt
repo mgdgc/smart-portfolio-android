@@ -1,10 +1,10 @@
-package com.mgchoi.smartportfolio
+package com.mgchoi.smartportfolio.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class MainAdapter(val activity: FragmentActivity) : FragmentStateAdapter(activity) {
+class MainAdapter(private val activity: FragmentActivity) : FragmentStateAdapter(activity) {
 
     private var fragments: ArrayList<Fragment> = arrayListOf()
 

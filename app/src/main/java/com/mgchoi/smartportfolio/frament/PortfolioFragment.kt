@@ -5,16 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.mgchoi.smartportfolio.databinding.FragmentTimelineBinding
+import com.mgchoi.smartportfolio.databinding.FragmentPortfolioBinding
 import com.mgchoi.smartportfolio.model.Member
 
-class TimelineFragment(val member: Member) : Fragment() {
+class PortfolioFragment(val member: Member) : Fragment() {
 
-    private lateinit var binding: FragmentTimelineBinding
+    private lateinit var binding: FragmentPortfolioBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FragmentTimelineBinding.inflate(layoutInflater)
+        binding = FragmentPortfolioBinding.inflate(layoutInflater)
     }
 
     override fun onCreateView(
@@ -23,5 +23,10 @@ class TimelineFragment(val member: Member) : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().title = member.name
     }
 }
