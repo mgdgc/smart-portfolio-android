@@ -5,6 +5,17 @@
     <color name="color_secondary">#66BB6A</color>
     <color name="color_secondary_variant">#43A047</color>
 
+    <color name="red">#EF5350</color>
+    <color name="sky">#26C6DA</color>
+    <color name="blue">#42A5F5</color>
+    <color name="indigo">#3949AB</color>
+    <color name="green">#66BB6A</color>
+    <color name="teal">#26A69A</color>
+    <color name="pink">#EC407A</color>
+    <color name="yellow">#FFCA28</color>
+    <color name="orange">#FF7043</color>
+    <color name="purple">#7E57C2</color>
+
     <color name="bg_primary">#0A0C0E</color>
     <color name="bg_secondary">#1A1B1D</color>
     <color name="bg_tertiary">#38393B</color>

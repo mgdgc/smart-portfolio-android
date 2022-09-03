@@ -8,6 +8,17 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
 
+    <color name="red">#F44336</color>
+    <color name="sky">#00BCD4</color>
+    <color name="blue">#2196F3</color>
+    <color name="indigo">#3F51B5</color>
+    <color name="green">#4CAF50</color>
+    <color name="teal">#009688</color>
+    <color name="pink">#E91E63</color>
+    <color name="yellow">#FFC107</color>
+    <color name="orange">#FF9800</color>
+    <color name="purple">#9C27B0</color>
+
     <color name="bg_primary">#FFFFFF</color>
     <color name="bg_secondary">#EFF1F6</color>
     <color name="bg_tertiary">#E1E3E8</color>
