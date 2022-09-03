@@ -35,4 +35,16 @@
         <item name="background">@drawable/bg_image_button</item>
         <item name="tint">@color/text_primary</item>
     </style>
+
+    <style name="Theme.SmartPortfolio.TextButton" parent="Theme.SmartPortfolio">
+        <item name="android:background">@drawable/bg_text_button</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:textColor">@color/color_primary_variant</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:padding">4dp</item>
+        <item name="background">@drawable/bg_text_button</item>
+        <item name="tint">@color/text_primary</item>
+    </style>
+
 </resources>
