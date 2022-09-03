@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.mgchoi.smartportfolio.R
 import com.mgchoi.smartportfolio.databinding.FragmentIndexBinding
 
 class IndexFragment : Fragment() {
@@ -26,5 +27,10 @@ class IndexFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().setTitle(R.string.app_name)
     }
 }
