@@ -17,6 +17,9 @@
     <string name="main_nav_menu_license">오픈소스 라이선스</string>
     <string name="main_nav_menu_info">애플리케이션 정보</string>
 
+    <!--  TimelineViewHolder  -->
+    <string name="row_timeline_open_link">Open Link</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
