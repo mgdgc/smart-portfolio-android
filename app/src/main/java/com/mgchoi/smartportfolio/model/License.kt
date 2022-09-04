@@ -2,6 +2,7 @@ package com.mgchoi.smartportfolio.model
 
 import android.content.res.AssetManager
 import com.google.gson.Gson
+import com.mgchoi.smartportfolio.tool.JsonAssetReader
 
 class License(
     var name: String,
@@ -14,12 +15,7 @@ class License(
         private const val FILE_JSON = "licenses.json"
 
         fun fromJson(assets: AssetManager): Array<License> {
-            val istream = assets.open(FILE_JSON)
-            val buffer = ByteArray(istream.available()) { 0 }
-            istream.read(buffer)
-            istream.close()
-
-            val json = String(buffer)
+            val json = JsonAssetReader.readStringFromJson(assets, FILE_JSON)
             return Gson().fromJson(json, Array<License>::class.java)
         }
     }
