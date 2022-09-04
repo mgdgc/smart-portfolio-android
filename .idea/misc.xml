@@ -6,18 +6,25 @@
         <entry key="app/src/main/res/drawable/bg_edit_text.xml" value="0.19" />
         <entry key="app/src/main/res/drawable/bg_image_button.xml" value="0.165" />
         <entry key="app/src/main/res/drawable/bg_progress.xml" value="0.19" />
+        <entry key="app/src/main/res/drawable/bg_text_button.xml" value="0.1985" />
         <entry key="app/src/main/res/drawable/shape_edit_text.xml" value="0.19" />
         <entry key="app/src/main/res/layout/activity_loading.xml" value="0.19630192502532928" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.3591485507246377" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29393115942028986" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.3591485507246377" />
+        <entry key="app/src/main/res/layout/activity_web_view.xml" value="0.3808876811594203" />
         <entry key="app/src/main/res/layout/fragment_card.xml" value="0.29393115942028986" />
         <entry key="app/src/main/res/layout/fragment_index.xml" value="0.29393115942028986" />
         <entry key="app/src/main/res/layout/fragment_message.xml" value="0.29393115942028986" />
+        <entry key="app/src/main/res/layout/fragment_portfolio.xml" value="0.3808876811594203" />
         <entry key="app/src/main/res/layout/fragment_timeline.xml" value="0.29393115942028986" />
         <entry key="app/src/main/res/layout/header_nav_main.xml" value="0.29393115942028986" />
+        <entry key="app/src/main/res/layout/row_card.xml" value="0.29393115942028986" />
+        <entry key="app/src/main/res/layout/row_message.xml" value="0.29393115942028986" />
+        <entry key="app/src/main/res/layout/row_timeline.xml" value="0.29393115942028986" />
         <entry key="app/src/main/res/layout/shape_edit_text.xml" value="0.3591485507246377" />
         <entry key="app/src/main/res/menu/menu_nav_main.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/menu/menu_web.xml" value="0.40260416666666665" />
       </map>
     </option>
   </component>
