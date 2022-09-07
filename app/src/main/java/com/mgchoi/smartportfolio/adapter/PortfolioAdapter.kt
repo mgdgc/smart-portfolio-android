@@ -3,13 +3,10 @@ package com.mgchoi.smartportfolio.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.support.customtabs.CustomTabsIntent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.mgchoi.smartportfolio.R
 import com.mgchoi.smartportfolio.ViewStyle
@@ -116,21 +113,7 @@ class PortfolioAdapter(private val context: Context, private val member: Member)
     }
 
     private fun openLinkAsChromeCustomTab(url: String) {
-        Uri.parse(url)?.let {
-            // Chrome Custom Tabs builder
-            val builder = CustomTabsIntent.Builder()
-            // Set theme
-            builder.setToolbarColor(ContextCompat.getColor(context, R.color.color_primary))
-            builder.setSecondaryToolbarColor(
-                ContextCompat.getColor(
-                    context,
-                    R.color.color_primary_variant
-                )
-            )
-            // Launch intent
-            val intent = builder.build()
-            intent.launchUrl(context, it)
-        }
+        WebViewActivity.openAsCustomTab(context, url)
     }
 
     override fun getItemViewType(position: Int): Int {
