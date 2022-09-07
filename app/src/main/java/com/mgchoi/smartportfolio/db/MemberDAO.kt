@@ -2,39 +2,16 @@ package com.mgchoi.smartportfolio.db
 
 import android.content.ContentValues
 import android.content.Context
-import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
 import com.mgchoi.smartportfolio.ViewStyle
 import com.mgchoi.smartportfolio.model.Member
-import com.mgchoi.smartportfolio.value.DBName
 
-class MemberDAO(private val context: Context) : SQLiteOpenHelper(context, DBName.name, null, 1) {
+class MemberDAO(private val context: Context) {
 
-    companion object {
-        private const val TABLE_NAME = "Member"
-        private const val COL_NAME = "name"
-        private const val COL_IMAGE = "image"
-        private const val COL_URL = "url"
-        private const val COL_VIEW_STYLE = "viewStyle"
-        private const val COL_DESTROYABLE = "destroyable"
-    }
-
-    override fun onCreate(db: SQLiteDatabase?) {
-        val sql = "CREATE TABLE IF NOT EXISTS $TABLE_NAME (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "name TEXT," +
-                "image INTEGER," +
-                "url TEXT," +
-                "viewStyle INTEGER," +
-                "destroyable INTEGER DEFAULT 1" + // (1: true, 0: false)
-                ");"
+    fun dropTable() {
+        val db = MemberDBHelper(context).writableDatabase
+        val sql = "DROP TABLE IF EXISTS ${MemberDBHelper.TABLE_NAME};"
         db?.execSQL(sql)
-    }
-
-    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        val sql = "DROP TABLE IF EXISTS $TABLE_NAME;"
-        db?.execSQL(sql)
-        onCreate(db)
+        db.close()
     }
 
     fun insert(member: Member): Boolean {
@@ -48,19 +25,25 @@ class MemberDAO(private val context: Context) : SQLiteOpenHelper(context, DBName
         viewStyle: ViewStyle,
         destroyable: Boolean = true
     ): Boolean {
-        val contentValues = ContentValues()
-        contentValues.put(COL_NAME, name)
-        contentValues.put(COL_IMAGE, image)
-        contentValues.put(COL_URL, url)
-        contentValues.put(COL_VIEW_STYLE, viewStyle.rawValue)
-        contentValues.put(COL_DESTROYABLE, if (destroyable) 1 else 0)
+        val db = MemberDBHelper(context).writableDatabase
 
-        return writableDatabase.insert(TABLE_NAME, null, contentValues) != -1L
+        val contentValues = ContentValues()
+        contentValues.put(MemberDBHelper.COL_NAME, name)
+        contentValues.put(MemberDBHelper.COL_IMAGE, image)
+        contentValues.put(MemberDBHelper.COL_URL, url)
+        contentValues.put(MemberDBHelper.COL_VIEW_STYLE, viewStyle.rawValue)
+        contentValues.put(MemberDBHelper.COL_DESTROYABLE, if (destroyable) 1 else 0)
+
+        val result = db.insert(MemberDBHelper.TABLE_NAME, null, contentValues) != -1L
+        db.close()
+        return result
     }
 
     fun selectAll(): ArrayList<Member> {
-        val sql = "SELECT * FROM $TABLE_NAME;"
-        val cursor = writableDatabase.rawQuery(sql, null)
+        val db = MemberDBHelper(context).writableDatabase
+
+        val sql = "SELECT * FROM ${MemberDBHelper.TABLE_NAME};"
+        val cursor = db.rawQuery(sql, null)
 
         val data: ArrayList<Member> = arrayListOf()
         while (cursor.moveToNext()) {
@@ -76,30 +59,58 @@ class MemberDAO(private val context: Context) : SQLiteOpenHelper(context, DBName
             )
         }
 
+        db.close()
+
         return data
     }
 
     fun select(id: Int): Member? {
-        val sql = "SELECT * FROM $TABLE_NAME WHERE id = $id;"
-        val cursor = writableDatabase.rawQuery(sql, null)
+        val db = MemberDBHelper(context).writableDatabase
+
+        val sql = "SELECT * FROM ${MemberDBHelper.TABLE_NAME} WHERE id = $id;"
+        val cursor = db.rawQuery(sql, null)
+
+        db.close()
 
         while (cursor.moveToNext()) {
-            val id = cursor.getInt(0)
+            val _id = cursor.getInt(0)
             val name = cursor.getString(1)
             val image = cursor.getInt(2)
             val url = cursor.getString(3)
             val viewStyle = cursor.getInt(4)
             val destroyable = cursor.getInt(5) == 1
 
-            return Member(id, name, image, url, ViewStyle.of(viewStyle), destroyable)
+            return Member(_id, name, image, url, ViewStyle.of(viewStyle), destroyable)
         }
 
         return null
     }
 
+    fun isEmpty(): Boolean {
+        val db = MemberDBHelper(context).writableDatabase
+
+        val sql = "SELECT COUNT(*) FROM ${MemberDBHelper.TABLE_NAME};"
+        val cursor = db.rawQuery(sql, null)
+
+        db.close()
+
+        while (cursor.moveToNext()) {
+            val isEmpty = cursor.getInt(0)
+
+            return isEmpty > 0
+        }
+
+        return false
+    }
+
     fun isDestroyable(id: Int): Boolean {
-        val sql = "SELECT $COL_DESTROYABLE FROM $TABLE_NAME WHERE id = $id;"
-        val cursor = writableDatabase.rawQuery(sql, null)
+        val db = MemberDBHelper(context).writableDatabase
+
+        val sql =
+            "SELECT ${MemberDBHelper.COL_DESTROYABLE} FROM ${MemberDBHelper.TABLE_NAME} WHERE id = $id;"
+        val cursor = db.rawQuery(sql, null)
+
+        db.close()
 
         while (cursor.moveToNext()) {
             return cursor.getInt(5) == 1
@@ -109,19 +120,34 @@ class MemberDAO(private val context: Context) : SQLiteOpenHelper(context, DBName
     }
 
     fun update(member: Member): Int {
+        val db = MemberDBHelper(context).writableDatabase
+
         val contentValues = ContentValues()
-        contentValues.put(COL_NAME, member.name)
-        contentValues.put(COL_IMAGE, member.image)
-        contentValues.put(COL_URL, member.url)
-        contentValues.put(COL_VIEW_STYLE, member.viewStyle.rawValue)
-        contentValues.put(COL_DESTROYABLE, if (member.destroyable) 1 else 0)
-        return writableDatabase.update(TABLE_NAME, contentValues, "id = ?", arrayOf(member.id.toString()))
+        contentValues.put(MemberDBHelper.COL_NAME, member.name)
+        contentValues.put(MemberDBHelper.COL_IMAGE, member.image)
+        contentValues.put(MemberDBHelper.COL_URL, member.url)
+        contentValues.put(MemberDBHelper.COL_VIEW_STYLE, member.viewStyle.rawValue)
+        contentValues.put(MemberDBHelper.COL_DESTROYABLE, if (member.destroyable) 1 else 0)
+
+        val result = db.update(
+            MemberDBHelper.TABLE_NAME,
+            contentValues,
+            "id = ?",
+            arrayOf(member.id.toString())
+        )
+        db.close()
+        return result
     }
 
     fun delete(id: Int): Int {
-        return if (isDestroyable(id)) {
-            writableDatabase.delete(TABLE_NAME, "id = ?", arrayOf(id.toString()))
-        } else -1
-    }
+        val db = MemberDBHelper(context).writableDatabase
 
+        val result = if (isDestroyable(id)) {
+            db.delete(MemberDBHelper.TABLE_NAME, "id = ?", arrayOf(id.toString()))
+        } else -1
+
+        db.close()
+
+        return result
+    }
 }

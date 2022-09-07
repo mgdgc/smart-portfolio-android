@@ -2,55 +2,41 @@ package com.mgchoi.smartportfolio.db
 
 import android.content.ContentValues
 import android.content.Context
-import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
 import com.mgchoi.smartportfolio.model.Portfolio
-import com.mgchoi.smartportfolio.value.DBName
+import java.io.Closeable
 
-class PortfolioDAO(private val context: Context) : SQLiteOpenHelper(context, DBName.name, null, 1) {
+class PortfolioDAO(private val context: Context) {
 
-    companion object {
-        private const val TABLE_NAME = "Portfolio"
-        private const val COL_ID = "id"
-        private const val COL_MEMBER_ID = "memberId"
-        private const val COL_TITLE = "title"
-        private const val COL_CONTENT = "content"
-        private const val COL_URL = "url"
-    }
-
-    override fun onCreate(db: SQLiteDatabase?) {
-        val sql = "CREATE TABLE IF NOT EXISTS $TABLE_NAME (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "memberId INTEGER," +
-                "title TEXT," +
-                "content TEXT," +
-                "url TEXT" +
-                ");"
+    fun dropTable() {
+        val db = PortfolioDBHelper(context).writableDatabase
+        val sql = "DROP TABLE IF EXISTS ${PortfolioDBHelper.TABLE_NAME};"
         db?.execSQL(sql)
-    }
-
-    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        val sql = "DROP TABLE IF EXISTS $TABLE_NAME;"
-        db?.execSQL(sql)
-        onCreate(db)
+        db?.close()
     }
 
     fun insert(portfolio: Portfolio): Boolean {
-        val contentValues = ContentValues()
-        contentValues.put(COL_MEMBER_ID, portfolio.memberId)
-        contentValues.put(COL_TITLE, portfolio.title)
-        contentValues.put(COL_CONTENT, portfolio.content)
-        contentValues.put(COL_URL, portfolio.url)
+        val db = PortfolioDBHelper(context).writableDatabase
 
-        return writableDatabase.insert(TABLE_NAME, null, contentValues) != -1L
+        val contentValues = ContentValues()
+        contentValues.put(PortfolioDBHelper.COL_MEMBER_ID, portfolio.memberId)
+        contentValues.put(PortfolioDBHelper.COL_TITLE, portfolio.title)
+        contentValues.put(PortfolioDBHelper.COL_CONTENT, portfolio.content)
+        contentValues.put(PortfolioDBHelper.COL_URL, portfolio.url)
+
+        val result = db.insert(PortfolioDBHelper.TABLE_NAME, null, contentValues) != -1L
+        db.close()
+        return result
     }
 
     fun selectAll(memberId: Int): ArrayList<Portfolio> {
-        val sql = "SELECT * FROM ${TABLE_NAME} WHERE memberId = $memberId;"
-        val cursor = writableDatabase.rawQuery(sql, null)
+        val db = PortfolioDBHelper(context).writableDatabase
+
+        val sql = "SELECT * FROM ${PortfolioDBHelper.TABLE_NAME} WHERE memberId = $memberId;"
+        val cursor = db.rawQuery(sql, null)
 
         val data: ArrayList<Portfolio> = arrayListOf()
-        while (cursor.moveToNext()) {
+
+        while (cursor.count > 0 && cursor.moveToNext()) {
             val id = cursor.getInt(0)
             val mId = cursor.getInt(1)
             val title = cursor.getString(2)
@@ -62,12 +48,16 @@ class PortfolioDAO(private val context: Context) : SQLiteOpenHelper(context, DBN
             )
         }
 
+        db.close()
+
         return data
     }
 
     fun select(id: Int): Portfolio? {
-        val sql = "SELECT * FROM ${TABLE_NAME} WHERE id = $id;"
-        val cursor = writableDatabase.rawQuery(sql, null)
+        val db = PortfolioDBHelper(context).writableDatabase
+
+        val sql = "SELECT * FROM ${PortfolioDBHelper.TABLE_NAME} WHERE id = $id;"
+        val cursor = db.rawQuery(sql, null)
 
         while (cursor.moveToNext()) {
             val _id = cursor.getInt(0)
@@ -76,29 +66,67 @@ class PortfolioDAO(private val context: Context) : SQLiteOpenHelper(context, DBN
             val content = cursor.getString(3)
             val url = cursor.getString(4)
 
+            db.close()
+
             return Portfolio(_id, mId, title, content, url)
         }
+
+        db.close()
 
         return null
     }
 
-    fun update(portfolio: Portfolio): Int {
-        val contentValues = ContentValues()
-        contentValues.put(COL_MEMBER_ID, portfolio.memberId)
-        contentValues.put(COL_TITLE, portfolio.title)
-        contentValues.put(COL_CONTENT, portfolio.content)
-        contentValues.put(COL_URL, portfolio.url)
+    fun isEmpty(): Boolean {
+        val db = PortfolioDBHelper(context).writableDatabase
 
-        return writableDatabase.update(
-            TABLE_NAME,
+        val sql = "SELECT COUNT(*) FROM ${PortfolioDBHelper.TABLE_NAME};"
+        val cursor = db.rawQuery(sql, null)
+
+        while (cursor.moveToNext()) {
+            val isEmpty = cursor.getInt(0)
+
+            db.close()
+
+            return isEmpty > 0
+        }
+
+        db.close()
+
+        return false
+    }
+
+    fun update(portfolio: Portfolio): Int {
+        val db = PortfolioDBHelper(context).writableDatabase
+
+        val contentValues = ContentValues()
+        contentValues.put(PortfolioDBHelper.COL_MEMBER_ID, portfolio.memberId)
+        contentValues.put(PortfolioDBHelper.COL_TITLE, portfolio.title)
+        contentValues.put(PortfolioDBHelper.COL_CONTENT, portfolio.content)
+        contentValues.put(PortfolioDBHelper.COL_URL, portfolio.url)
+
+        val result =  db.update(
+            PortfolioDBHelper.TABLE_NAME,
             contentValues,
             "id = ?",
             arrayOf(portfolio.id.toString())
         )
+
+        db.close()
+
+        return result
     }
 
     fun delete(id: Int): Int {
-        return writableDatabase.delete(TABLE_NAME, "id = ?", arrayOf(id.toString()))
-    }
+        val db = PortfolioDBHelper(context).writableDatabase
 
+        val result = db.delete(
+            PortfolioDBHelper.TABLE_NAME,
+            "id = ?",
+            arrayOf(id.toString())
+        )
+
+        db.close()
+
+        return result
+    }
 }
