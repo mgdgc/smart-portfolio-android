@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         private const val ACTION_PORTFOLIO = 1000
         private const val ACTION_LICENSE = 2001
         private const val ACTION_INFO = 2002
+        private const val ACTION_SETTINGS = 2003
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -66,32 +67,42 @@ class MainActivity : AppCompatActivity() {
 
         binding.navMain.setNavigationItemSelectedListener { item ->
             binding.drawerMain.closeDrawer(GravityCompat.START)
-
-            when (item.itemId) {
-                in ACTION_PORTFOLIO until ACTION_INDEX -> {
-                    val memberId = item.itemId - ACTION_PORTFOLIO
-                    for (i in 0 until this.data.size) {
-                        if (this.data[i].id == memberId) {
-                            binding.pagerMain.currentItem = i + 1
-                            return@setNavigationItemSelectedListener true
-                        }
-                    }
-                }
-                ACTION_INDEX -> {
-                    binding.pagerMain.currentItem = 0
-                }
-                ACTION_LICENSE -> {
-
-                }
-                ACTION_INFO -> {
-
-                }
-                else -> return@setNavigationItemSelectedListener false
-
-            }
-            true
+            onNavigationItemSelected(item)
         }
 
+    }
+
+    private val onNavigationItemSelected: ((MenuItem) -> Boolean) = { item ->
+        when (item.itemId) {
+            in ACTION_PORTFOLIO until ACTION_INDEX -> {
+                val memberId = item.itemId - ACTION_PORTFOLIO
+                for (i in 0 until this.data.size) {
+                    if (this.data[i].id == memberId) {
+                        binding.pagerMain.currentItem = i + 1
+                        break
+                    }
+                }
+            }
+            ACTION_INDEX -> {
+                binding.pagerMain.currentItem = 0
+            }
+            ACTION_SETTINGS -> {
+                startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
+            }
+            ACTION_LICENSE -> {
+                startActivity(Intent(this@MainActivity, LicenseActivity::class.java))
+            }
+            ACTION_INFO -> {
+                val intent = Intent(this@MainActivity, SettingsActivity::class.java)
+                intent.putExtra(
+                    SettingsActivity.EXTRA_SCROLL,
+                    SettingsActivity.SettingsFragment.KEY_VERSION
+                )
+                startActivity(intent)
+            }
+        }
+
+        true
     }
 
     private fun initHeaderView() {
@@ -135,12 +146,14 @@ class MainActivity : AppCompatActivity() {
 
         // Portfolio menu
         val portfolioGroup = binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_portfolio)
-        for (d in this.data) {
-            portfolioGroup.add(0, (ACTION_PORTFOLIO + d.id), 0, d.name)
+        for (i in this.data.indices) {
+            portfolioGroup.add(0, (ACTION_PORTFOLIO + this.data[i].id), 0, "${i + 1}. ${data[i].name}")
         }
 
         // Application menu
-        val appGroup = binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_title)
+        val appGroup = binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_app)
+        appGroup.add(0, ACTION_SETTINGS, 0, R.string.main_nav_menu_settings)
+            .setIcon(R.drawable.ic_baseline_settings_24)
         appGroup.add(0, ACTION_LICENSE, 0, R.string.main_nav_menu_license)
             .setIcon(R.drawable.ic_round_folder_open_24)
         appGroup.add(0, ACTION_INFO, 0, R.string.main_nav_menu_info)
