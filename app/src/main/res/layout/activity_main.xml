@@ -25,7 +25,8 @@
                 style="@style/Theme.SmartPortfolio.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fitsSystemWindows="true">
+                android:fitsSystemWindows="true"
+                android:theme="@style/Theme.SmartPortfolio.Toolbar">
 
             </androidx.appcompat.widget.Toolbar>
 

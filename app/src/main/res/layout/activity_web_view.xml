@@ -16,9 +16,11 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_web"
+            style="@style/Theme.SmartPortfolio.Toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:fitsSystemWindows="true">
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:theme="@style/Theme.SmartPortfolio.Toolbar">
 
         </androidx.appcompat.widget.Toolbar>
 
