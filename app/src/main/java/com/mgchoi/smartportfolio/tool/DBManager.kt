@@ -1,17 +1,37 @@
-package com.mgchoi.smartportfolio.db
+package com.mgchoi.smartportfolio.tool
 
 import android.content.Context
 import com.google.gson.Gson
-import com.mgchoi.smartportfolio.model.License
+import com.mgchoi.smartportfolio.db.MemberDAO
+import com.mgchoi.smartportfolio.db.MemberDBHelper
+import com.mgchoi.smartportfolio.db.PortfolioDAO
 import com.mgchoi.smartportfolio.model.Member
 import com.mgchoi.smartportfolio.model.Portfolio
-import com.mgchoi.smartportfolio.tool.JsonAssetReader
 
-class DBInitializer(private val context: Context) {
+class DBManager(private val context: Context) {
 
     companion object {
         const val FILE_MEMBER = "member.json"
         const val FILE_PORTFOLIO = "portfolio.json"
+    }
+
+    fun initDB() {
+        initMemberDB()
+        initPortfolioDB()
+    }
+
+    fun initMemberDB() {
+        val dao = MemberDAO(context)
+        if (dao.isEmpty()) {
+            insertMemberDB()
+        }
+    }
+
+    fun initPortfolioDB() {
+        val dao = PortfolioDAO(context)
+        if (dao.isEmpty()) {
+            insertPortfolioDB()
+        }
     }
 
     fun insertMemberDB() {
@@ -30,6 +50,21 @@ class DBInitializer(private val context: Context) {
         portfolios.forEach {
             dao.insert(it)
         }
+    }
+
+    fun resetDB() {
+        resetMemberDB()
+        resetPortfolioDB()
+    }
+
+    fun resetMemberDB() {
+        val dao = MemberDAO(context)
+        dao.dropTable()
+    }
+
+    fun resetPortfolioDB() {
+        val dao = PortfolioDAO(context)
+        dao.dropTable()
     }
 
 }
