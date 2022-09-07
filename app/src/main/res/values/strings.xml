@@ -24,6 +24,7 @@
     <string name="main_nav_submenu_app">애플리케이션</string>
     <string name="main_nav_menu_license">오픈소스 라이선스</string>
     <string name="main_nav_menu_info">애플리케이션 정보</string>
+    <string name="main_nav_menu_settings">설정</string>
 
     <!--  TimelineViewHolder  -->
     <string name="row_timeline_open_link">Open Link</string>
@@ -42,6 +43,45 @@
     <string name="menu_copy">주소 복사</string>
     <string name="web_url_error">URL 주소가 올바르지 않아 웹을 표시할 수 없습니다.</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!--  SettingsActivity  -->
+    <string name="settings_category_login">로그인</string>
+    <string name="settings_auto_login">자동 로그인</string>
+    <string name="settings_auto_login_summary_on">앱을 시작할 때 자동으로 로그인합니다.</string>
+    <string name="settings_auto_login_summary_off">앱을 시작하면 로그인 화면으로 이동합니다.</string>
+    <string name="settings_logout">로그아웃</string>
+    <string name="settings_category_app">애플리케이션</string>
+    <string name="settings_db_reset">DB 초기화</string>
+    <string name="settings_db_reset_summary">DB에 저장된 데이터를 모두 삭제합니다.</string>
+    <string name="settings_db_init">사전 DB 생성</string>
+    <string name="settings_db_init_summary">최초 애플리케이션 DB를 생성합니다.</string>
+    <string name="settings_category_info">애플리케이션 정보</string>
+    <string name="settings_version">애플리케이션 버전</string>
+    <string name="settings_build">빌드</string>
+    <string name="settings_category_license">라이선스</string>
+    <string name="settings_license">오픈소스 라이선스</string>
+    <string name="settings_developer">애플리케이션 개발</string>
+    <string name="settings_developer_summary">최명근 (Choi, Myung Geun)</string>
+    <string name="settings_developer_detail">한림대학교 소프트웨어학부\n20185301 최명근</string>
+    <string name="settings_developer_github">Github</string>
+    <string name="settings_developer_portfolio">포트폴리오</string>
+    <string name="settings_github">Github</string>
+
+    <!-- Auto Generated Strings -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails</string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
 </resources>

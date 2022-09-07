@@ -1,0 +1,63 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <PreferenceCategory app:title="@string/settings_category_login">
+
+        <SwitchPreferenceCompat
+            app:key="auto_login"
+            app:summaryOff="@string/settings_auto_login_summary_off"
+            app:summaryOn="@string/settings_auto_login_summary_on"
+            app:title="@string/settings_auto_login" />
+
+        <Preference
+            app:key="logout"
+            app:title="@string/settings_logout" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/settings_category_app">
+
+        <Preference
+            app:key="reset_db"
+            app:summary="@string/settings_db_reset_summary"
+            app:title="@string/settings_db_reset" />
+
+        <Preference
+            app:key="init_db"
+            app:summary="@string/settings_db_init_summary"
+            app:title="@string/settings_db_init" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/settings_category_info">
+
+        <Preference
+            app:key="version"
+            app:title="@string/settings_version"
+            tools:summary="1.0.0" />
+
+        <Preference
+            app:key="build"
+            app:title="@string/settings_build"
+            tools:summary="22090500" />
+
+        <Preference
+            app:key="developer"
+            app:summary="@string/settings_developer_summary"
+            app:title="@string/settings_developer" />
+
+        <Preference
+            app:key="github"
+            app:title="@string/settings_github" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/settings_category_license">
+
+        <Preference
+            app:key="license"
+            app:title="@string/settings_license" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
