@@ -1,12 +1,16 @@
 package com.mgchoi.smartportfolio
 
+import android.content.Context
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.webkit.WebChromeClient
 import android.webkit.WebViewClient
-import androidx.appcompat.app.AlertDialog
+import androidx.browser.customtabs.CustomTabColorSchemeParams
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.mgchoi.smartportfolio.databinding.ActivityWebViewBinding
 
@@ -14,6 +18,33 @@ class WebViewActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_URL = "url"
+
+        fun openAsCustomTab(context: Context, url: String) {
+            Uri.parse(url)?.let {
+                // Set theme
+                val colorScheme = CustomTabColorSchemeParams.Builder()
+                colorScheme.setToolbarColor(ContextCompat.getColor(context, R.color.color_primary))
+                colorScheme.setNavigationBarColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.color_primary_variant
+                    )
+                )
+                colorScheme.setSecondaryToolbarColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.color_secondary
+                    )
+                )
+
+                // Chrome Custom Tabs builder
+                val builder = CustomTabsIntent.Builder()
+                builder.setDefaultColorSchemeParams(colorScheme.build())
+                // Launch intent
+                val intent = builder.build()
+                intent.launchUrl(context, it)
+            }
+        }
     }
 
     private lateinit var binding: ActivityWebViewBinding
@@ -80,6 +111,8 @@ class WebViewActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
+        if (binding.webView.canGoBack()) {
+            binding.webView.goBack()
+        } else super.onBackPressed()
     }
 }
