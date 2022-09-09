@@ -13,7 +13,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         app:cardCornerRadius="8dp"
-        app:cardElevation="8dp"
+        app:cardElevation="4dp"
         app:cardUseCompatPadding="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,6 +40,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:adjustViewBounds="true"
                 android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -56,7 +57,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
                 android:textColor="@color/text_secondary"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/img_row_card_image"
@@ -65,11 +66,13 @@
             </TextView>
 
             <Button
+                android:id="@+id/btn_row_card_link"
                 style="@style/Theme.SmartPortfolio.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Open Link"
+                android:layout_marginEnd="16dp"
+                android:text="@string/row_card_open_link"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_row_card_content">
 

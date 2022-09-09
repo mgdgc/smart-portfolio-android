@@ -73,6 +73,7 @@
             android:layout_marginTop="16dp"
             app:cardBackgroundColor="@color/bg_tertiary"
             app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
             app:contentPadding="8dp">
 
             <TextView
@@ -107,6 +108,7 @@
             android:layout_marginTop="16dp"
             app:cardBackgroundColor="@color/color_primary"
             app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
             app:contentPadding="8dp">
 
             <TextView
@@ -130,13 +132,15 @@
             android:visibility="gone"
             app:cardBackgroundColor="@color/color_primary"
             app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
             app:cardUseCompatPadding="false"
             app:contentPadding="0dp">
 
             <ImageView
                 android:id="@+id/img_row_message_image"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true">
 
             </ImageView>
 
@@ -151,6 +155,7 @@
             android:focusable="true"
             app:cardBackgroundColor="@color/color_primary"
             app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
             app:contentPadding="8dp">
 
             <LinearLayout
