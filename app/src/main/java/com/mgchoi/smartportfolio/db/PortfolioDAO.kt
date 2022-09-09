@@ -53,6 +53,11 @@ class PortfolioDAO(private val context: Context) {
         return data
     }
 
+    fun selectLast(memberId: Int): Portfolio? {
+        val portfolios = selectAll(memberId)
+        return if (portfolios.size <= 0) null else portfolios[0]
+    }
+
     fun select(id: Int): Portfolio? {
         val db = PortfolioDBHelper(context).writableDatabase
 

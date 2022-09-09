@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="view_style">
+        <item>@string/view_style_timeline</item>
+        <item>@string/view_style_message</item>
+        <item>@string/view_style_card</item>
+    </string-array>
+</resources>

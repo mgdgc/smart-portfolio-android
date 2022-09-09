@@ -8,6 +8,10 @@
     <string name="cancel">취소</string>
     <string name="dismiss">닫기</string>
     <string name="close">닫기</string>
+    <string name="add">추가</string>
+    <string name="delete">삭제</string>
+    <string name="remove">제거</string>
+    <string name="edit">수정</string>
 
     <!--  LoginActivity  -->
     <string name="login_username">Username</string>
@@ -65,6 +69,27 @@
     <string name="settings_developer_github">Github</string>
     <string name="settings_developer_portfolio">포트폴리오</string>
     <string name="settings_github">Github</string>
+
+    <!--  PortfolioManageActivity  -->
+    <string name="portfolio_manage_error">데이터가 없습니다.</string>
+    <string name="portfolio_edit_name_title">이름 수정</string>
+    <string name="edit_portfolio_title">제목</string>
+    <string name="edit_portfolio_content">내용</string>
+    <string name="edit_portfolio_github">Github</string>
+    <string name="edit_portfolio_link">링크</string>
+    <string name="portfolio_edit_title">포트폴리오 수정</string>
+    <string name="portfolio_write_title">포트폴리오 작성</string>
+    <string name="portfolio_write_title_not_valid">제목을 작성해주세요</string>
+    <string name="portfolio_write_content_not_valid">내용을 작성해주세요</string>
+    <string name="portfolio_write_url_not_valid">주소를 작성해주세요</string>
+
+    <!--  ProfileViewHolder  -->
+    <string name="row_profile_img_edit">수정</string>
+    <string name="row_profile_image">Profile Image</string>
+    <string name="view_style_timeline">타임라인</string>
+    <string name="view_style_message">채팅</string>
+    <string name="view_style_card">카드뷰</string>
+    <string name="row_portfolio_github_image">Github Image</string>
 
     <!-- Auto Generated Strings -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
