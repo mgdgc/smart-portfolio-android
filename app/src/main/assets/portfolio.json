@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1,
+    "memberId": 1,
+    "title": "강고 포켓",
+    "content": "강원고등학교 학생들을 위한 시간표, 교실배치도, 급식 정보 애플리케이션입니다.\n담당: 안드로이드, iOS, Web 개발",
+    "url": "https://github.com/soc06212/kanggo-pocket-android"
+  },
+  {
+    "id": 2,
+    "memberId": 1,
+    "title": "Smart Portfolio",
+    "content": "2022년 2학기 모바일 프로그래밍 기업체 과제로 개발한 스마트 포트폴리오 애플리케이션입니다.\n담당: 안드로이드 애플리케이션 개발",
+    "url": "https://github.com/soc06212/smart-portfolio-android"
+  },
+  {
+    "id": 3,
+    "memberId": 1,
+    "title": "한림맵 (Hallym Map)",
+    "content": "한림대학교 지도와 건물, 강의실 위치, 편의시설 정보를 제공하는 안드로이드 애플리케이션입니다.\n담당: 안드로이드 애플리케이션 개발",
+    "url": "https://github.com/soc06212/hallym-map"
+  },
+  {
+    "id": 4,
+    "memberId": 2,
+    "title": "하루맵 (Harumap)",
+    "content": "GitHub의 commit heatmap 스타일의 습관 관리 애플리케이션입니다.\n담당: 안드로이드 애플리케이션 개발",
+    "url": "https://github.com/soc06212/harumap"
+  },
+  {
+    "id": 5,
+    "memberId": 2,
+    "title": "WordCounter",
+    "content": "글자 수를 간단하게 셀 수 있는 애플리케이션입니다.\n담당: iOS 애플리케이션 개발",
+    "url": "https://github.com/soc06212/word-counter"
+  },
+  {
+    "id": 6,
+    "memberId": 2,
+    "title": "매달 (Maedal)",
+    "content": "구독 서비스를 확인하고 관리할 수 있는 애플리케이션입니다.\n담당: iOS 애플리케이션 개발",
+    "url": "https://github.com/soc06212/maedal"
+  },
+  {
+    "id": 7,
+    "memberId": 3,
+    "title": "DeepSeat",
+    "content": "좌석 점유 정보를 카메라 한 대로 탐지할 수 있는 기능을 제공하여 스터디존, 카페의 빈 좌석 정보를 iOS 및 Android 플랫폼에서 모바일 애플리케이션을 통해 손쉽게 확인할 수 있습니다.\n담당: 안드로이드 애플리케이션 및 백엔드 서버 개발",
+    "url": "https://github.com/soc06212/deepseat"
+  }
+]

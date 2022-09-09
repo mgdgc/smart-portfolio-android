@@ -4,7 +4,7 @@
     "name": "최명근",
     "image": null,
     "url": "https://mgchoi.com",
-    "viewStyle": 1,
+    "viewStyle": "TIMELINE",
     "destroyable": false
   },
   {
@@ -12,7 +12,7 @@
     "name": "최명근",
     "image": null,
     "url": "https://ridsoft.xyz",
-    "viewStyle": 2,
+    "viewStyle": "MESSAGE",
     "destroyable": false
   },
   {
@@ -20,7 +20,7 @@
     "name": "최명근",
     "image": null,
     "url": "https://github.com/soc06212",
-    "viewStyle": 3,
+    "viewStyle": "CARD",
     "destroyable": false
   }
 ]
