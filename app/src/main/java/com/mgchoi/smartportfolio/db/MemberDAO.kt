@@ -2,7 +2,8 @@ package com.mgchoi.smartportfolio.db
 
 import android.content.ContentValues
 import android.content.Context
-import com.mgchoi.smartportfolio.ViewStyle
+import androidx.core.database.getStringOrNull
+import com.mgchoi.smartportfolio.model.ViewStyle
 import com.mgchoi.smartportfolio.model.Member
 
 class MemberDAO(private val context: Context) {
@@ -20,7 +21,7 @@ class MemberDAO(private val context: Context) {
 
     fun insert(
         name: String,
-        image: Int,
+        image: String?,
         url: String,
         viewStyle: ViewStyle,
         destroyable: Boolean = true
@@ -49,7 +50,7 @@ class MemberDAO(private val context: Context) {
         while (cursor.moveToNext()) {
             val id = cursor.getInt(0)
             val name = cursor.getString(1)
-            val image = cursor.getInt(2)
+            val image = cursor.getStringOrNull(2)
             val url = cursor.getString(3)
             val viewStyle = cursor.getInt(4)
             val destroyable = cursor.getInt(5) == 1
@@ -70,18 +71,20 @@ class MemberDAO(private val context: Context) {
         val sql = "SELECT * FROM ${MemberDBHelper.TABLE_NAME} WHERE id = $id;"
         val cursor = db.rawQuery(sql, null)
 
-        db.close()
-
         while (cursor.moveToNext()) {
             val _id = cursor.getInt(0)
             val name = cursor.getString(1)
-            val image = cursor.getInt(2)
+            val image = cursor.getStringOrNull(2)
             val url = cursor.getString(3)
             val viewStyle = cursor.getInt(4)
             val destroyable = cursor.getInt(5) == 1
 
+            db.close()
+
             return Member(_id, name, image, url, ViewStyle.of(viewStyle), destroyable)
         }
+
+        db.close()
 
         return null
     }
@@ -92,13 +95,14 @@ class MemberDAO(private val context: Context) {
         val sql = "SELECT COUNT(*) FROM ${MemberDBHelper.TABLE_NAME};"
         val cursor = db.rawQuery(sql, null)
 
-        db.close()
-
         while (cursor.moveToNext()) {
             val isEmpty = cursor.getInt(0)
 
+            db.close()
+
             return isEmpty > 0
         }
+        db.close()
 
         return false
     }
@@ -113,8 +117,14 @@ class MemberDAO(private val context: Context) {
         db.close()
 
         while (cursor.moveToNext()) {
-            return cursor.getInt(5) == 1
+            val result = cursor.getInt(5) == 1
+
+            db.close()
+
+            return result
         }
+
+        db.close()
 
         return false
     }
