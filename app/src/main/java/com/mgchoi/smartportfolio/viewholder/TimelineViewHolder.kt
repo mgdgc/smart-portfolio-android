@@ -1,11 +1,16 @@
 package com.mgchoi.smartportfolio.viewholder
 
 import android.content.res.ColorStateList
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.mgchoi.smartportfolio.R
 import com.mgchoi.smartportfolio.databinding.RowTimelineBinding
 import com.mgchoi.smartportfolio.model.Portfolio
+import com.mgchoi.smartportfolio.tool.OGTagImageGetter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class TimelineViewHolder(private val binding: RowTimelineBinding) :
     RecyclerView.ViewHolder(binding.root) {
@@ -46,6 +51,19 @@ class TimelineViewHolder(private val binding: RowTimelineBinding) :
         // Set listeners
         binding.cardRowTimeline.setOnClickListener {
             this.onLinkClick?.let { it(portfolio.url) }
+        }
+
+        // OGTag Image
+        CoroutineScope(Dispatchers.IO).launch {
+            val manager = OGTagImageGetter()
+            val url = manager.getOGImageUrl(portfolio.url)
+            url?.let { urlString ->
+                val image = manager.getImageFromUrl(urlString)
+                image?.let { bitmap ->
+                    binding.cardRowTimelineImage.visibility = View.VISIBLE
+                    binding.imgRowTimelineImage.setImageBitmap(bitmap)
+                }
+            }
         }
     }
 }

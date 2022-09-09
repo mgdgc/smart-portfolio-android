@@ -123,6 +123,26 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/card_row_message_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/color_primary"
+            app:cardCornerRadius="8dp"
+            app:cardUseCompatPadding="false"
+            app:contentPadding="0dp">
+
+            <ImageView
+                android:id="@+id/img_row_message_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ImageView>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:id="@+id/card_row_message_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
