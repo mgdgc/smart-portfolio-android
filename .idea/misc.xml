@@ -3,15 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/avatar_01.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/bg_edit_text.xml" value="0.19" />
         <entry key="app/src/main/res/drawable/bg_image_button.xml" value="0.165" />
+        <entry key="app/src/main/res/drawable/bg_profile.xml" value="0.19" />
         <entry key="app/src/main/res/drawable/bg_progress.xml" value="0.19" />
         <entry key="app/src/main/res/drawable/bg_text_button.xml" value="0.1985" />
+        <entry key="app/src/main/res/drawable/fg_profile.xml" value="0.221" />
         <entry key="app/src/main/res/drawable/shape_edit_text.xml" value="0.19" />
         <entry key="app/src/main/res/layout/activity_license.xml" value="0.27219202898550726" />
         <entry key="app/src/main/res/layout/activity_loading.xml" value="0.19630192502532928" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.3591485507246377" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.29393115942028986" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3167220017005657" />
+        <entry key="app/src/main/res/layout/activity_portfolio_manage.xml" value="0.3591485507246377" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.1889564336372847" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.3591485507246377" />
         <entry key="app/src/main/res/layout/activity_web_view.xml" value="0.3808876811594203" />
@@ -21,8 +25,12 @@
         <entry key="app/src/main/res/layout/fragment_portfolio.xml" value="0.3808876811594203" />
         <entry key="app/src/main/res/layout/fragment_timeline.xml" value="0.29393115942028986" />
         <entry key="app/src/main/res/layout/header_nav_main.xml" value="0.29393115942028986" />
+        <entry key="app/src/main/res/layout/layout_portfolio_edit.xml" value="0.3591485507246377" />
         <entry key="app/src/main/res/layout/row_card.xml" value="0.29393115942028986" />
+        <entry key="app/src/main/res/layout/row_footer.xml" value="0.27219202898550726" />
         <entry key="app/src/main/res/layout/row_message.xml" value="0.29393115942028986" />
+        <entry key="app/src/main/res/layout/row_portfolio.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/row_profile.xml" value="0.335" />
         <entry key="app/src/main/res/layout/row_timeline.xml" value="0.29393115942028986" />
         <entry key="app/src/main/res/layout/shape_edit_text.xml" value="0.3591485507246377" />
         <entry key="app/src/main/res/menu/menu_nav_main.xml" value="0.4036458333333333" />
