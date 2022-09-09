@@ -90,9 +90,10 @@
     <string name="view_style_message">채팅</string>
     <string name="view_style_card">카드뷰</string>
     <string name="row_portfolio_github_image">Github Image</string>
+    <string name="row_profile_view_style">뷰 스타일</string>
+    <string name="row_card_open_link">Open Link</string>
 
     <!-- Auto Generated Strings -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="row_profile_view_style">뷰 스타일</string>
 
 </resources>
