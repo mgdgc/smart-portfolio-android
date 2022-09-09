@@ -10,10 +10,10 @@ import androidx.core.view.GravityCompat
 import com.mgchoi.smartportfolio.adapter.MainAdapter
 import com.mgchoi.smartportfolio.databinding.ActivityMainBinding
 import com.mgchoi.smartportfolio.databinding.HeaderNavMainBinding
+import com.mgchoi.smartportfolio.db.MemberDAO
 import com.mgchoi.smartportfolio.frament.IndexFragment
 import com.mgchoi.smartportfolio.frament.PortfolioFragment
 import com.mgchoi.smartportfolio.model.Member
-import com.mgchoi.smartportfolio.model.ViewStyle
 
 class MainActivity : AppCompatActivity() {
 
@@ -127,20 +127,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        // TODO: replace with real code
         // Data initialization
-//        val dao = MemberDAO(this)
-//        data.addAll(dao.selectAll())
-        // TODO: remove after
-        data.addAll(
-            arrayListOf(
-                Member(1, "1", null, "1", ViewStyle.TIMELINE, true),
-                Member(2, "2", null, "2", ViewStyle.MESSAGE, true),
-                Member(3, "3", null, "3", ViewStyle.TIMELINE, true),
-                Member(4, "4", null, "4", ViewStyle.CARD, true),
-                Member(5, "5", null, "5", ViewStyle.MESSAGE, true)
-            )
-        )
+        val dao = MemberDAO(this)
+        data.addAll(dao.selectAll())
 
         // Add menu to navigation drawer
         // Index menu
