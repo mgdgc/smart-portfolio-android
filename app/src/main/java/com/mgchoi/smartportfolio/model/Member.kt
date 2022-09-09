@@ -1,6 +1,6 @@
 package com.mgchoi.smartportfolio.model
 
-import com.mgchoi.smartportfolio.ViewStyle
+import java.io.Serializable
 
 class Member(
     var id: Int,
@@ -9,4 +9,4 @@ class Member(
     var url: String,
     var viewStyle: ViewStyle,
     var destroyable: Boolean
-)
+) : Serializable
