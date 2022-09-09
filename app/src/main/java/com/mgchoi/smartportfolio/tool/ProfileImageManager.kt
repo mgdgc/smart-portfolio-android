@@ -9,6 +9,7 @@ import androidx.core.graphics.drawable.toBitmap
 import com.mgchoi.smartportfolio.R
 import java.io.File
 import java.io.FileOutputStream
+import kotlin.math.abs
 
 class ProfileImageManager(private val context: Context) {
 
@@ -56,7 +57,7 @@ class ProfileImageManager(private val context: Context) {
                 return null
             }
 
-            return BitmapFactory.decodeFile(file.name)
+            return BitmapFactory.decodeFile(file.path)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -71,7 +72,7 @@ class ProfileImageManager(private val context: Context) {
             R.drawable.ic_avatar_03,
             R.drawable.ic_avatar_04
         )
-        val index = (memberName ?: 0).hashCode() % imageRes.size
+        val index = abs((memberName ?: 0).hashCode() % imageRes.size)
 
         return ContextCompat.getDrawable(context, imageRes[index])!!.toBitmap()
     }
