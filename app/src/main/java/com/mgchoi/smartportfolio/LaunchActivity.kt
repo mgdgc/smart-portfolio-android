@@ -15,8 +15,8 @@ class LaunchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         initializer = DBManager(this)
 
-//        initMemberDB()
-//        initPortfolioDB()
+        initializer.initDB()
+
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         if (pref.getBoolean(SharedPreferenceKeys.BOOL_AUTO_LOGIN, false)) {
             launchMainActivity()
