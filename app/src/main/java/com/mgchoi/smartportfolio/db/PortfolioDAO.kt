@@ -92,7 +92,7 @@ class PortfolioDAO(private val context: Context) {
 
             db.close()
 
-            return isEmpty > 0
+            return isEmpty <= 0
         }
 
         db.close()
