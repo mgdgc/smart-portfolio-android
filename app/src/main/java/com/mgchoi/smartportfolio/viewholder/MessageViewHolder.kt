@@ -34,8 +34,10 @@ class MessageViewHolder(private val binding: RowMessageBinding) :
             url?.let { urlString ->
                 val image = manager.getImageFromUrl(urlString)
                 image?.let { bitmap ->
-                    binding.cardRowMessageImage.visibility = View.VISIBLE
-                    binding.imgRowMessageImage.setImageBitmap(bitmap)
+                    CoroutineScope(Dispatchers.Main).launch {
+                        binding.cardRowMessageImage.visibility = View.VISIBLE
+                        binding.imgRowMessageImage.setImageBitmap(bitmap)
+                    }
                 }
             }
         }

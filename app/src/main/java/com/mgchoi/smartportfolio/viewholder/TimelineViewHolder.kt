@@ -11,6 +11,7 @@ import com.mgchoi.smartportfolio.tool.OGTagImageGetter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.math.abs
 
 class TimelineViewHolder(private val binding: RowTimelineBinding) :
     RecyclerView.ViewHolder(binding.root) {
@@ -39,7 +40,7 @@ class TimelineViewHolder(private val binding: RowTimelineBinding) :
         binding.txtRowTimelineContent.text = portfolio.content
 
         // Set dot color
-        val colorIndex = portfolio.title.hashCode() % COLORS_DOT.size
+        val colorIndex = abs(portfolio.title.hashCode() % COLORS_DOT.size)
         binding.imgRowTimelineDot.imageTintList =
             ColorStateList.valueOf(
                 ContextCompat.getColor(
@@ -60,8 +61,10 @@ class TimelineViewHolder(private val binding: RowTimelineBinding) :
             url?.let { urlString ->
                 val image = manager.getImageFromUrl(urlString)
                 image?.let { bitmap ->
-                    binding.cardRowTimelineImage.visibility = View.VISIBLE
-                    binding.imgRowTimelineImage.setImageBitmap(bitmap)
+                    CoroutineScope(Dispatchers.Main).launch {
+                        binding.cardRowTimelineImage.visibility = View.VISIBLE
+                        binding.imgRowTimelineImage.setImageBitmap(bitmap)
+                    }
                 }
             }
         }

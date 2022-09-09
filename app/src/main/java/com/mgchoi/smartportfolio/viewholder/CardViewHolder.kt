@@ -23,9 +23,10 @@ class CardViewHolder(private val binding: RowCardBinding) :
         binding.txtRowCardTitle.text = portfolio.title
         binding.txtRowCardContent.text = portfolio.content
 
-        binding.txtRowCardTitle.setOnClickListener {
+        binding.btnRowCardLink.setOnClickListener {
             this.onLinkClick?.let { it(portfolio.url) }
         }
+
         // OGTag Image
         CoroutineScope(Dispatchers.IO).launch {
             val manager = OGTagImageGetter()
@@ -33,8 +34,10 @@ class CardViewHolder(private val binding: RowCardBinding) :
             url?.let { urlString ->
                 val image = manager.getImageFromUrl(urlString)
                 image?.let { bitmap ->
-                    binding.imgRowCardImage.visibility = View.VISIBLE
-                    binding.imgRowCardImage.setImageBitmap(bitmap)
+                    CoroutineScope(Dispatchers.Main).launch {
+                        binding.imgRowCardImage.visibility = View.VISIBLE
+                        binding.imgRowCardImage.setImageBitmap(bitmap)
+                    }
                 }
             }
         }
