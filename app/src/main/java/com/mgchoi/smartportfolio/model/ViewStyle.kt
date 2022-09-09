@@ -1,4 +1,4 @@
-package com.mgchoi.smartportfolio
+package com.mgchoi.smartportfolio.model
 
 enum class ViewStyle(val rawValue: Int) {
     TIMELINE(0), MESSAGE(1), CARD(2);

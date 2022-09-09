@@ -9,7 +9,7 @@ import android.widget.CheckBox
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.mgchoi.smartportfolio.R
-import com.mgchoi.smartportfolio.ViewStyle
+import com.mgchoi.smartportfolio.model.ViewStyle
 import com.mgchoi.smartportfolio.WebViewActivity
 import com.mgchoi.smartportfolio.databinding.RowCardBinding
 import com.mgchoi.smartportfolio.databinding.RowMessageBinding
