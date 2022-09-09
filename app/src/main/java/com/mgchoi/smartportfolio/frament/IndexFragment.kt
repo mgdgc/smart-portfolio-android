@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.mgchoi.smartportfolio.MainActivity
 import com.mgchoi.smartportfolio.R
 import com.mgchoi.smartportfolio.databinding.FragmentIndexBinding
 
@@ -31,6 +32,8 @@ class IndexFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        requireActivity().setTitle(R.string.app_name)
+        val activity = requireActivity() as MainActivity
+        activity.setToolbarText(getString(R.string.app_name))
+        activity.setToolbarImage()
     }
 }

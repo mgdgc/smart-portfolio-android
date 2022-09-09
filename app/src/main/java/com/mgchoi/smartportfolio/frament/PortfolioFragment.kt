@@ -1,15 +1,17 @@
 package com.mgchoi.smartportfolio.frament
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.mgchoi.smartportfolio.MainActivity
 import com.mgchoi.smartportfolio.adapter.PortfolioAdapter
 import com.mgchoi.smartportfolio.databinding.FragmentPortfolioBinding
 import com.mgchoi.smartportfolio.db.PortfolioDAO
 import com.mgchoi.smartportfolio.model.Member
+import com.mgchoi.smartportfolio.tool.ProfileImageManager
 
 class PortfolioFragment(private val member: Member) : Fragment() {
 
@@ -32,7 +34,16 @@ class PortfolioFragment(private val member: Member) : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        requireActivity().title = member.name
+
+        // Set Image & Text for MainActivity
+        val activity = requireActivity() as MainActivity
+        activity.setToolbarText(member.name)
+        val manager = ProfileImageManager(requireContext())
+        val profileImage = member.image?.let { manager.read(it) }
+            ?: manager.defaultProfileImage(member.name)
+
+        activity.setToolbarImage(member, profileImage)
+
         initData()
     }
 

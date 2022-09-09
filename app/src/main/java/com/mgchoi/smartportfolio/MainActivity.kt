@@ -1,8 +1,10 @@
 package com.mgchoi.smartportfolio
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.mgchoi.smartportfolio.adapter.MainAdapter
@@ -11,6 +13,7 @@ import com.mgchoi.smartportfolio.databinding.HeaderNavMainBinding
 import com.mgchoi.smartportfolio.frament.IndexFragment
 import com.mgchoi.smartportfolio.frament.PortfolioFragment
 import com.mgchoi.smartportfolio.model.Member
+import com.mgchoi.smartportfolio.model.ViewStyle
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24)
+        supportActionBar?.title = ""
     }
 
     private fun initView() {
@@ -130,11 +134,11 @@ class MainActivity : AppCompatActivity() {
         // TODO: remove after
         data.addAll(
             arrayListOf(
-                Member(1, "1", 1, "1", ViewStyle.TIMELINE, true),
-                Member(2, "2", 2, "2", ViewStyle.MESSAGE, true),
-                Member(3, "3", 3, "3", ViewStyle.TIMELINE, true),
-                Member(4, "4", 4, "4", ViewStyle.CARD, true),
-                Member(5, "5", 5, "5", ViewStyle.MESSAGE, true)
+                Member(1, "1", null, "1", ViewStyle.TIMELINE, true),
+                Member(2, "2", null, "2", ViewStyle.MESSAGE, true),
+                Member(3, "3", null, "3", ViewStyle.TIMELINE, true),
+                Member(4, "4", null, "4", ViewStyle.CARD, true),
+                Member(5, "5", null, "5", ViewStyle.MESSAGE, true)
             )
         )
 
@@ -147,7 +151,12 @@ class MainActivity : AppCompatActivity() {
         // Portfolio menu
         val portfolioGroup = binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_portfolio)
         for (i in this.data.indices) {
-            portfolioGroup.add(0, (ACTION_PORTFOLIO + this.data[i].id), 0, "${i + 1}. ${data[i].name}")
+            portfolioGroup.add(
+                0,
+                (ACTION_PORTFOLIO + this.data[i].id),
+                0,
+                "${i + 1}. ${data[i].name}"
+            )
         }
 
         // Application menu
@@ -179,6 +188,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun setPage(page: Int) {
         binding.pagerMain.currentItem = page % adapter.itemCount
+    }
+
+    fun setToolbarImage(member: Member? = null, image: Bitmap? = null) {
+        if (member == null || image == null) {
+            binding.imgToolbarMain.visibility = View.GONE
+        } else {
+            binding.imgToolbarMain.setImageBitmap(image)
+            binding.imgToolbarMain.visibility = View.VISIBLE
+            binding.imgToolbarMain.setOnClickListener {
+
+            }
+        }
+    }
+
+    fun setToolbarText(text: String) {
+        binding.txtToolbarMain.text = text
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
