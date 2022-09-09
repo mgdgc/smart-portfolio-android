@@ -43,19 +43,38 @@
 
                     </TextView>
 
-                    <ImageView
-                        android:id="@+id/img_toolbar_main"
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_toolbar_main"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_gravity="center|end"
                         android:layout_marginEnd="16dp"
-                        android:background="@drawable/bg_profile"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:padding="2dp"
-                        android:src="@drawable/ic_avatar_04">
+                        app:cardCornerRadius="18dp"
+                        app:cardElevation="0dp">
 
-                    </ImageView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_margin="2dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="0dp"
+                            app:cardUseCompatPadding="false">
+
+                            <ImageView
+                                android:id="@+id/img_toolbar_main"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/bg_profile"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_avatar_04">
+
+                            </ImageView>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </androidx.cardview.widget.CardView>
 
                 </FrameLayout>
 
