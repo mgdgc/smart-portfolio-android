@@ -1,11 +1,8 @@
 package com.mgchoi.smartportfolio.db
 
-import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.mgchoi.smartportfolio.ViewStyle
-import com.mgchoi.smartportfolio.model.Member
 import com.mgchoi.smartportfolio.value.DBName
 
 class MemberDBHelper(private val context: Context) : SQLiteOpenHelper(context, DBName.name, null, 1) {
