@@ -3,7 +3,6 @@ package com.mgchoi.smartportfolio.tool
 import android.content.Context
 import com.google.gson.Gson
 import com.mgchoi.smartportfolio.db.MemberDAO
-import com.mgchoi.smartportfolio.db.MemberDBHelper
 import com.mgchoi.smartportfolio.db.PortfolioDAO
 import com.mgchoi.smartportfolio.model.Member
 import com.mgchoi.smartportfolio.model.Portfolio
