@@ -1,22 +1,20 @@
 package com.mgchoi.smartportfolio
 
+import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.mgchoi.smartportfolio.adapter.PortfolioAdapter
+import com.mgchoi.smartportfolio.adapter.PortfolioEditAdapter
 import com.mgchoi.smartportfolio.adapter.PortfolioEditRequest
 import com.mgchoi.smartportfolio.adapter.ProfileEditRequest
 import com.mgchoi.smartportfolio.databinding.ActivityPortfolioManageBinding
@@ -35,7 +33,7 @@ class PortfolioManageActivity : AppCompatActivity(), ProfileEditRequest, Portfol
     }
 
     private lateinit var binding: ActivityPortfolioManageBinding
-    private lateinit var adapter: PortfolioAdapter
+    private lateinit var adapter: PortfolioEditAdapter
     private lateinit var member: Member
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,8 +46,9 @@ class PortfolioManageActivity : AppCompatActivity(), ProfileEditRequest, Portfol
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         initIntentData()
-        initView()
         initRecyclerView()
+        initView()
+        initData()
 
     }
 
@@ -73,10 +72,19 @@ class PortfolioManageActivity : AppCompatActivity(), ProfileEditRequest, Portfol
     }
 
     private fun initRecyclerView() {
-        adapter = PortfolioAdapter(this, member)
+        adapter = PortfolioEditAdapter(this, member)
+        adapter.portfolioEditRequest = this
+        adapter.profileEditRequest = this
 
         binding.rvManage.adapter = adapter
         binding.rvManage.layoutManager = LinearLayoutManager(this)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun initData() {
+        val dao = PortfolioDAO(this)
+        adapter.data.addAll(dao.selectAll(member.id))
+        adapter.notifyDataSetChanged()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

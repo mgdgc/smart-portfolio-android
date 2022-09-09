@@ -34,13 +34,16 @@ class PortfolioEditViewHolder(
         binding.txtRowPortfolioEdit.setOnClickListener { onEditRequest?.let { it(false) } }
         binding.txtRowPortfolioDelete.setOnClickListener { onEditRequest?.let { it(true) } }
 
+
         CoroutineScope(Dispatchers.IO).launch {
             val getter = OGTagImageGetter()
             val url = getter.getOGImageUrl(portfolio.url) ?: return@launch
             val image = getter.getImageFromUrl(url) ?: return@launch
 
-            binding.imgRowPortfolioOgtag.visibility = View.VISIBLE
-            binding.imgRowPortfolioOgtag.setImageBitmap(image)
+            CoroutineScope(Dispatchers.Main).launch {
+                binding.imgRowPortfolioOgtag.visibility = View.VISIBLE
+                binding.imgRowPortfolioOgtag.setImageBitmap(image)
+            }
         }
 
     }

@@ -181,12 +181,14 @@ class MainActivity : AppCompatActivity() {
 
     fun setToolbarImage(member: Member? = null, image: Bitmap? = null) {
         if (member == null || image == null) {
-            binding.imgToolbarMain.visibility = View.GONE
+            binding.cardToolbarMain.visibility = View.GONE
         } else {
+            binding.cardToolbarMain.visibility = View.VISIBLE
             binding.imgToolbarMain.setImageBitmap(image)
-            binding.imgToolbarMain.visibility = View.VISIBLE
             binding.imgToolbarMain.setOnClickListener {
-
+                val intent = Intent(this, PortfolioManageActivity::class.java)
+                intent.putExtra(PortfolioManageActivity.EXTRA_MEMBER, member)
+                startActivity(intent)
             }
         }
     }
