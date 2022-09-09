@@ -72,8 +72,8 @@ class PortfolioEditAdapter(private val context: Context, private val member: Mem
             is PortfolioEditViewHolder -> {
                 val index = position - 1
                 holder.onEditRequest = { delete ->
-                    if (delete) this.portfolioEditRequest?.onDeleteRequest(index, position, data[position])
-                    else this.portfolioEditRequest?.onEditRequest(index, position, data[position])
+                    if (delete) this.portfolioEditRequest?.onDeleteRequest(index, position, data[index])
+                    else this.portfolioEditRequest?.onEditRequest(index, position, data[index])
 
                     notifyItemChanged(position)
                 }
