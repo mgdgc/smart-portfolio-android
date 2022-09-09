@@ -19,6 +19,7 @@
     <color name="bg_primary">#0A0C0E</color>
     <color name="bg_secondary">#1A1B1D</color>
     <color name="bg_tertiary">#38393B</color>
+    <color name="bg_destructive">#EF5350</color>
     <color name="text_primary">#DEffffff</color>
     <color name="text_secondary">#BFFFFFFF</color>
     <color name="text_tertiary">#ADFFFFFF</color>

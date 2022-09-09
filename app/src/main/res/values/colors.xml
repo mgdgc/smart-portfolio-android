@@ -5,6 +5,7 @@
     <color name="color_secondary">#66BB6A</color>
     <color name="color_secondary_variant">#43A047</color>
     <color name="black">#FF000000</color>
+    <color name="black_30">#4D000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
 
@@ -22,6 +23,7 @@
     <color name="bg_primary">#FFFFFF</color>
     <color name="bg_secondary">#EFF1F6</color>
     <color name="bg_tertiary">#E1E3E8</color>
+    <color name="bg_destructive">#F44336</color>
     <color name="text_primary">#DE000000</color>
     <color name="text_secondary">#99000000</color>
     <color name="text_tertiary">#66000000</color>
