@@ -1,0 +1,26 @@
+[
+  {
+    "id": 0,
+    "name": "최명근",
+    "image": null,
+    "url": "https://mgchoi.com",
+    "viewStyle": 1,
+    "destroyable": false
+  },
+  {
+    "id": 1,
+    "name": "최명근",
+    "image": null,
+    "url": "https://ridsoft.xyz",
+    "viewStyle": 2,
+    "destroyable": false
+  },
+  {
+    "id": 2,
+    "name": "최명근",
+    "image": null,
+    "url": "https://github.com/soc06212",
+    "viewStyle": 3,
+    "destroyable": false
+  }
+]
