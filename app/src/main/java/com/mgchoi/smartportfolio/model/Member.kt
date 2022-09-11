@@ -6,7 +6,7 @@ class Member(
     var id: Int,
     var name: String,
     var image: String?,
-    var url: String,
+    var url: String?,
     var viewStyle: ViewStyle,
     var destroyable: Boolean
 ) : Serializable

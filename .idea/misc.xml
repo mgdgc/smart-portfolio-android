@@ -25,7 +25,9 @@
         <entry key="app/src/main/res/layout/fragment_portfolio.xml" value="0.3808876811594203" />
         <entry key="app/src/main/res/layout/fragment_timeline.xml" value="0.29393115942028986" />
         <entry key="app/src/main/res/layout/header_nav_main.xml" value="0.29393115942028986" />
+        <entry key="app/src/main/res/layout/layout_member_add.xml" value="0.3551993311115794" />
         <entry key="app/src/main/res/layout/layout_portfolio_edit.xml" value="0.3591485507246377" />
+        <entry key="app/src/main/res/layout/layout_portfolio_write.xml" value="0.19630192502532928" />
         <entry key="app/src/main/res/layout/row_card.xml" value="0.29393115942028986" />
         <entry key="app/src/main/res/layout/row_footer.xml" value="0.27219202898550726" />
         <entry key="app/src/main/res/layout/row_message.xml" value="0.29393115942028986" />

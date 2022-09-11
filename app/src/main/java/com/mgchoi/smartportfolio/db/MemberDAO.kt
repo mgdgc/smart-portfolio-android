@@ -29,7 +29,7 @@ class MemberDAO(private val context: Context) {
     fun insert(
         name: String,
         image: String?,
-        url: String,
+        url: String?,
         viewStyle: ViewStyle,
         destroyable: Boolean = true
     ): Boolean {
@@ -138,33 +138,6 @@ class MemberDAO(private val context: Context) {
         }
     }
 
-    fun isDestroyable(id: Int): Boolean {
-        try {
-            val db = MemberDBHelper(context).writableDatabase
-
-            val sql =
-                "SELECT ${MemberDBHelper.COL_DESTROYABLE} FROM ${MemberDBHelper.TABLE_NAME} WHERE id = $id;"
-            val cursor = db.rawQuery(sql, null)
-
-            db.close()
-
-            while (cursor.moveToNext()) {
-                val result = cursor.getInt(5) == 1
-
-                db.close()
-
-                return result
-            }
-
-            db.close()
-
-            return false
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return false
-        }
-    }
-
     fun update(member: Member): Int {
         try {
 
@@ -196,9 +169,7 @@ class MemberDAO(private val context: Context) {
         return try {
             val db = MemberDBHelper(context).writableDatabase
 
-            val result = if (isDestroyable(id)) {
-                db.delete(MemberDBHelper.TABLE_NAME, "id = ?", arrayOf(id.toString()))
-            } else -1
+            val result = db.delete(MemberDBHelper.TABLE_NAME, "id = ?", arrayOf(id.toString()))
 
             db.close()
 

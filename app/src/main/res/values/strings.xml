@@ -32,6 +32,16 @@
     <string name="main_nav_menu_license">오픈소스 라이선스</string>
     <string name="main_nav_menu_info">애플리케이션 정보</string>
     <string name="main_nav_menu_settings">설정</string>
+    <string name="main_nav_submenu_manage">포트폴리오 관리</string>
+    <string name="main_nav_menu_add">포트폴리오 추가</string>
+    <string name="main_nav_menu_remove">포트폴리오 삭제</string>
+    <string name="main_member_add_title">포트폴리오 추가</string>
+    <string name="main_member_add_name">이름</string>
+    <string name="main_member_add_name_hint">프로파일 이름</string>
+    <string name="main_member_add_url">웹</string>
+    <string name="main_member_add_url_hint">URL</string>
+    <string name="main_member_remove_confirm">정말 삭제하시겠습니까?</string>
+    <string name="main_member_remove_not_destroyable">초기 데이터는 삭제할 수 없습니다.</string>
 
     <!--  TimelineViewHolder  -->
     <string name="row_timeline_open_link">Open Link</string>

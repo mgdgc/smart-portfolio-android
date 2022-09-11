@@ -3,17 +3,24 @@ package com.mgchoi.smartportfolio
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import com.google.android.material.snackbar.Snackbar
 import com.mgchoi.smartportfolio.adapter.MainAdapter
 import com.mgchoi.smartportfolio.databinding.ActivityMainBinding
 import com.mgchoi.smartportfolio.databinding.HeaderNavMainBinding
+import com.mgchoi.smartportfolio.databinding.LayoutMemberAddBinding
 import com.mgchoi.smartportfolio.db.MemberDAO
 import com.mgchoi.smartportfolio.frament.IndexFragment
 import com.mgchoi.smartportfolio.frament.PortfolioFragment
 import com.mgchoi.smartportfolio.model.Member
+import com.mgchoi.smartportfolio.model.ViewStyle
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         private const val ACTION_LICENSE = 2001
         private const val ACTION_INFO = 2002
         private const val ACTION_SETTINGS = 2003
+        private const val ACTION_ADD = 2004
+        private const val ACTION_REMOVE = 2005
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -104,9 +113,79 @@ class MainActivity : AppCompatActivity() {
                 )
                 startActivity(intent)
             }
+            ACTION_ADD -> {
+                handleAdd()
+            }
+            ACTION_REMOVE -> {
+                handleRemove()
+            }
         }
 
         true
+    }
+
+    private fun handleAdd() {
+        val addBinding = LayoutMemberAddBinding.inflate(layoutInflater)
+        val dialog = AlertDialog.Builder(this)
+        dialog.setTitle(R.string.main_member_add_title)
+            .setView(addBinding.root)
+            .setPositiveButton(R.string.confirm) { d, _ ->
+                val dao = MemberDAO(this)
+                val member = Member(
+                    0,
+                    addBinding.editTextProfileName.text.toString().trim(),
+                    null,
+                    addBinding.editTextProfileUrl.text.toString().trim(),
+                    ViewStyle.TIMELINE,
+                    true
+                )
+                dao.insert(member)
+                initData()
+                initFragments()
+                d.dismiss()
+            }
+            .setNegativeButton(R.string.cancel) { d, _ ->
+                d.dismiss()
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun handleRemove() {
+        val array = Array(data.size) { data[it].name }
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, array)
+        val dialog = AlertDialog.Builder(this)
+        dialog.setTitle(R.string.main_nav_menu_remove)
+            .setAdapter(adapter) { d, p ->
+                val target = data[p]
+                d.dismiss()
+                if (target.destroyable) {
+                    val confirm = AlertDialog.Builder(this)
+                    confirm.setTitle(target.name)
+                        .setMessage(R.string.main_member_remove_confirm)
+                        .setPositiveButton(R.string.confirm) { dialog, _ ->
+                            dialog.dismiss()
+                            val dao = MemberDAO(this)
+                            dao.delete(target.id)
+                            initData()
+                            initFragments()
+                        }
+                        .setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
+                        .show()
+                } else {
+                    Snackbar.make(
+                        binding.root,
+                        R.string.main_member_remove_not_destroyable,
+                        Snackbar.LENGTH_LONG
+                    )
+                        .setAction(R.string.close) { }
+                        .show()
+                }
+            }
+            .setNegativeButton(R.string.cancel) { d, _ ->
+                d.dismiss()
+            }
+            .show()
     }
 
     private fun initHeaderView() {
@@ -129,9 +208,11 @@ class MainActivity : AppCompatActivity() {
     private fun initData() {
         // Data initialization
         val dao = MemberDAO(this)
+        data.clear()
         data.addAll(dao.selectAll())
 
         // Add menu to navigation drawer
+        binding.navMain.menu.clear()
         // Index menu
         binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_title)
             .add(0, ACTION_INDEX, 0, R.string.main_nav_menu_index)
@@ -147,6 +228,13 @@ class MainActivity : AppCompatActivity() {
                 "${i + 1}. ${data[i].name}"
             )
         }
+
+
+        val portfolioManage = binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_manage)
+        portfolioManage.add(0, ACTION_ADD, 0, R.string.main_nav_menu_add)
+            .setIcon(R.drawable.ic_baseline_add_black_24)
+        portfolioManage.add(0, ACTION_REMOVE, 0, R.string.main_nav_menu_remove)
+            .setIcon(R.drawable.ic_baseline_delete_24)
 
         // Application menu
         val appGroup = binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_app)
