@@ -12,12 +12,14 @@ import com.mgchoi.smartportfolio.R
 import com.mgchoi.smartportfolio.model.ViewStyle
 import com.mgchoi.smartportfolio.WebViewActivity
 import com.mgchoi.smartportfolio.databinding.RowCardBinding
+import com.mgchoi.smartportfolio.databinding.RowFooterBinding
 import com.mgchoi.smartportfolio.databinding.RowMessageBinding
 import com.mgchoi.smartportfolio.databinding.RowTimelineBinding
 import com.mgchoi.smartportfolio.model.Member
 import com.mgchoi.smartportfolio.model.Portfolio
 import com.mgchoi.smartportfolio.value.SharedPreferenceKeys
 import com.mgchoi.smartportfolio.viewholder.CardViewHolder
+import com.mgchoi.smartportfolio.viewholder.FooterViewHolder
 import com.mgchoi.smartportfolio.viewholder.MessageViewHolder
 import com.mgchoi.smartportfolio.viewholder.TimelineViewHolder
 
@@ -48,7 +50,11 @@ class PortfolioAdapter(private val context: Context, private val member: Member)
             CardViewHolder.VIEW_TYPE -> CardViewHolder(
                 RowCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
-            else -> throw Exception("Invalid viewType")
+            else -> FooterViewHolder(
+                RowFooterBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                )
+            )
         }
     }
 
@@ -118,14 +124,18 @@ class PortfolioAdapter(private val context: Context, private val member: Member)
 
     override fun getItemViewType(position: Int): Int {
         super.getItemViewType(position)
-        return when (member.viewStyle) {
-            ViewStyle.TIMELINE -> TimelineViewHolder.VIEW_TYPE
-            ViewStyle.MESSAGE -> MessageViewHolder.VIEW_TYPE
-            ViewStyle.CARD -> CardViewHolder.VIEW_TYPE
+        return if (position < this.data.size) {
+            when (member.viewStyle) {
+                ViewStyle.TIMELINE -> TimelineViewHolder.VIEW_TYPE
+                ViewStyle.MESSAGE -> MessageViewHolder.VIEW_TYPE
+                ViewStyle.CARD -> CardViewHolder.VIEW_TYPE
+            }
+        } else {
+            FooterViewHolder.VIEW_TYPE
         }
     }
 
     override fun getItemCount(): Int {
-        return this.data.size
+        return this.data.size + 1
     }
 }
