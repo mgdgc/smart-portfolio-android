@@ -287,6 +287,7 @@ class MainActivity : AppCompatActivity() {
         binding.txtToolbarMain.text = text
         if (url == null) {
             binding.txtToolbarMainSub.visibility = View.GONE
+            binding.layoutMainToolbar.setOnClickListener { }
         } else {
             binding.txtToolbarMainSub.text = url
             binding.txtToolbarMainSub.visibility = View.VISIBLE
