@@ -58,12 +58,12 @@ class DBManager(private val context: Context) {
 
     fun resetMemberDB() {
         val dao = MemberDAO(context)
-        dao.dropTable()
+        dao.deleteAll()
     }
 
     fun resetPortfolioDB() {
         val dao = PortfolioDAO(context)
-        dao.dropTable()
+        dao.deleteAll()
     }
 
 }

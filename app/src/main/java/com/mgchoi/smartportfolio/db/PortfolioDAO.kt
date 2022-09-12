@@ -3,7 +3,6 @@ package com.mgchoi.smartportfolio.db
 import android.content.ContentValues
 import android.content.Context
 import com.mgchoi.smartportfolio.model.Portfolio
-import java.io.Closeable
 
 class PortfolioDAO(private val context: Context) {
 
@@ -133,5 +132,19 @@ class PortfolioDAO(private val context: Context) {
         db.close()
 
         return result
+    }
+
+    fun deleteAll() {
+        try {
+            val db = PortfolioDBHelper(context).writableDatabase
+
+            val sql = "DELETE FROM ${PortfolioDBHelper.TABLE_NAME}"
+            db.rawQuery(sql, null)
+
+            db.close()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

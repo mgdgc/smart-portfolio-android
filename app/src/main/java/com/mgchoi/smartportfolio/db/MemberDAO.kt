@@ -180,4 +180,18 @@ class MemberDAO(private val context: Context) {
             -1
         }
     }
+
+    fun deleteAll() {
+        try {
+            val db = MemberDBHelper(context).writableDatabase
+
+            val sql = "DELETE FROM ${MemberDBHelper.TABLE_NAME}"
+            db.rawQuery(sql, null)
+
+            db.close()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }
