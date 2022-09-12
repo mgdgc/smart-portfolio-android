@@ -272,6 +272,7 @@ class MainActivity : AppCompatActivity() {
     fun setToolbarImage(member: Member? = null, image: Bitmap? = null) {
         if (member == null || image == null) {
             binding.cardToolbarMain.visibility = View.GONE
+            binding.layoutMainToolbar.setOnClickListener { }
         } else {
             binding.cardToolbarMain.visibility = View.VISIBLE
             binding.imgToolbarMain.setImageBitmap(image)
