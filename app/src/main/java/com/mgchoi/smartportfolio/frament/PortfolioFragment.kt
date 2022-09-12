@@ -37,7 +37,7 @@ class PortfolioFragment(private val member: Member) : Fragment() {
 
         // Set Image & Text for MainActivity
         val activity = requireActivity() as MainActivity
-        activity.setToolbarText(member.name)
+        activity.setToolbarText(member.name, member.url)
         val manager = ProfileImageManager(requireContext())
         val profileImage = member.image?.let { manager.read(it) }
             ?: manager.defaultProfileImage(member.name)

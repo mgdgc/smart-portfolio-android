@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.CheckBox
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +22,7 @@ import com.mgchoi.smartportfolio.frament.IndexFragment
 import com.mgchoi.smartportfolio.frament.PortfolioFragment
 import com.mgchoi.smartportfolio.model.Member
 import com.mgchoi.smartportfolio.model.ViewStyle
+import com.mgchoi.smartportfolio.value.SharedPreferenceKeys
 
 class MainActivity : AppCompatActivity() {
 
@@ -281,8 +283,60 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun setToolbarText(text: String) {
+    fun setToolbarText(text: String, url: String? = null) {
         binding.txtToolbarMain.text = text
+        if (url == null) {
+            binding.txtToolbarMainSub.visibility = View.GONE
+        } else {
+            binding.txtToolbarMainSub.text = url
+            binding.txtToolbarMainSub.visibility = View.VISIBLE
+            binding.layoutMainToolbar.setOnClickListener {
+                openLink(url)
+            }
+        }
+    }
+
+    private fun openLink(url: String) {
+        val pref = getSharedPreferences(SharedPreferenceKeys.PREF_APP, 0)
+        when (pref.getInt(SharedPreferenceKeys.INT_BROWSER, 0)) {
+            0 -> {
+                // Checkbox for remember decision
+                val checkbox = CheckBox(this).apply {
+                    this.setText(R.string.portfolio_browser_remember)
+                }
+
+                // Alert dialog for choosing browser
+                val alert = AlertDialog.Builder(this)
+                alert.setTitle(R.string.portfolio_browser_title)
+                    .setMessage(R.string.portfolio_browser_content)
+                    .setView(checkbox)
+                    .setPositiveButton(R.string.portfolio_browser_chrome) { d, _ ->
+                        pref.edit().putInt(
+                            SharedPreferenceKeys.INT_BROWSER,
+                            if (checkbox.isChecked) 2 else 0
+                        ).apply()
+                        d.dismiss()
+                        WebViewActivity.openAsCustomTab(this, url)
+                    }
+                    .setNegativeButton(R.string.portfolio_browser_internal) { d, _ ->
+                        pref.edit().putInt(
+                            SharedPreferenceKeys.INT_BROWSER,
+                            if (checkbox.isChecked) 1 else 0
+                        ).apply()
+                        d.dismiss()
+                        openLinkAsWebViewActivity(url)
+                    }
+                    .show()
+            }
+            1 -> openLinkAsWebViewActivity(url)
+            2 -> WebViewActivity.openAsCustomTab(this, url)
+        }
+    }
+
+    private fun openLinkAsWebViewActivity(url: String) {
+        val intent = Intent(this, WebViewActivity::class.java)
+        intent.putExtra(WebViewActivity.EXTRA_URL, url)
+        startActivity(intent)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
