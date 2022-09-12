@@ -263,7 +263,7 @@ class MainActivity : AppCompatActivity() {
         setPage(0)
     }
 
-    private fun setPage(page: Int) {
+    fun setPage(page: Int) {
         binding.pagerMain.currentItem = page % adapter.itemCount
     }
 
