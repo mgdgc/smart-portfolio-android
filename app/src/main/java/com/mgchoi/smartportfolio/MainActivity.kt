@@ -12,6 +12,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.contains
 import com.google.android.material.snackbar.Snackbar
 import com.mgchoi.smartportfolio.adapter.MainAdapter
 import com.mgchoi.smartportfolio.databinding.ActivityMainBinding
@@ -50,6 +51,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbarMain)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
         // Initializations
         initNavigationDrawer()
         initView()
@@ -192,7 +197,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initHeaderView() {
         // Attach header view
-        binding.navMain.addHeaderView(headerBinding.root)
+        if (binding.navMain.contains(headerBinding.root)) {
+            binding.navMain.addHeaderView(headerBinding.root)
+        }
 
         // Set listeners
         headerBinding.imgBtnNavClose.setOnClickListener {
