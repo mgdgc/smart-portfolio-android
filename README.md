@@ -56,10 +56,22 @@
 <div>
 <img src="/screenshots/10.png" width="180px"/>
 <img src="/screenshots/11.png" width="180px"/>
-<img src="/screenshots/09.png" width="180px"/>
 <div>
 
 - 타이틀 영역에는 해당 사용자의 프로필이미지, 햄버거 메뉴를 제공한다. 
   * 프로필이미지 선택시 수정 기능을 제공한다.
   * 사진선택화면을 Custom 사진선택화면으로 제공한다.
 - 상세화면의 내용을 추가/수정/삭제 제공한다.
+
+  
+## 내부/외부 웹브라우저
+  
+<div>
+<img src="/screenshots/12.png" width="180px"/>
+<img src="/screenshots/13.png" width="180px"/>
+<img src="/screenshots/14.png" width="180px"/>
+<div>
+
+- 내부 웹브라우저에서 최초이동한 URL을 외부 웹브라우저로 이동하는 기능을 제공한다.
+- (내부) WebView, (외부) Chrome Custom Tab
+  
