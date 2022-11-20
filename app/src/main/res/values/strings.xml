@@ -13,6 +13,10 @@
     <string name="remove">제거</string>
     <string name="edit">수정</string>
 
+    <!--  DrawerLayout  -->
+    <string name="drawer_open">드로어 열기</string>
+    <string name="drawer_close">드로어 닫기</string>
+
     <!--  Manifest  -->
     <string name="label_edit_portfolio">포트폴리오 수정</string>
 

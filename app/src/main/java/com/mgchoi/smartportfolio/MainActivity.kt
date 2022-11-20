@@ -3,17 +3,17 @@ package com.mgchoi.smartportfolio
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
-import android.widget.EditText
-import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.addCallback
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.contains
+import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import com.google.android.material.snackbar.Snackbar
 import com.mgchoi.smartportfolio.adapter.MainAdapter
 import com.mgchoi.smartportfolio.databinding.ActivityMainBinding
@@ -39,8 +39,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var headerBinding: HeaderNavMainBinding
-
     private lateinit var adapter: MainAdapter
 
     private var data: ArrayList<Member> = arrayListOf()
@@ -64,9 +64,33 @@ class MainActivity : AppCompatActivity() {
     private fun initNavigationDrawer() {
         // Display hamburger menu
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowCustomEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24)
+        toggle = ActionBarDrawerToggle(
+            this,
+            binding.drawerMain,
+            R.string.drawer_open,
+            R.string.drawer_close
+        )
+        toggle.syncState()
         supportActionBar?.title = ""
+
+        // On back pressed event
+        val callback = onBackPressedDispatcher.addCallback {
+            binding.drawerMain.closeDrawer(GravityCompat.START)
+        }
+
+        binding.drawerMain.addDrawerListener(object : DrawerListener {
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) = Unit
+            override fun onDrawerStateChanged(newState: Int) = Unit
+
+            override fun onDrawerOpened(drawerView: View) {
+                callback.isEnabled = true
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+                callback.isEnabled = false
+            }
+
+        })
     }
 
     private fun initView() {
@@ -88,45 +112,6 @@ class MainActivity : AppCompatActivity() {
             onNavigationItemSelected(item)
         }
 
-    }
-
-    private val onNavigationItemSelected: ((MenuItem) -> Boolean) = { item ->
-        when (item.itemId) {
-            in ACTION_PORTFOLIO until ACTION_INDEX -> {
-                val memberId = item.itemId - ACTION_PORTFOLIO
-                for (i in 0 until this.data.size) {
-                    if (this.data[i].id == memberId) {
-                        binding.pagerMain.currentItem = i + 1
-                        break
-                    }
-                }
-            }
-            ACTION_INDEX -> {
-                binding.pagerMain.currentItem = 0
-            }
-            ACTION_SETTINGS -> {
-                startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
-            }
-            ACTION_LICENSE -> {
-                startActivity(Intent(this@MainActivity, LicenseActivity::class.java))
-            }
-            ACTION_INFO -> {
-                val intent = Intent(this@MainActivity, SettingsActivity::class.java)
-                intent.putExtra(
-                    SettingsActivity.EXTRA_SCROLL,
-                    SettingsActivity.SettingsFragment.KEY_VERSION
-                )
-                startActivity(intent)
-            }
-            ACTION_ADD -> {
-                handleAdd()
-            }
-            ACTION_REMOVE -> {
-                handleRemove()
-            }
-        }
-
-        true
     }
 
     private fun handleAdd() {
@@ -346,6 +331,45 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private val onNavigationItemSelected: ((MenuItem) -> Boolean) = { item ->
+        when (item.itemId) {
+            in ACTION_PORTFOLIO until ACTION_INDEX -> {
+                val memberId = item.itemId - ACTION_PORTFOLIO
+                for (i in 0 until this.data.size) {
+                    if (this.data[i].id == memberId) {
+                        binding.pagerMain.currentItem = i + 1
+                        break
+                    }
+                }
+            }
+            ACTION_INDEX -> {
+                binding.pagerMain.currentItem = 0
+            }
+            ACTION_SETTINGS -> {
+                startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
+            }
+            ACTION_LICENSE -> {
+                startActivity(Intent(this@MainActivity, LicenseActivity::class.java))
+            }
+            ACTION_INFO -> {
+                val intent = Intent(this@MainActivity, SettingsActivity::class.java)
+                intent.putExtra(
+                    SettingsActivity.EXTRA_SCROLL,
+                    SettingsActivity.SettingsFragment.KEY_VERSION
+                )
+                startActivity(intent)
+            }
+            ACTION_ADD -> {
+                handleAdd()
+            }
+            ACTION_REMOVE -> {
+                handleRemove()
+            }
+        }
+
+        true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
@@ -355,12 +379,4 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onBackPressed() {
-        // Close drawer if opened
-        if (binding.drawerMain.isDrawerOpen(GravityCompat.START)) {
-            binding.drawerMain.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-    }
 }

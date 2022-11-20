@@ -1,0 +1,20 @@
+{
+  "version": 3,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.mgchoi.smartportfolio",
+  "variantName": "release",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "attributes": [],
+      "versionCode": 2022091900,
+      "versionName": "1.0.0-SNAPSHOT01",
+      "outputFile": "app-release.apk"
+    }
+  ],
+  "elementType": "File"
+}

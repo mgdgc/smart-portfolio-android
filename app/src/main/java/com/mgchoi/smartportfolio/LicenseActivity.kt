@@ -1,13 +1,9 @@
 package com.mgchoi.smartportfolio
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.SimpleAdapter
+import androidx.appcompat.app.AppCompatActivity
 import com.mgchoi.smartportfolio.databinding.ActivityLicenseBinding
 import com.mgchoi.smartportfolio.model.License
 
@@ -50,7 +46,7 @@ class LicenseActivity : AppCompatActivity() {
         )
 
         binding.listLicense.adapter = adapter
-        binding.listLicense.setOnItemClickListener { parent, view, position, id ->
+        binding.listLicense.setOnItemClickListener { _, _, position, _ ->
             WebViewActivity.openAsCustomTab(this@LicenseActivity, data[position].url)
         }
     }
