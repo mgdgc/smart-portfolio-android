@@ -43,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:contentDescription="@string/row_portfolio_github_image"
+                android:scaleType="fitCenter"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_row_portfolio_title"

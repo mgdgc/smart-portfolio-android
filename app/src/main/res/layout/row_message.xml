@@ -140,7 +140,9 @@
                 android:id="@+id/img_row_message_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true">
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/row_portfolio_github_image"
+                android:scaleType="fitCenter">
 
             </ImageView>
 
@@ -194,6 +196,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginStart="8dp"
+                    android:contentDescription="@string/row_portfolio_github_image"
                     android:src="@drawable/ic_baseline_open_in_new_24">
 
                 </ImageView>

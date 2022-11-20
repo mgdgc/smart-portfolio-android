@@ -2,8 +2,8 @@ package com.mgchoi.smartportfolio.tool
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.util.Log
 import org.jsoup.Jsoup
-import java.net.HttpURLConnection
 import java.net.URL
 
 class OGTagImageGetter {
@@ -27,21 +27,9 @@ class OGTagImageGetter {
 
     fun getImageFromUrl(urlString: String): Bitmap? {
         try {
-            val url = URL(urlString)
-            val conn = url.openConnection() as HttpURLConnection
+            Log.e("og:image", urlString)
 
-            conn.requestMethod = "GET"
-            conn.connectTimeout = 10000
-            conn.doInput = true
-            conn.doOutput = true
-            conn.useCaches = true
-
-            conn.connect()
-
-            if (conn.responseCode == HttpURLConnection.HTTP_OK) {
-                val istream = conn.inputStream
-                return BitmapFactory.decodeStream(istream)
-            }
+            return BitmapFactory.decodeStream(URL(urlString).openStream())
         } catch (e: Exception) {
             e.printStackTrace()
         }
