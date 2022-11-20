@@ -52,7 +52,7 @@
   - 팀원들의 포트폴리오 UI는 아래 보기형식중 겹치지 않게 표현한다.
   
 ## 포트폴리오 수정 화면
-  
+
 <div>
 <img src="/screenshots/10.png" width="180px"/>
 <img src="/screenshots/11.png" width="180px"/>
