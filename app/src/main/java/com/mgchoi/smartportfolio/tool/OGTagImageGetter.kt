@@ -2,7 +2,6 @@ package com.mgchoi.smartportfolio.tool
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.Log
 import org.jsoup.Jsoup
 import java.net.URL
 
@@ -27,8 +26,6 @@ class OGTagImageGetter {
 
     fun getImageFromUrl(urlString: String): Bitmap? {
         try {
-            Log.e("og:image", urlString)
-
             return BitmapFactory.decodeStream(URL(urlString).openStream())
         } catch (e: Exception) {
             e.printStackTrace()
