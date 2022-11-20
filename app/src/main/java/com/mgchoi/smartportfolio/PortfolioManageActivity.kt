@@ -53,16 +53,23 @@ class PortfolioManageActivity : AppCompatActivity(), ProfileEditRequest, Portfol
     }
 
     private fun initIntentData() {
-        if (intent?.getSerializableExtra(EXTRA_MEMBER) == null) {
+        val member: Member? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent?.getSerializableExtra(EXTRA_MEMBER, Member::class.java)
+        } else {
+            intent?.getSerializableExtra(EXTRA_MEMBER) as Member
+        }
+
+        if (member == null) {
             Toast.makeText(this, R.string.portfolio_manage_error, Toast.LENGTH_LONG)
                 .show()
             this.finish()
         } else {
-            member = intent?.getSerializableExtra(EXTRA_MEMBER) as Member
+            this.member = member
         }
     }
 
     private fun initView() {
+        // 포트폴리오 추가 Floating Action Button OnClickListener 설정
         binding.fabPortfolioManage.setOnClickListener {
             showPortfolioWriteDialog(null) {
                 adapter.data.add(it)
@@ -124,7 +131,12 @@ class PortfolioManageActivity : AppCompatActivity(), ProfileEditRequest, Portfol
     }
 
     override fun onNameEditRequest() {
+        // AlertDialog에 설정할 EditText
         val editText = EditText(this)
+        // 기존 데이터 설정
+        editText.setText(member.name)
+
+        // 이름 변경 AlertDialog 보여주기
         val dialog = AlertDialog.Builder(this)
         dialog.setTitle(R.string.portfolio_edit_name_title)
             .setView(editText)
