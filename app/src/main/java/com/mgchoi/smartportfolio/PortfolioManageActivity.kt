@@ -1,6 +1,7 @@
 package com.mgchoi.smartportfolio
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.graphics.ImageDecoder
 import android.os.Build
@@ -241,5 +242,10 @@ class PortfolioManageActivity : AppCompatActivity(), ProfileEditRequest, Portfol
         Snackbar.make(binding.root, stringRes, Snackbar.LENGTH_LONG)
             .setAction(R.string.confirm) {}
             .show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        setResult(Activity.RESULT_OK)
     }
 }

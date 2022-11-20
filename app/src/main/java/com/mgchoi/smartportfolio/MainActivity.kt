@@ -1,5 +1,6 @@
 package com.mgchoi.smartportfolio
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -8,12 +9,15 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import androidx.activity.addCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.contains
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.snackbar.Snackbar
 import com.mgchoi.smartportfolio.adapter.MainAdapter
 import com.mgchoi.smartportfolio.databinding.ActivityMainBinding
@@ -44,6 +48,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: MainAdapter
 
     private var data: ArrayList<Member> = arrayListOf()
+    private var currentSelectedPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,13 +57,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbarMain)
 
+        initHeaderView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         // Initializations
+        initData()
         initNavigationDrawer()
         initView()
-        initHeaderView()
-        initData()
+        initNavigationMenu()
         initFragments()
 
+        setPage(currentSelectedPosition)
     }
 
     private fun initNavigationDrawer() {
@@ -112,6 +124,13 @@ class MainActivity : AppCompatActivity() {
             onNavigationItemSelected(item)
         }
 
+        binding.pagerMain.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                currentSelectedPosition = position
+            }
+        })
+
     }
 
     private fun handleAdd() {
@@ -131,6 +150,7 @@ class MainActivity : AppCompatActivity() {
                 )
                 dao.insert(member)
                 initData()
+                initNavigationMenu()
                 initFragments()
                 d.dismiss()
             }
@@ -157,7 +177,7 @@ class MainActivity : AppCompatActivity() {
                             dialog.dismiss()
                             val dao = MemberDAO(this)
                             dao.delete(target.id)
-                            initData()
+                            initNavigationMenu()
                             initFragments()
                         }
                         .setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
@@ -202,7 +222,9 @@ class MainActivity : AppCompatActivity() {
         val dao = MemberDAO(this)
         data.clear()
         data.addAll(dao.selectAll())
+    }
 
+    private fun initNavigationMenu() {
         // Add menu to navigation drawer
         binding.navMain.menu.clear()
         // Index menu

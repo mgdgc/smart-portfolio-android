@@ -14,10 +14,21 @@ class MainAdapter(private val activity: FragmentActivity) : FragmentStateAdapter
         this.notifyItemRangeRemoved(0, original)
     }
 
+    fun removeAt(position: Int) {
+        this.fragments.removeAt(position)
+        this.notifyItemRemoved(position)
+    }
+
     fun addFragments(vararg fragments: Fragment) {
         val original = this.fragments.size
         this.fragments.addAll(fragments)
         this.notifyItemRangeInserted(original, fragments.size)
+    }
+
+    fun addFragment(fragment: Fragment, position: Int) {
+        val original = this.fragments.size
+        this.fragments.add(fragment)
+        this.notifyItemInserted(position)
     }
 
     override fun getItemCount(): Int {
