@@ -35,20 +35,34 @@
 
             </TextView>
 
-            <ImageView
-                android:id="@+id/img_row_card_image"
+            <FrameLayout
+                android:id="@+id/layout_row_card_img"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_row_card_title"
-                tools:ignore="ContentDescription">
+                app:layout_constraintTop_toBottomOf="@+id/txt_row_card_title">
 
-            </ImageView>
+                <ProgressBar
+                    android:id="@+id/progress_row_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                </ProgressBar>
+
+                <ImageView
+                    android:id="@+id/img_row_card_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    tools:ignore="ContentDescription">
+
+                </ImageView>
+
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/txt_row_card_content"
@@ -61,7 +75,7 @@
                 android:textSize="14sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/img_row_card_image"
+                app:layout_constraintTop_toBottomOf="@+id/layout_row_card_img"
                 tools:text="Content">
 
             </TextView>

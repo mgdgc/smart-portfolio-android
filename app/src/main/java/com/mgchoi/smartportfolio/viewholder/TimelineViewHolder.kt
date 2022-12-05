@@ -58,14 +58,20 @@ class TimelineViewHolder(private val binding: RowTimelineBinding) :
         CoroutineScope(Dispatchers.IO).launch {
             val manager = OGTagImageGetter()
             val url = manager.getOGImageUrl(portfolio.url)
-            url?.let { urlString ->
-                val image = manager.getImageFromUrl(urlString)
-                image?.let { bitmap ->
+
+            if (url != null) {
+                val image = manager.getImageFromUrl(url)
+                if (image != null) {
                     CoroutineScope(Dispatchers.Main).launch {
-                        binding.cardRowTimelineImage.visibility = View.VISIBLE
-                        binding.imgRowTimelineImage.setImageBitmap(bitmap)
+                        // 이미지 로딩 프로그레스 바 숨기기
+                        binding.progressRowTimeline.visibility = View.GONE
+                        binding.imgRowTimelineImage.setImageBitmap(image)
                     }
+                } else {
+                    binding.cardRowTimelineImage.visibility = View.GONE
                 }
+            } else {
+                binding.cardRowTimelineImage.visibility = View.GONE
             }
         }
     }

@@ -31,14 +31,20 @@ class CardViewHolder(private val binding: RowCardBinding) :
         CoroutineScope(Dispatchers.IO).launch {
             val manager = OGTagImageGetter()
             val url = manager.getOGImageUrl(portfolio.url)
-            url?.let { urlString ->
-                val image = manager.getImageFromUrl(urlString)
-                image?.let { bitmap ->
+
+            if (url != null) {
+                val image = manager.getImageFromUrl(url)
+                if (image != null) {
                     CoroutineScope(Dispatchers.Main).launch {
-                        binding.imgRowCardImage.visibility = View.VISIBLE
-                        binding.imgRowCardImage.setImageBitmap(bitmap)
+                        // 이미지 로딩 프로그레스 바 숨기기
+                        binding.progressRowCard.visibility = View.GONE
+                        binding.imgRowCardImage.setImageBitmap(image)
                     }
+                } else {
+                    binding.layoutRowCardImg.visibility = View.GONE
                 }
+            } else {
+                binding.layoutRowCardImg.visibility = View.GONE
             }
         }
     }

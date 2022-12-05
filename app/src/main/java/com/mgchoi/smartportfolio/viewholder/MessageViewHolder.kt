@@ -31,14 +31,20 @@ class MessageViewHolder(private val binding: RowMessageBinding) :
         CoroutineScope(Dispatchers.IO).launch {
             val manager = OGTagImageGetter()
             val url = manager.getOGImageUrl(portfolio.url)
-            url?.let { urlString ->
-                val image = manager.getImageFromUrl(urlString)
-                image?.let { bitmap ->
+
+            if (url != null) {
+                val image = manager.getImageFromUrl(url)
+                if (image != null) {
                     CoroutineScope(Dispatchers.Main).launch {
-                        binding.cardRowMessageImage.visibility = View.VISIBLE
-                        binding.imgRowMessageImage.setImageBitmap(bitmap)
+                        // 이미지 로딩 프로그레스 바 숨기기
+                        binding.progressRowMessage.visibility = View.GONE
+                        binding.imgRowMessageImage.setImageBitmap(image)
                     }
+                } else {
+                    binding.cardRowMessageImage.visibility = View.GONE
                 }
+            } else {
+                binding.cardRowMessageImage.visibility = View.GONE
             }
         }
     }
