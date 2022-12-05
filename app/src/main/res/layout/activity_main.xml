@@ -54,20 +54,38 @@
 
                         </TextView>
 
-                        <TextView
-                            android:id="@+id/txt_toolbar_main_sub"
+                        <LinearLayout
+                            android:id="@+id/layout_toolbar_main_sub"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="-4dp"
                             android:alpha="0.85"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:textColor="@color/white"
-                            android:textSize="14sp"
-                            android:visibility="visible"
-                            tools:text="subtitle">
+                            android:gravity="start|center"
+                            android:orientation="horizontal">
 
-                        </TextView>
+                            <TextView
+                                android:id="@+id/txt_toolbar_main_sub"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                android:visibility="visible"
+                                tools:text="subtitle">
+
+                            </TextView>
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_marginStart="4dp"
+                                android:src="@drawable/ic_baseline_open_in_new_24"
+                                tools:ignore="ContentDescription">
+
+                            </ImageView>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
