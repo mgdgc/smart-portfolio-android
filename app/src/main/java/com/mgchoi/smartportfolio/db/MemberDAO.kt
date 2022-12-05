@@ -2,10 +2,12 @@ package com.mgchoi.smartportfolio.db
 
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.core.database.getStringOrNull
 import com.mgchoi.smartportfolio.model.ViewStyle
 import com.mgchoi.smartportfolio.model.Member
+import com.mgchoi.smartportfolio.value.IntentFilterActions
 
 class MemberDAO(private val context: Context) {
 
@@ -21,8 +23,6 @@ class MemberDAO(private val context: Context) {
     }
 
     fun insert(member: Member): Boolean {
-
-        Log.e(member.viewStyle.toString(), "It's me")
         return insert(member.name, member.image, member.url, member.viewStyle, member.destroyable)
     }
 
@@ -47,6 +47,10 @@ class MemberDAO(private val context: Context) {
         try {
             val result = db.insert(MemberDBHelper.TABLE_NAME, null, contentValues) != -1L
             db.close()
+
+            // Member가 추가된 것을 broadcast
+            context.sendBroadcast(Intent(IntentFilterActions.ACTION_MEMBER_ADDED))
+
             return result
         } catch (e: Exception) {
             e.printStackTrace()
@@ -168,10 +172,14 @@ class MemberDAO(private val context: Context) {
     fun delete(id: Int): Int {
         return try {
             val db = MemberDBHelper(context).writableDatabase
-
             val result = db.delete(MemberDBHelper.TABLE_NAME, "id = ?", arrayOf(id.toString()))
-
             db.close()
+
+            // Member가 제거된 것을 broadcast
+            val intent = Intent(IntentFilterActions.ACTION_MEMBER_REMOVED).apply {
+                putExtra(MemberDBHelper.COL_ID, id)
+            }
+            context.sendBroadcast(intent)
 
             result
 
@@ -189,6 +197,9 @@ class MemberDAO(private val context: Context) {
             db.rawQuery(sql, null)
 
             db.close()
+
+            // Member가 제거된 것을 broadcast
+            context.sendBroadcast(Intent(IntentFilterActions.ACTION_MEMBER_REMOVED))
 
         } catch (e: Exception) {
             e.printStackTrace()

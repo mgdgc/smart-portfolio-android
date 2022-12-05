@@ -9,6 +9,7 @@ class MemberDBHelper(private val context: Context) : SQLiteOpenHelper(context, D
 
     companion object {
         const val TABLE_NAME = "Member"
+        const val COL_ID = "id"
         const val COL_NAME = "name"
         const val COL_IMAGE = "image"
         const val COL_URL = "url"

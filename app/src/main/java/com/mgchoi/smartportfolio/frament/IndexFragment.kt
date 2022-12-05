@@ -1,5 +1,9 @@
 package com.mgchoi.smartportfolio.frament
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +16,7 @@ import com.mgchoi.smartportfolio.R
 import com.mgchoi.smartportfolio.databinding.FragmentIndexBinding
 import com.mgchoi.smartportfolio.db.MemberDAO
 import com.mgchoi.smartportfolio.model.Member
+import com.mgchoi.smartportfolio.value.IntentFilterActions
 
 class IndexFragment : Fragment() {
 
@@ -23,10 +28,12 @@ class IndexFragment : Fragment() {
     private lateinit var binding: FragmentIndexBinding
 
     private var data: ArrayList<Member> = arrayListOf()
+    private var receiver: BroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentIndexBinding.inflate(layoutInflater)
+        initBroadcastReceiver()
     }
 
     override fun onCreateView(
@@ -46,6 +53,7 @@ class IndexFragment : Fragment() {
     }
 
     private fun initData() {
+        data.clear()
         val dao = MemberDAO(requireContext())
         val members = dao.selectAll()
         data.addAll(members)
@@ -71,6 +79,29 @@ class IndexFragment : Fragment() {
         binding.lstIndex.adapter = adapter
         binding.lstIndex.setOnItemClickListener { _: AdapterView<*>, _: View, position: Int, _: Long ->
             (requireActivity() as MainActivity).setPage(1 + position)
+        }
+    }
+
+    private fun initBroadcastReceiver() {
+        receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                initData()
+                initListView()
+            }
+        }
+
+        val filter = IntentFilter().apply {
+            addAction(IntentFilterActions.ACTION_MEMBER_ADDED)
+            addAction(IntentFilterActions.ACTION_MEMBER_REMOVED)
+        }
+        requireContext().registerReceiver(receiver, filter)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        receiver?.let {
+            requireContext().unregisterReceiver(it)
+            receiver = null
         }
     }
 }

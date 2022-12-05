@@ -1,7 +1,9 @@
 package com.mgchoi.smartportfolio
 
-import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.MenuItem
@@ -9,15 +11,12 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import androidx.activity.addCallback
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.contains
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
-import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.snackbar.Snackbar
 import com.mgchoi.smartportfolio.adapter.MainAdapter
 import com.mgchoi.smartportfolio.databinding.ActivityMainBinding
@@ -28,6 +27,7 @@ import com.mgchoi.smartportfolio.frament.IndexFragment
 import com.mgchoi.smartportfolio.frament.PortfolioFragment
 import com.mgchoi.smartportfolio.model.Member
 import com.mgchoi.smartportfolio.model.ViewStyle
+import com.mgchoi.smartportfolio.value.IntentFilterActions
 import com.mgchoi.smartportfolio.value.SharedPreferenceKeys
 
 class MainActivity : AppCompatActivity() {
@@ -47,8 +47,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var headerBinding: HeaderNavMainBinding
     private lateinit var adapter: MainAdapter
 
+    // Member가 추가되었을 때 호출되는 브로드캐스트 리시버
+    private var memberAddReceiver: BroadcastReceiver? = null
+
     private var data: ArrayList<Member> = arrayListOf()
-    private var currentSelectedPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,20 +59,48 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbarMain)
 
-        initHeaderView()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        // Initializations
+        // DB에서 Member 데이터 가져오기
         initData()
+        // 네비게이션 헤더 뷰를 네비게이션 드로어에 추가
+        initHeaderView()
+        // 네비게이션 드로어 초기화
         initNavigationDrawer()
+        // 기타 뷰 초기화
         initView()
+        // 네비게이션 메뉴 초기화
+        // 네비게이션 메뉴에 Member가 리스트되어 있으므로 데이터 초기화와 함께 진행되어야 한다
         initNavigationMenu()
+        // Portfolio fragment 초기화
         initFragments()
 
-        setPage(currentSelectedPosition)
+        // 데이터가 수정되었을 때 다시 로드할 수 있는 BroadcastReceiver 등록
+        initReceiver()
+    }
+
+    private fun initData() {
+        // Data initialization
+        val dao = MemberDAO(this)
+        data.clear()
+        data.addAll(dao.selectAll())
+    }
+
+    private fun initHeaderView() {
+        // Attach header view
+        if (!binding.navMain.contains(headerBinding.root)) {
+            binding.navMain.addHeaderView(headerBinding.root)
+        }
+
+        // Set listeners
+        headerBinding.imgBtnNavClose.setOnClickListener {
+            binding.drawerMain.closeDrawer(GravityCompat.START)
+        }
+
+        headerBinding.imgBtnNavLogout.setOnClickListener {
+            val intent = Intent(this@MainActivity, LoginActivity::class.java)
+            startActivity(intent)
+            this@MainActivity.finish()
+        }
+
     }
 
     private fun initNavigationDrawer() {
@@ -85,15 +115,15 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
         supportActionBar?.title = ""
 
-        // On back pressed event
+        // 뒤로 버튼을 눌렀을 때 네비게이션 드로어가 열려 있으면 네비게이션 드로어를 먼저 닫음
         val callback = onBackPressedDispatcher.addCallback {
             binding.drawerMain.closeDrawer(GravityCompat.START)
         }
 
+        // 드로어가 열렸는지 여부에 따라 onBackPressed callback을 활성화하거나 비활성화
         binding.drawerMain.addDrawerListener(object : DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) = Unit
             override fun onDrawerStateChanged(newState: Int) = Unit
-
             override fun onDrawerOpened(drawerView: View) {
                 callback.isEnabled = true
             }
@@ -106,31 +136,62 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        // Set listeners
+        // Viewpager 이전 버튼
         binding.imgBtnMainPrev.setOnClickListener {
             if (binding.pagerMain.currentItem > 0) {
                 binding.pagerMain.currentItem--
             }
         }
 
+        // Viewpager 다음 버튼
         binding.imgBtnMainNext.setOnClickListener {
             if (binding.pagerMain.currentItem < adapter.itemCount) {
                 binding.pagerMain.currentItem++
             }
         }
 
+        // NavigationItemSelectedListener, 함수로 구현하여 분리
         binding.navMain.setNavigationItemSelectedListener { item ->
             binding.drawerMain.closeDrawer(GravityCompat.START)
             onNavigationItemSelected(item)
         }
 
-        binding.pagerMain.registerOnPageChangeCallback(object : OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                currentSelectedPosition = position
-            }
-        })
+    }
 
+    private fun initNavigationMenu() {
+        // Add menu to navigation drawer
+        binding.navMain.menu.clear()
+        // Index menu
+        binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_title)
+            .add(0, ACTION_INDEX, 0, R.string.main_nav_menu_index)
+            .setIcon(R.drawable.ic_round_home_24)
+
+        // Portfolio menu
+        val portfolioGroup = binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_portfolio)
+        for (i in this.data.indices) {
+            portfolioGroup.add(
+                0,
+                (ACTION_PORTFOLIO + this.data[i].id),
+                0,
+                "${i + 1}. ${data[i].name}"
+            )
+        }
+
+        // Member 추가 혹은 제거 메뉴
+        val portfolioManage = binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_manage)
+        portfolioManage.add(0, ACTION_ADD, 0, R.string.main_nav_menu_add)
+            .setIcon(R.drawable.ic_baseline_add_black_24)
+        portfolioManage.add(0, ACTION_REMOVE, 0, R.string.main_nav_menu_remove)
+            .setIcon(R.drawable.ic_baseline_delete_24)
+
+        // Application menu
+        val appGroup = binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_app)
+        appGroup.add(0, ACTION_SETTINGS, 0, R.string.main_nav_menu_settings)
+            .setIcon(R.drawable.ic_baseline_settings_24)
+        appGroup.add(0, ACTION_LICENSE, 0, R.string.main_nav_menu_license)
+            .setIcon(R.drawable.ic_round_folder_open_24)
+        appGroup.add(0, ACTION_INFO, 0, R.string.main_nav_menu_info)
+            .setIcon(R.drawable.ic_round_info_24)
     }
 
     private fun handleAdd() {
@@ -198,68 +259,6 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun initHeaderView() {
-        // Attach header view
-        if (!binding.navMain.contains(headerBinding.root)) {
-            binding.navMain.addHeaderView(headerBinding.root)
-        }
-
-        // Set listeners
-        headerBinding.imgBtnNavClose.setOnClickListener {
-            binding.drawerMain.closeDrawer(GravityCompat.START)
-        }
-
-        headerBinding.imgBtnNavLogout.setOnClickListener {
-            val intent = Intent(this@MainActivity, LoginActivity::class.java)
-            startActivity(intent)
-            this@MainActivity.finish()
-        }
-
-    }
-
-    private fun initData() {
-        // Data initialization
-        val dao = MemberDAO(this)
-        data.clear()
-        data.addAll(dao.selectAll())
-    }
-
-    private fun initNavigationMenu() {
-        // Add menu to navigation drawer
-        binding.navMain.menu.clear()
-        // Index menu
-        binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_title)
-            .add(0, ACTION_INDEX, 0, R.string.main_nav_menu_index)
-            .setIcon(R.drawable.ic_round_home_24)
-
-        // Portfolio menu
-        val portfolioGroup = binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_portfolio)
-        for (i in this.data.indices) {
-            portfolioGroup.add(
-                0,
-                (ACTION_PORTFOLIO + this.data[i].id),
-                0,
-                "${i + 1}. ${data[i].name}"
-            )
-        }
-
-
-        val portfolioManage = binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_manage)
-        portfolioManage.add(0, ACTION_ADD, 0, R.string.main_nav_menu_add)
-            .setIcon(R.drawable.ic_baseline_add_black_24)
-        portfolioManage.add(0, ACTION_REMOVE, 0, R.string.main_nav_menu_remove)
-            .setIcon(R.drawable.ic_baseline_delete_24)
-
-        // Application menu
-        val appGroup = binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_app)
-        appGroup.add(0, ACTION_SETTINGS, 0, R.string.main_nav_menu_settings)
-            .setIcon(R.drawable.ic_baseline_settings_24)
-        appGroup.add(0, ACTION_LICENSE, 0, R.string.main_nav_menu_license)
-            .setIcon(R.drawable.ic_round_folder_open_24)
-        appGroup.add(0, ACTION_INFO, 0, R.string.main_nav_menu_info)
-            .setIcon(R.drawable.ic_round_info_24)
-    }
-
     private fun initFragments() {
         // Initialize adapter
         adapter = MainAdapter(this)
@@ -274,11 +273,10 @@ class MainActivity : AppCompatActivity() {
         // Attach indicator
         binding.indicatorMain.attachTo(binding.pagerMain)
 
-        setPage(0)
     }
 
     fun setPage(page: Int) {
-        binding.pagerMain.currentItem = page % adapter.itemCount
+        binding.pagerMain.currentItem = page
     }
 
     fun setToolbarImage(member: Member? = null, image: Bitmap? = null) {
@@ -299,11 +297,11 @@ class MainActivity : AppCompatActivity() {
     fun setToolbarText(text: String, url: String? = null) {
         binding.txtToolbarMain.text = text
         if (url == null) {
-            binding.txtToolbarMainSub.visibility = View.GONE
+            binding.layoutToolbarMainSub.visibility = View.GONE
             binding.layoutMainToolbar.setOnClickListener { }
         } else {
             binding.txtToolbarMainSub.text = url
-            binding.txtToolbarMainSub.visibility = View.VISIBLE
+            binding.layoutToolbarMainSub.visibility = View.VISIBLE
             binding.layoutMainToolbar.setOnClickListener {
                 openLink(url)
             }
@@ -401,4 +399,34 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun initReceiver() {
+        // 멤버가 추가되거나 삭제되었을 때 데이터 다시 로드
+        memberAddReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                // 멤버가 추가되거나 삭제되었을 때만 동작
+                if (intent?.action == IntentFilterActions.ACTION_MEMBER_ADDED ||
+                    intent?.action == IntentFilterActions.ACTION_MEMBER_REMOVED
+                ) {
+                    initData()
+                    initFragments()
+                    initNavigationMenu()
+                }
+            }
+        }
+
+        val filter = IntentFilter().apply {
+            addAction(IntentFilterActions.ACTION_MEMBER_ADDED)
+            addAction(IntentFilterActions.ACTION_MEMBER_REMOVED)
+        }
+        registerReceiver(memberAddReceiver, filter)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Activity가 종료되면 Broadcast receiver 제거
+        memberAddReceiver?.let {
+            unregisterReceiver(it)
+            memberAddReceiver = null
+        }
+    }
 }

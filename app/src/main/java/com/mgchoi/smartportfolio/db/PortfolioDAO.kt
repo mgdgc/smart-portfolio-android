@@ -2,7 +2,9 @@ package com.mgchoi.smartportfolio.db
 
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import com.mgchoi.smartportfolio.model.Portfolio
+import com.mgchoi.smartportfolio.value.IntentFilterActions
 
 class PortfolioDAO(private val context: Context) {
 
@@ -24,6 +26,10 @@ class PortfolioDAO(private val context: Context) {
 
         val result = db.insert(PortfolioDBHelper.TABLE_NAME, null, contentValues) != -1L
         db.close()
+
+        // Portfolio가 추가된 것을 broadcast
+        context.sendBroadcast(Intent(IntentFilterActions.ACTION_PORTFOLIO_ADDED))
+
         return result
     }
 
@@ -117,6 +123,9 @@ class PortfolioDAO(private val context: Context) {
 
         db.close()
 
+        // Portfolio가 수정된 것을 broadcast
+        context.sendBroadcast(Intent(IntentFilterActions.ACTION_PORTFOLIO_UPDATE))
+
         return result
     }
 
@@ -131,6 +140,12 @@ class PortfolioDAO(private val context: Context) {
 
         db.close()
 
+        // Portfolio가 제거된 것을 broadcast
+        val intent = Intent(IntentFilterActions.ACTION_PORTFOLIO_REMOVED).apply {
+            putExtra(PortfolioDBHelper.COL_ID, id)
+        }
+        context.sendBroadcast(intent)
+
         return result
     }
 
@@ -142,6 +157,9 @@ class PortfolioDAO(private val context: Context) {
             db.rawQuery(sql, null)
 
             db.close()
+
+            // Portfolio가 제거된 것을 broadcast
+            context.sendBroadcast(Intent(IntentFilterActions.ACTION_PORTFOLIO_REMOVED))
 
         } catch (e: Exception) {
             e.printStackTrace()
