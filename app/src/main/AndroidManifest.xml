@@ -22,10 +22,12 @@
             android:label="@string/label_edit_portfolio" />
         <activity
             android:name=".LicenseActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/main_nav_menu_license" />
         <activity
             android:name=".SettingsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/main_nav_menu_settings" />
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
