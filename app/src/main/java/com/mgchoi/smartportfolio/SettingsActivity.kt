@@ -1,7 +1,7 @@
 package com.mgchoi.smartportfolio
 
 import android.content.Intent
-import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PackageInfoFlags
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
@@ -10,7 +10,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreference
 import androidx.preference.SwitchPreferenceCompat
 import com.mgchoi.smartportfolio.databinding.ActivitySettingsBinding
 import com.mgchoi.smartportfolio.tool.DBManager
@@ -82,21 +81,43 @@ class SettingsActivity : AppCompatActivity() {
 
             // DB reset
             findPreference<Preference>(KEY_RESET)?.setOnPreferenceClickListener {
-                val manager = DBManager(requireContext())
-                manager.resetDB()
+                AlertDialog.Builder(requireContext()).apply {
+                    setTitle(R.string.settings_db_reset)
+                        .setMessage(R.string.settings_db_reset_dialog)
+                        .setPositiveButton(R.string.cancel) { d, _ -> d.dismiss() } // 실수 삭제 방지를 위해 Positive/ Negative 반대로 사용
+                        .setNegativeButton(R.string.reset) { d, i ->
+                            val manager = DBManager(requireContext())
+                            manager.resetDB()
+                            d.dismiss()
+                        }
+                        .show()
+                }
                 true
             }
 
             // DB init
             findPreference<Preference>(KEY_INIT)?.setOnPreferenceClickListener {
-                val manager = DBManager(requireContext())
-                manager.initDB()
+                AlertDialog.Builder(requireContext()).apply {
+                    setTitle(R.string.settings_db_init)
+                        .setMessage(R.string.settings_db_init_dialog)
+                        .setNegativeButton(R.string.cancel) { d, _ -> d.dismiss() }
+                        .setPositiveButton(R.string.confirm) { d, i ->
+                            val manager = DBManager(requireContext())
+                            manager.initDB()
+                            d.dismiss()
+                        }
+                        .show()
+                }
                 true
             }
 
             // Version and build
             val pm = requireContext().packageManager
-            val info = pm.getPackageInfo(requireContext().packageName, 0)
+            val info = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                pm.getPackageInfo(requireContext().packageName, PackageInfoFlags.of(0))
+            } else {
+                pm.getPackageInfo(requireContext().packageName, 0)
+            }
             val version = info.versionName
             val build = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 info.longVersionCode.toString()

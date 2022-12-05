@@ -12,6 +12,7 @@
     <string name="delete">삭제</string>
     <string name="remove">제거</string>
     <string name="edit">수정</string>
+    <string name="reset">초기화</string>
 
     <!--  DrawerLayout  -->
     <string name="drawer_open">드로어 열기</string>
@@ -90,6 +91,8 @@
     <string name="settings_developer_github">Github</string>
     <string name="settings_developer_portfolio">포트폴리오</string>
     <string name="settings_github">Github</string>
+    <string name="settings_db_reset_dialog">저장된 모든 DB가 삭제됩니다. (초기 DB 포함)\n\n초기화하시겠습니까?</string>
+    <string name="settings_db_init_dialog">최초 DB를 설치하시겠습니까?</string>
 
     <!--  PortfolioManageActivity  -->
     <string name="portfolio_manage_error">데이터가 없습니다.</string>
@@ -114,8 +117,6 @@
     <string name="row_profile_view_style">뷰 스타일</string>
     <string name="row_card_open_link">Open Link</string>
 
-    <!-- Auto Generated Strings -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="main_portfolio_list">포트폴리오 목록</string>
 
 </resources>
