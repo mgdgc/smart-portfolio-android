@@ -114,7 +114,7 @@ class PortfolioDAO(private val context: Context) {
         contentValues.put(PortfolioDBHelper.COL_CONTENT, portfolio.content)
         contentValues.put(PortfolioDBHelper.COL_URL, portfolio.url)
 
-        val result =  db.update(
+        val result = db.update(
             PortfolioDBHelper.TABLE_NAME,
             contentValues,
             "id = ?",
@@ -150,19 +150,18 @@ class PortfolioDAO(private val context: Context) {
     }
 
     fun deleteAll() {
-        try {
-            val db = PortfolioDBHelper(context).writableDatabase
+        val db = PortfolioDBHelper(context).writableDatabase
 
-            val sql = "DELETE FROM ${PortfolioDBHelper.TABLE_NAME}"
-            db.rawQuery(sql, null)
+        // 데이터 모두 삭제
+        db.delete(PortfolioDBHelper.TABLE_NAME, null, null)
 
-            db.close()
+        // AUTOINCREMENT 초기화
+        db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = '${PortfolioDBHelper.TABLE_NAME}'; ")
 
-            // Portfolio가 제거된 것을 broadcast
-            context.sendBroadcast(Intent(IntentFilterActions.ACTION_PORTFOLIO_REMOVED))
+        db.close()
 
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        // Portfolio가 제거된 것을 broadcast
+        val intent = Intent(IntentFilterActions.ACTION_PORTFOLIO_REMOVED)
+        context.sendBroadcast(intent)
     }
 }

@@ -34,7 +34,6 @@ class MemberDAO(private val context: Context) {
         destroyable: Boolean = true
     ): Boolean {
 
-        Log.e("여기다 이 등신아", "It's me")
         val db = MemberDBHelper(context).writableDatabase
 
         val contentValues = ContentValues()
@@ -190,19 +189,18 @@ class MemberDAO(private val context: Context) {
     }
 
     fun deleteAll() {
-        try {
-            val db = MemberDBHelper(context).writableDatabase
+        val db = MemberDBHelper(context).writableDatabase
 
-            val sql = "DELETE FROM ${MemberDBHelper.TABLE_NAME}"
-            db.rawQuery(sql, null)
+        // 데이터 모두 삭제
+        db.delete(MemberDBHelper.TABLE_NAME, null, null)
 
-            db.close()
+        // AUTOINCREMENT 초기화
+        db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = '${MemberDBHelper.TABLE_NAME}'; ")
 
-            // Member가 제거된 것을 broadcast
-            context.sendBroadcast(Intent(IntentFilterActions.ACTION_MEMBER_REMOVED))
+        db.close()
 
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        // Member가 제거된 것을 broadcast
+        val intent = Intent(IntentFilterActions.ACTION_MEMBER_REMOVED)
+        context.sendBroadcast(intent)
     }
 }
