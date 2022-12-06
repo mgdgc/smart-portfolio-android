@@ -60,4 +60,19 @@
 
     </PreferenceCategory>
 
+    <!--  Navigation Bar를 침범하지 않도록 Footer 추가  -->
+    <PreferenceCategory
+        app:allowDividerAbove="false"
+        app:title="">
+
+        <Preference
+            app:selectable="false"
+            app:title=""/>
+
+        <Preference
+            app:selectable="false"
+            app:title=""/>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
