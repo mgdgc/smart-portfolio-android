@@ -9,6 +9,7 @@ import com.mgchoi.smartportfolio.tool.OGTagImageGetter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CardViewHolder(private val binding: RowCardBinding) :
     RecyclerView.ViewHolder(binding.root) {
@@ -35,16 +36,20 @@ class CardViewHolder(private val binding: RowCardBinding) :
             if (url != null) {
                 val image = manager.getImageFromUrl(url)
                 if (image != null) {
-                    CoroutineScope(Dispatchers.Main).launch {
+                    withContext(Dispatchers.Main) {
                         // 이미지 로딩 프로그레스 바 숨기기
                         binding.progressRowCard.visibility = View.GONE
                         binding.imgRowCardImage.setImageBitmap(image)
                     }
                 } else {
-                    binding.layoutRowCardImg.visibility = View.GONE
+                    withContext(Dispatchers.Main) {
+                        binding.layoutRowCardImg.visibility = View.GONE
+                    }
                 }
             } else {
-                binding.layoutRowCardImg.visibility = View.GONE
+                withContext(Dispatchers.Main) {
+                    binding.layoutRowCardImg.visibility = View.GONE
+                }
             }
         }
     }

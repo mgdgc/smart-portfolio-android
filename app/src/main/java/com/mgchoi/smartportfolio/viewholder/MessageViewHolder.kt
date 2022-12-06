@@ -9,6 +9,7 @@ import com.mgchoi.smartportfolio.tool.OGTagImageGetter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MessageViewHolder(private val binding: RowMessageBinding) :
     RecyclerView.ViewHolder(binding.root) {
@@ -35,16 +36,20 @@ class MessageViewHolder(private val binding: RowMessageBinding) :
             if (url != null) {
                 val image = manager.getImageFromUrl(url)
                 if (image != null) {
-                    CoroutineScope(Dispatchers.Main).launch {
+                    withContext(Dispatchers.Main) {
                         // 이미지 로딩 프로그레스 바 숨기기
                         binding.progressRowMessage.visibility = View.GONE
                         binding.imgRowMessageImage.setImageBitmap(image)
                     }
                 } else {
-                    binding.cardRowMessageImage.visibility = View.GONE
+                    withContext(Dispatchers.Main) {
+                        binding.cardRowMessageImage.visibility = View.GONE
+                    }
                 }
             } else {
-                binding.cardRowMessageImage.visibility = View.GONE
+                withContext(Dispatchers.Main) {
+                    binding.cardRowMessageImage.visibility = View.GONE
+                }
             }
         }
     }

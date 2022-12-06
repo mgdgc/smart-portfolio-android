@@ -1,6 +1,7 @@
 package com.mgchoi.smartportfolio.viewholder
 
 import android.content.res.ColorStateList
+import android.provider.Contacts.Intents.UI
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,7 @@ import com.mgchoi.smartportfolio.tool.OGTagImageGetter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.abs
 
 class TimelineViewHolder(private val binding: RowTimelineBinding) :
@@ -62,16 +64,20 @@ class TimelineViewHolder(private val binding: RowTimelineBinding) :
             if (url != null) {
                 val image = manager.getImageFromUrl(url)
                 if (image != null) {
-                    CoroutineScope(Dispatchers.Main).launch {
+                    withContext(Dispatchers.Main) {
                         // 이미지 로딩 프로그레스 바 숨기기
                         binding.progressRowTimeline.visibility = View.GONE
                         binding.imgRowTimelineImage.setImageBitmap(image)
                     }
                 } else {
-                    binding.cardRowTimelineImage.visibility = View.GONE
+                    withContext(Dispatchers.Main) {
+                        binding.cardRowTimelineImage.visibility = View.GONE
+                    }
                 }
             } else {
-                binding.cardRowTimelineImage.visibility = View.GONE
+                withContext(Dispatchers.Main) {
+                    binding.cardRowTimelineImage.visibility = View.GONE
+                }
             }
         }
     }
