@@ -121,6 +121,7 @@ class MainActivity : AppCompatActivity() {
         val callback = onBackPressedDispatcher.addCallback {
             binding.drawerMain.closeDrawer(GravityCompat.START)
         }
+        callback.isEnabled = false
 
         // 드로어가 열렸는지 여부에 따라 onBackPressed callback을 활성화하거나 비활성화
         binding.drawerMain.addDrawerListener(object : DrawerListener {
