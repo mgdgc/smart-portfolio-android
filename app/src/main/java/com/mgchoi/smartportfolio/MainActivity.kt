@@ -14,6 +14,7 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
 import androidx.core.view.contains
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity() {
     private var data: ArrayList<Member> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         headerBinding = HeaderNavMainBinding.inflate(layoutInflater)

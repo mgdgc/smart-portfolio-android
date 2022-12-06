@@ -1,8 +1,12 @@
 package com.mgchoi.smartportfolio
 
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.splashscreen.SplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.preference.PreferenceManager
 import com.mgchoi.smartportfolio.tool.DBManager
 import com.mgchoi.smartportfolio.value.SharedPreferenceKeys
@@ -12,7 +16,11 @@ class LaunchActivity : AppCompatActivity() {
     private lateinit var initializer: DBManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Android 12 Splash Screen
+        installSplashScreen()
+        // OnCreate
         super.onCreate(savedInstanceState)
+
         initializer = DBManager(this)
 
         initializer.initDB()

@@ -30,7 +30,8 @@
             android:label="@string/main_nav_menu_settings" />
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.SmartPortfolio.Splash" />
         <activity
             android:name=".WebViewActivity"
             android:exported="false" />
@@ -39,10 +40,12 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.SmartPortfolio.Splash" />
         <activity
             android:name=".LaunchActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.SmartPortfolio.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

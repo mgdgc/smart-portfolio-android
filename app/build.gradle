@@ -10,7 +10,7 @@ android {
         applicationId "com.mgchoi.smartportfolio"
         minSdk 24
         targetSdk 33
-        versionCode 2022091900
+        versionCode 202209190
         versionName '1.0.0-SNAPSHOT01'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -43,6 +43,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     implementation 'androidx.browser:browser:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.core:core-splashscreen:1.0.0'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'com.airbnb.android:lottie:5.2.0'
     implementation 'com.tbuonomo:dotsindicator:4.3'
