@@ -15,6 +15,7 @@
             android:id="@+id/appbar_main"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -24,7 +25,6 @@
                 style="@style/Theme.SmartPortfolio.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fitsSystemWindows="true"
                 android:theme="@style/Theme.SmartPortfolio.Toolbar">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -142,60 +142,69 @@
 
         </androidx.viewpager2.widget.ViewPager2>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_main_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            app:cardBackgroundColor="@color/bg_primary"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="4dp"
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fitsSystemWindows="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appbar_main">
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_main_indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:gravity="center">
+                android:layout_gravity="center|bottom"
+                android:layout_marginBottom="24dp"
+                app:cardBackgroundColor="@color/bg_primary"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp">
 
-                <ImageView
-                    android:id="@+id/img_btn_main_prev"
-                    style="@style/Theme.SmartPortfolio.ImageButton"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:contentDescription="@string/main_image_button_prev"
-                    android:src="@drawable/ic_baseline_arrow_left_24">
-
-                </ImageView>
-
-                <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
-                    android:id="@+id/indicator_main"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:dotsColor="@color/color_primary"
-                    app:dotsCornerRadius="6dp"
-                    app:dotsSize="12dp"
-                    app:dotsSpacing="4dp"
-                    app:dotsStrokeColor="@color/color_primary"
-                    app:dotsStrokeWidth="2dp">
+                    android:layout_margin="4dp"
+                    android:gravity="center">
 
-                </com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator>
+                    <ImageView
+                        android:id="@+id/img_btn_main_prev"
+                        style="@style/Theme.SmartPortfolio.ImageButton"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:contentDescription="@string/main_image_button_prev"
+                        android:src="@drawable/ic_baseline_arrow_left_24">
 
-                <ImageView
-                    android:id="@+id/img_btn_main_next"
-                    style="@style/Theme.SmartPortfolio.ImageButton"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:contentDescription="@string/main_image_button_next"
-                    android:src="@drawable/ic_baseline_arrow_right_24">
+                    </ImageView>
 
-                </ImageView>
+                    <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                        android:id="@+id/indicator_main"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:dotsColor="@color/color_primary"
+                        app:dotsCornerRadius="6dp"
+                        app:dotsSize="12dp"
+                        app:dotsSpacing="4dp"
+                        app:dotsStrokeColor="@color/color_primary"
+                        app:dotsStrokeWidth="2dp">
 
-            </LinearLayout>
+                    </com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator>
 
-        </androidx.cardview.widget.CardView>
+                    <ImageView
+                        android:id="@+id/img_btn_main_next"
+                        style="@style/Theme.SmartPortfolio.ImageButton"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:contentDescription="@string/main_image_button_next"
+                        android:src="@drawable/ic_baseline_arrow_right_24">
+
+                    </ImageView>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -203,6 +212,7 @@
         android:id="@+id/nav_main"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         android:layout_gravity="start">
 
     </com.google.android.material.navigation.NavigationView>
