@@ -291,7 +291,7 @@ class MainActivity : AppCompatActivity() {
             binding.imgToolbarMain.setImageBitmap(image)
             binding.imgToolbarMain.setOnClickListener {
                 val intent = Intent(this, PortfolioManageActivity::class.java)
-                intent.putExtra(PortfolioManageActivity.EXTRA_MEMBER, member)
+                intent.putExtra(PortfolioManageActivity.EXTRA_MEMBER, member.id)
                 startActivity(intent)
             }
         }

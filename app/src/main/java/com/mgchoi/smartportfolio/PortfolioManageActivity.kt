@@ -54,11 +54,11 @@ class PortfolioManageActivity : AppCompatActivity(), ProfileEditRequest, Portfol
     }
 
     private fun initIntentData() {
-        val member: Member? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent?.getSerializableExtra(EXTRA_MEMBER, Member::class.java)
-        } else {
-            intent?.getSerializableExtra(EXTRA_MEMBER) as Member
-        }
+        val memberId = intent.getIntExtra(EXTRA_MEMBER, -1)
+        if (memberId == -1) this.finish()
+
+        val dao = MemberDAO(this)
+        val member = dao.select(memberId)
 
         if (member == null) {
             Toast.makeText(this, R.string.portfolio_manage_error, Toast.LENGTH_LONG)

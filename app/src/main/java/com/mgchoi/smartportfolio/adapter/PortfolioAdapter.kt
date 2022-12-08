@@ -3,6 +3,7 @@ package com.mgchoi.smartportfolio.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CheckBox
@@ -23,7 +24,7 @@ import com.mgchoi.smartportfolio.viewholder.FooterViewHolder
 import com.mgchoi.smartportfolio.viewholder.MessageViewHolder
 import com.mgchoi.smartportfolio.viewholder.TimelineViewHolder
 
-class PortfolioAdapter(private val context: Context, private val member: Member) :
+class PortfolioAdapter(private val context: Context, private var member: Member) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var data: ArrayList<Portfolio> = arrayListOf()
@@ -37,6 +38,10 @@ class PortfolioAdapter(private val context: Context, private val member: Member)
         val prevCount = this.data.size
         this.data.addAll(portfolios)
         notifyItemRangeInserted(prevCount, portfolios.size)
+    }
+
+    fun setMember(member: Member) {
+        this.member = member
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

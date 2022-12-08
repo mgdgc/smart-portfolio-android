@@ -160,6 +160,10 @@ class MemberDAO(private val context: Context) {
                 arrayOf(member.id.toString())
             )
             db.close()
+
+            // Portfolio가 수정된 것을 broadcast
+            context.sendBroadcast(Intent(IntentFilterActions.ACTION_MEMBER_UPDATE))
+
             return result
 
         } catch (e: Exception) {
