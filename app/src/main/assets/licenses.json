@@ -22,5 +22,11 @@
     "url": "https://boringavatars.com",
     "user": "Hayk An and Josep Martins",
     "license": "Free"
+  },
+  {
+    "name": "Jsoup",
+    "url": "https://jsoup.org",
+    "user": "Jsoup",
+    "license": "MIT"
   }
 ]
