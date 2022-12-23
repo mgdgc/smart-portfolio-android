@@ -1,10 +1,13 @@
 package com.mgchoi.smartportfolio.viewholder
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.provider.Contacts.Intents.UI
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.mgchoi.smartportfolio.PortfolioDetailActivity
 import com.mgchoi.smartportfolio.R
 import com.mgchoi.smartportfolio.databinding.RowTimelineBinding
 import com.mgchoi.smartportfolio.model.Portfolio
@@ -16,7 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.math.abs
 
-class TimelineViewHolder(private val binding: RowTimelineBinding) :
+class TimelineViewHolder(private val context: Context, private val binding: RowTimelineBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     companion object {
@@ -36,6 +39,7 @@ class TimelineViewHolder(private val binding: RowTimelineBinding) :
     }
 
     var onLinkClick: ((String) -> Unit)? = null
+    var onDetailClick: ((binding: RowTimelineBinding, portfolioId: Int) -> Unit)? = null
 
     fun bind(portfolio: Portfolio) {
         // Set texts
@@ -45,15 +49,13 @@ class TimelineViewHolder(private val binding: RowTimelineBinding) :
         // Set dot color
         val colorIndex = abs(portfolio.title.hashCode() % COLORS_DOT.size)
         binding.imgRowTimelineDot.imageTintList =
-            ColorStateList.valueOf(
-                ContextCompat.getColor(
-                    binding.root.context,
-                    COLORS_DOT[colorIndex]
-                )
-            )
+            ColorStateList.valueOf(ContextCompat.getColor(context, COLORS_DOT[colorIndex]))
 
         // Set listeners
         binding.cardRowTimeline.setOnClickListener {
+            onDetailClick?.let { it(binding, portfolio.id) }
+        }
+        binding.layoutRowTimelineLink.setOnClickListener {
             this.onLinkClick?.let { it(portfolio.url) }
         }
 

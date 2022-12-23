@@ -8,11 +8,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.core.util.Pair
 import com.mgchoi.smartportfolio.MainActivity
+import com.mgchoi.smartportfolio.PortfolioDetailActivity
+import com.mgchoi.smartportfolio.adapter.DetailViewRequestListener
 import com.mgchoi.smartportfolio.adapter.PortfolioAdapter
 import com.mgchoi.smartportfolio.databinding.FragmentPortfolioBinding
+import com.mgchoi.smartportfolio.databinding.RowCardBinding
+import com.mgchoi.smartportfolio.databinding.RowMessageBinding
+import com.mgchoi.smartportfolio.databinding.RowTimelineBinding
 import com.mgchoi.smartportfolio.db.MemberDAO
 import com.mgchoi.smartportfolio.db.PortfolioDAO
 import com.mgchoi.smartportfolio.model.Member
@@ -58,6 +65,48 @@ class PortfolioFragment(private var member: Member) : Fragment() {
 
         binding.rvPortfolio.adapter = adapter
         binding.rvPortfolio.layoutManager = LinearLayoutManager(requireContext())
+
+        adapter.detailViewRequestListener = object : DetailViewRequestListener {
+            override fun cardView(binding: RowCardBinding, portfolioId: Int) {
+                val option = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    requireActivity(),
+                    Pair(binding.txtRowCardTitle, "detail_title"),
+                    Pair(binding.txtRowCardContent, "detail_content"),
+                    Pair(binding.imgRowCardImage, "detail_image")
+                )
+                startDetailActivityWithTransition(option, portfolioId)
+            }
+
+            override fun timelineView(binding: RowTimelineBinding, portfolioId: Int) {
+                val option = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    requireActivity(),
+                    Pair(binding.txtRowTimelineTitle, "detail_title"),
+                    Pair(binding.txtRowTimelineContent, "detail_content"),
+                    Pair(binding.imgRowTimelineImage, "detail_image")
+                )
+                startDetailActivityWithTransition(option, portfolioId)
+            }
+
+            override fun messageView(binding: RowMessageBinding, portfolioId: Int) {
+                val option = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    requireActivity(),
+                    Pair(binding.txtRowMessageTitle, "detail_title"),
+                    Pair(binding.txtRowMessageContent, "detail_content"),
+                    Pair(binding.imgRowMessageImage, "detail_image")
+                )
+                startDetailActivityWithTransition(option, portfolioId)
+            }
+
+        }
+    }
+
+    private fun startDetailActivityWithTransition(
+        options: ActivityOptionsCompat,
+        portfolioId: Int
+    ) {
+        val intent = Intent(requireContext(), PortfolioDetailActivity::class.java)
+        intent.putExtra(PortfolioDetailActivity.EXTRA_PORTFOLIO_ID, portfolioId)
+        startActivity(intent, options.toBundle())
     }
 
     private fun initBroadcastReceiver() {

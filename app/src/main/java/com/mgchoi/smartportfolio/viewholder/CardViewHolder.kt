@@ -1,7 +1,12 @@
 package com.mgchoi.smartportfolio.viewholder
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.view.View
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.mgchoi.smartportfolio.PortfolioDetailActivity
 import com.mgchoi.smartportfolio.R
 import com.mgchoi.smartportfolio.databinding.RowCardBinding
 import com.mgchoi.smartportfolio.model.Portfolio
@@ -12,7 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CardViewHolder(private val binding: RowCardBinding) :
+class CardViewHolder(private val context: Context, private val binding: RowCardBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     companion object {
@@ -20,6 +25,7 @@ class CardViewHolder(private val binding: RowCardBinding) :
     }
 
     var onLinkClick: ((url: String) -> Unit)? = null
+    var onDetailClick: ((binding: RowCardBinding, portfolioId: Int) -> Unit)? = null
 
     fun bind(portfolio: Portfolio) {
         // 제목 및 내용 설정
@@ -29,6 +35,11 @@ class CardViewHolder(private val binding: RowCardBinding) :
         // 링크 클릭 설정
         binding.btnRowCardLink.setOnClickListener {
             this.onLinkClick?.let { it(portfolio.url) }
+        }
+
+        // 자세히 보기
+        binding.cardRowCard.setOnClickListener {
+            this.onDetailClick?.let { it(binding, portfolio.id) }
         }
 
         // 이미지가 있으면 이미지를, 없으면 OG Tag 보여주기

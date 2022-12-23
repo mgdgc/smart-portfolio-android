@@ -1,7 +1,10 @@
 package com.mgchoi.smartportfolio.viewholder
 
+import android.content.Context
+import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.mgchoi.smartportfolio.PortfolioDetailActivity
 import com.mgchoi.smartportfolio.R
 import com.mgchoi.smartportfolio.databinding.RowMessageBinding
 import com.mgchoi.smartportfolio.model.Portfolio
@@ -12,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MessageViewHolder(private val binding: RowMessageBinding) :
+class MessageViewHolder(private val context: Context, private val binding: RowMessageBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     companion object {
@@ -20,13 +23,24 @@ class MessageViewHolder(private val binding: RowMessageBinding) :
     }
 
     var onLinkClick: ((url: String) -> Unit)? = null
+    var onDetailClick: ((binding: RowMessageBinding, portfolioId: Int) -> Unit)? = null
 
     fun bind(portfolio: Portfolio) {
+        // 제목과 내용 설정
         binding.txtRowMessageTitle.text = portfolio.title
         binding.txtRowMessageContent.text = portfolio.content
 
+        // 링크 설정
         binding.cardRowMessageLink.setOnClickListener {
             this.onLinkClick?.let { it(portfolio.url) }
+        }
+
+        // 자세히 보기 설정
+        binding.imgRowMessageImage.setOnClickListener {
+            openDetailView(portfolio.id)
+        }
+        binding.cardRowMessageContent.setOnClickListener {
+            openDetailView(portfolio.id)
         }
 
         // 이미지가 있으면 이미지를, 없으면 OG Tag 보여주기
@@ -60,5 +74,9 @@ class MessageViewHolder(private val binding: RowMessageBinding) :
                 }
             }
         }
+    }
+
+    private fun openDetailView(portfolioId: Int) {
+        onDetailClick?.let { it(binding, portfolioId) }
     }
 }

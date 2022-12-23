@@ -3,8 +3,8 @@ package com.mgchoi.smartportfolio.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.appcompat.app.AlertDialog
@@ -24,8 +24,16 @@ import com.mgchoi.smartportfolio.viewholder.FooterViewHolder
 import com.mgchoi.smartportfolio.viewholder.MessageViewHolder
 import com.mgchoi.smartportfolio.viewholder.TimelineViewHolder
 
+interface DetailViewRequestListener {
+    fun cardView(binding: RowCardBinding, portfolioId: Int)
+    fun timelineView(binding: RowTimelineBinding, portfolioId: Int)
+    fun messageView(binding: RowMessageBinding, portfolioId: Int)
+}
+
 class PortfolioAdapter(private val context: Context, private var member: Member) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var detailViewRequestListener: DetailViewRequestListener? = null
 
     var data: ArrayList<Portfolio> = arrayListOf()
         @SuppressLint("NotifyDataSetChanged")
@@ -47,12 +55,15 @@ class PortfolioAdapter(private val context: Context, private var member: Member)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TimelineViewHolder.VIEW_TYPE -> TimelineViewHolder(
+                context,
                 RowTimelineBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
             MessageViewHolder.VIEW_TYPE -> MessageViewHolder(
+                context,
                 RowMessageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
             CardViewHolder.VIEW_TYPE -> CardViewHolder(
+                context,
                 RowCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
             else -> FooterViewHolder(
@@ -67,14 +78,23 @@ class PortfolioAdapter(private val context: Context, private var member: Member)
         when (holder) {
             is TimelineViewHolder -> {
                 holder.onLinkClick = { openLink(it) }
+                holder.onDetailClick = { b, p ->
+                    detailViewRequestListener?.let { it.timelineView(b, p) }
+                }
                 holder.bind(this.data[position])
             }
             is MessageViewHolder -> {
                 holder.onLinkClick = { openLink(it) }
+                holder.onDetailClick = { b, p ->
+                    detailViewRequestListener?.let { it.messageView(b, p) }
+                }
                 holder.bind(this.data[position])
             }
             is CardViewHolder -> {
                 holder.onLinkClick = { openLink(it) }
+                holder.onDetailClick = { b, p ->
+                    detailViewRequestListener?.let { it.cardView(b, p) }
+                }
                 holder.bind(this.data[position])
             }
         }

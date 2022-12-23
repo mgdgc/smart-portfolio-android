@@ -82,6 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
+                android:transitionName="detail_title"
                 tools:text="Message">
 
             </TextView>
@@ -116,8 +117,11 @@
                 style="@style/Theme.SmartPortfolio.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="3"
                 android:textColor="@color/white"
                 android:textSize="16sp"
+                android:transitionName="detail_content"
                 tools:text="Content">
 
             </TextView>
@@ -155,7 +159,8 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/row_portfolio_github_image"
                     android:maxHeight="240dp"
-                    android:scaleType="centerCrop">
+                    android:scaleType="centerCrop"
+                    android:transitionName="detail_image">
 
                 </ImageView>
 
