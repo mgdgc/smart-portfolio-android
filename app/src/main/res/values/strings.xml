@@ -24,8 +24,15 @@
     <!--  LoginActivity  -->
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>
+    <string name="login_button_text">Login</string>
     <string name="login_start">Start</string>
+    <string name="login_or">또는</string>
+    <string name="login_not_valid">아이디와 비밀번호를 채워주세요.</string>
+    <string name="login_id_not_valid">아이디가 다릅니다.</string>
+    <string name="login_pw_not_valid">비밀번호가 다릅니다.</string>
     <string name="navigation_drawer_close_button">내비게이션 드로어 닫기 버튼</string>
+    <string name="login_help">로그인 도움</string>
+    <string name="login_help_dialog">초기 ID와 비밀번호는 <font color='#F44336'>admin</font> 입니다.\n\n관리자로 로그인해야 포트폴리오를 관리할 수 있으며, 방문자라면 아래 <font color='#0277BD'>Start</font>를 눌러 사용하실 수 있습니다.</string>
 
     <!--  MainActivity  -->
     <string name="main_image_button_prev">이전 페이지 버튼</string>
