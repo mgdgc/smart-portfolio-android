@@ -237,7 +237,7 @@ class PortfolioManageActivity : AppCompatActivity(), ProfileEditRequest, Portfol
             .setPositiveButton(R.string.confirm) { d, _ ->
                 val title = writeBinding.editTextPortfolioEditTitle.text.toString().trim()
                 val content = writeBinding.editTextPortfolioEditContent.text.toString().trim()
-                val github = writeBinding.editTextPortfolioEditGithub.text.toString().trim()
+                var github = writeBinding.editTextPortfolioEditGithub.text.toString().trim()
 
                 if (title.isEmpty()) {
                     makeSnackBar(R.string.portfolio_write_title_not_valid)
@@ -257,6 +257,10 @@ class PortfolioManageActivity : AppCompatActivity(), ProfileEditRequest, Portfol
                 if (github.isEmpty() && !github.matches(regex)) {
                     makeSnackBar(R.string.portfolio_write_url_not_valid)
                     return@setPositiveButton
+                }
+
+                if (!github.startsWith("https://") || !github.startsWith("http://")) {
+                    github = "https://${github}"
                 }
 
                 val dao = PortfolioDAO(this)
