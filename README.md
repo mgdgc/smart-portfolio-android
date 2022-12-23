@@ -11,10 +11,11 @@
 
 <div>
 <img src="/screenshots/01.png" width="180px"/>
-<img src="/screenshots/01.png" width="180px"/>
+<img src="/screenshots/01a.png" width="180px"/>
 </div>
 
 - 앱의 이름과 다음화면으로 넘어갈 수 있는 'Start' 버튼을 제공한다.
+- 로그인 인증 방식을 제공하며, Biometric 로그인을 지원한다.
 
 ## 스플래시 화면
 
