@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="도움이 필요하세요?"
+                android:text="@string/login_help"
                 android:textColor="@color/text_secondary"
                 android:textSize="12sp">
 

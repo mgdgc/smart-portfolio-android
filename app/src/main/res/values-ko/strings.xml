@@ -1,0 +1,154 @@
+<resources>
+    <string name="app_name">Smart Portfolio</string>
+
+    <!--  General Texts  -->
+    <string name="yes">예</string>
+    <string name="no">아니오</string>
+    <string name="confirm">확인</string>
+    <string name="cancel">취소</string>
+    <string name="dismiss">닫기</string>
+    <string name="close">닫기</string>
+    <string name="add">추가</string>
+    <string name="delete">삭제</string>
+    <string name="remove">제거</string>
+    <string name="edit">수정</string>
+    <string name="reset">초기화</string>
+
+    <!--  DrawerLayout  -->
+    <string name="drawer_open">드로어 열기</string>
+    <string name="drawer_close">드로어 닫기</string>
+
+    <!--  Manifest  -->
+    <string name="label_edit_portfolio">포트폴리오 수정</string>
+
+    <!--  LoginActivity  -->
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_button_text">Login</string>
+    <string name="login_start">Start</string>
+    <string name="login_or">또는</string>
+    <string name="login_not_valid">아이디와 비밀번호를 채워주세요.</string>
+    <string name="login_id_not_valid">아이디가 다릅니다.</string>
+    <string name="login_pw_not_valid">비밀번호가 다릅니다.</string>
+    <string name="navigation_drawer_close_button">내비게이션 드로어 닫기 버튼</string>
+    <string name="login_help">도움이 필요하세요?</string>
+    <string name="login_help_dialog">초기 ID와 비밀번호는 <font color='#F44336'>admin</font> 입니다.\n\n관리자로 로그인해야 포트폴리오를 관리할 수 있으며, 방문자라면 아래 <font color='#0277BD'>Start</font>를 눌러 사용하실 수 있습니다.</string>
+    <string name="login_biometric_title">SmartPortfolio 로그인</string>
+    <string name="login_biometric_subtitle">생체인증을 사용하여 관리자로 로그인합니다.</string>
+    <string name="login_biometric_negative">비밀번호로 로그인</string>
+
+    <!--  MainActivity  -->
+    <string name="main_image_button_prev">이전 페이지 버튼</string>
+    <string name="main_image_button_next">다음 페이지 버튼</string>
+    <string name="main_nav_submenu_portfolio">포트폴리오</string>
+    <string name="main_nav_submenu_title">소개</string>
+    <string name="main_nav_menu_index">Index</string>
+    <string name="main_nav_submenu_app">애플리케이션</string>
+    <string name="main_nav_menu_license">오픈소스 라이선스</string>
+    <string name="main_nav_menu_info">애플리케이션 정보</string>
+    <string name="main_nav_menu_settings">설정</string>
+    <string name="main_nav_submenu_manage">포트폴리오 관리</string>
+    <string name="main_nav_menu_add">포트폴리오 추가</string>
+    <string name="main_nav_menu_remove">포트폴리오 삭제</string>
+    <string name="main_member_add_title">포트폴리오 추가</string>
+    <string name="main_member_add_name">이름</string>
+    <string name="main_member_add_name_hint">프로파일 이름</string>
+    <string name="main_member_add_url">웹</string>
+    <string name="main_member_add_url_hint">URL</string>
+    <string name="main_member_remove_confirm">정말 삭제하시겠습니까?</string>
+    <string name="main_member_remove_not_destroyable">초기 데이터는 삭제할 수 없습니다.</string>
+    <string name="main_portfolio_list">포트폴리오 목록</string>
+
+    <!--  IndexFragment  -->
+    <string name="main_index">Index</string>
+    <string name="main_index_desc">스마트 포트폴리오에서 다양한 포트폴리오를 톺아보고 관리해 보세요.</string>
+
+    <!--  TimelineViewHolder  -->
+    <string name="row_timeline_open_link">Open Link</string>
+    <!--  MessageViewHolder  -->
+    <string name="row_message_open_link">링크 열기</string>
+
+    <!--  PortfolioAdapter  -->
+    <string name="portfolio_browser_title">링크 열기</string>
+    <string name="portfolio_browser_content">링크를 열 때 어떤 브라우저를 사용할까요?</string>
+    <string name="portfolio_browser_internal">내부 브라우저</string>
+    <string name="portfolio_browser_chrome">Chrome</string>
+    <string name="portfolio_browser_remember">내 선택 기억하기</string>
+
+    <!--  WebViewActivity  -->
+    <string name="menu_open_external">브라우저에서 열기</string>
+    <string name="menu_copy">주소 복사</string>
+    <string name="web_url_error">URL 주소가 올바르지 않아 웹을 표시할 수 없습니다.</string>
+
+    <!--  SettingsActivity  -->
+    <string name="settings_category_login">로그인</string>
+    <string name="settings_auto_login">자동 로그인</string>
+    <string name="settings_auto_login_summary_on">앱을 시작할 때 자동으로 로그인합니다.</string>
+    <string name="settings_auto_login_summary_off">앱을 시작하면 로그인 화면으로 이동합니다.</string>
+    <string name="settings_biometric">생체 인증</string>
+    <string name="settings_biometric_summary">지문인식 혹은 얼굴인식으로 로그인합니다.</string>
+    <string name="settings_biometric_none_enrolled">등록된 생체인증 정보가 없습니다.</string>
+    <string name="settings_biometric_enroll">등록</string>
+    <string name="settings_logout">로그아웃</string>
+    <string name="settings_admin_id">관리자 ID</string>
+    <string name="settings_admin_pw">비밀번호 변경</string>
+    <string name="settings_admin_pw_current">현재 비밀번호</string>
+    <string name="settings_admin_pw_new">새 비밀번호</string>
+    <string name="settings_admin_pw_check">비밀번호 확인</string>
+    <string name="settings_category_app">애플리케이션</string>
+    <string name="settings_db_reset">DB 초기화</string>
+    <string name="settings_db_reset_summary">DB에 저장된 데이터를 모두 삭제합니다.</string>
+    <string name="settings_db_init">사전 DB 생성</string>
+    <string name="settings_db_init_summary">최초 애플리케이션 DB를 생성합니다.</string>
+    <string name="settings_category_info">애플리케이션 정보</string>
+    <string name="settings_version">애플리케이션 버전</string>
+    <string name="settings_build">빌드</string>
+    <string name="settings_category_license">라이선스</string>
+    <string name="settings_license">오픈소스 라이선스</string>
+    <string name="settings_developer">애플리케이션 개발</string>
+    <string name="settings_developer_summary">최명근 (Choi, Myung Geun)</string>
+    <string name="settings_developer_detail">한림대학교 소프트웨어학부\n20185301 최명근</string>
+    <string name="settings_developer_github">Github</string>
+    <string name="settings_developer_portfolio">포트폴리오</string>
+    <string name="settings_github">Github</string>
+
+    <!--  SettingsActivity+AlertDialog  -->
+    <string name="settings_admin_id_dialog">변경할 관리자 ID를 입력해주세요.</string>
+    <string name="settings_admin_id_not_valid">새 관리자 ID를 입력해야 저장됩니다.</string>
+    <string name="settings_admin_pw_not_valid">현재 비밀번호가 맞지 않습니다.</string>
+    <string name="settings_admin_pw_check_not_valid">비밀번호 확인이 다릅니다.</string>
+    <string name="settings_admin_pw_success">비밀번호가 변경되었습니다.</string>
+    <string name="settings_db_reset_dialog"><font color='#F44336'>저장된 모든 데이터가 삭제됩니다.</font>\n\n이 작업에는 삭제할 수 없는 사전 DB 데이터도 포함됩니다.\n\n(사전 DB 데이터를 설치하려면 \'사전 DB 생성\'을 진행하십시오.) \n\n초기화하시겠습니까?</string>
+    <string name="settings_db_init_dialog">최초 DB를 설치하시겠습니까?</string>
+
+    <!--  PortfolioManageActivity  -->
+    <string name="portfolio_manage_error">데이터가 없습니다.</string>
+    <string name="portfolio_edit_name_title">이름 수정</string>
+    <string name="edit_portfolio_title">제목</string>
+    <string name="edit_portfolio_content">내용</string>
+    <string name="edit_portfolio_github">Github</string>
+    <string name="edit_portfolio_link">링크</string>
+    <string name="portfolio_edit_title">포트폴리오 수정</string>
+    <string name="portfolio_write_title">포트폴리오 작성</string>
+    <string name="portfolio_write_image_add">사진 추가</string>
+    <string name="portfolio_write_cover_image_desc">커버 이미지</string>
+    <string name="portfolio_write_image_remove">사진 제거</string>
+    <string name="portfolio_write_image_remove_message">사진을 제거하시겠습니까?</string>
+    <string name="portfolio_write_title_not_valid">제목을 작성해주세요</string>
+    <string name="portfolio_write_content_not_valid">내용을 작성해주세요</string>
+    <string name="portfolio_write_url_not_valid">주소를 작성해주세요</string>
+
+    <!--  ProfileViewHolder  -->
+    <string name="row_profile_img_edit">수정</string>
+    <string name="row_profile_image">Profile Image</string>
+    <string name="view_style_timeline">타임라인</string>
+    <string name="view_style_message">채팅</string>
+    <string name="view_style_card">카드뷰</string>
+    <string name="row_portfolio_github_image">Github Image</string>
+    <string name="row_profile_view_style">뷰 스타일</string>
+    <string name="row_card_open_link">Open Link</string>
+
+    <!--  PortfolioDetailActivity  -->
+    <string name="portfolio_detail_cover">포트폴리오 커버 이미지</string>
+
+</resources>
