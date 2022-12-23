@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mgchoi.smartportfolio.R
 import com.mgchoi.smartportfolio.databinding.RowMessageBinding
 import com.mgchoi.smartportfolio.model.Portfolio
+import com.mgchoi.smartportfolio.tool.CoverImageHelper
 import com.mgchoi.smartportfolio.tool.OGTagImageGetter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,27 +29,34 @@ class MessageViewHolder(private val binding: RowMessageBinding) :
             this.onLinkClick?.let { it(portfolio.url) }
         }
 
-        // OGTag Image
-        CoroutineScope(Dispatchers.IO).launch {
-            val manager = OGTagImageGetter()
-            val url = manager.getOGImageUrl(portfolio.url)
+        // 이미지가 있으면 이미지를, 없으면 OG Tag 보여주기
+        if (portfolio.image != null) {
+            val coverImageHelper = CoverImageHelper(binding.root.context)
+            val image = coverImageHelper.read(portfolio.image!!)
+            binding.imgRowMessageImage.setImageBitmap(image)
+        } else {
+            // OGTag Image
+            CoroutineScope(Dispatchers.IO).launch {
+                val manager = OGTagImageGetter()
+                val url = manager.getOGImageUrl(portfolio.url)
 
-            if (url != null) {
-                val image = manager.getImageFromUrl(url)
-                if (image != null) {
-                    withContext(Dispatchers.Main) {
-                        // 이미지 로딩 프로그레스 바 숨기기
-                        binding.progressRowMessage.visibility = View.GONE
-                        binding.imgRowMessageImage.setImageBitmap(image)
+                if (url != null) {
+                    val image = manager.getImageFromUrl(url)
+                    if (image != null) {
+                        withContext(Dispatchers.Main) {
+                            // 이미지 로딩 프로그레스 바 숨기기
+                            binding.progressRowMessage.visibility = View.GONE
+                            binding.imgRowMessageImage.setImageBitmap(image)
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            binding.cardRowMessageImage.visibility = View.GONE
+                        }
                     }
                 } else {
                     withContext(Dispatchers.Main) {
                         binding.cardRowMessageImage.visibility = View.GONE
                     }
-                }
-            } else {
-                withContext(Dispatchers.Main) {
-                    binding.cardRowMessageImage.visibility = View.GONE
                 }
             }
         }

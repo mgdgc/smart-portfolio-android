@@ -3,6 +3,7 @@ package com.mgchoi.smartportfolio
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.os.Build
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.provider.MediaStore
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +27,7 @@ import com.mgchoi.smartportfolio.db.PortfolioDAO
 import com.mgchoi.smartportfolio.model.Member
 import com.mgchoi.smartportfolio.model.Portfolio
 import com.mgchoi.smartportfolio.model.ViewStyle
+import com.mgchoi.smartportfolio.tool.CoverImageHelper
 import com.mgchoi.smartportfolio.tool.ProfileImageHelper
 
 class PortfolioManageActivity : AppCompatActivity(), ProfileEditRequest, PortfolioEditRequest {
@@ -105,10 +108,10 @@ class PortfolioManageActivity : AppCompatActivity(), ProfileEditRequest, Portfol
     override fun onImageEditRequest() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
-        imageActivityResult.launch(intent)
+        profileImageActivityResult.launch(intent)
     }
 
-    private val imageActivityResult = registerForActivityResult(
+    private val profileImageActivityResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
         val uri = it.data?.data
@@ -181,10 +184,51 @@ class PortfolioManageActivity : AppCompatActivity(), ProfileEditRequest, Portfol
     private fun showPortfolioWriteDialog(portfolio: Portfolio?, onFinish: ((Portfolio) -> Unit)) {
         val writeBinding = LayoutPortfolioWriteBinding.inflate(layoutInflater)
 
-        portfolio?.let {
-            writeBinding.editTextPortfolioEditTitle.setText(it.title)
-            writeBinding.editTextPortfolioEditContent.setText(it.content)
-            writeBinding.editTextPortfolioEditGithub.setText(it.url)
+        val coverImageHelper = CoverImageHelper(this)
+
+        // 포트폴리오 수정인 경우 기존 데이터를 미리 설정
+        portfolio?.let { p ->
+            writeBinding.editTextPortfolioEditTitle.setText(p.title)
+            writeBinding.editTextPortfolioEditContent.setText(p.content)
+            writeBinding.editTextPortfolioEditGithub.setText(p.url)
+            // 이미지가 있는 경우 CoverImageHelper 에서 이미지를 가져와서 설정
+            portfolio.image?.let {
+                writeBinding.imgPortfolioEditCover.setImageBitmap(
+                    coverImageHelper.read(it)
+                )
+            }
+        }
+
+        // 이미지 이름을 임시로 저장하는 변수
+        var imageFilename: String? = portfolio?.image
+
+        // 사진 추가 버튼
+        writeBinding.layoutPortfolioEditImage.setOnClickListener {
+            // 사진이 이미 있는 경우 제거할 지 묻고, 없으면 사진을 가져옴
+            if (imageFilename != null) {
+                val dialog = AlertDialog.Builder(this)
+                dialog.setTitle(R.string.portfolio_write_image_remove)
+                    .setMessage(R.string.portfolio_write_image_remove_message)
+                    .setPositiveButton(R.string.remove) { d, _ ->
+                        imageFilename = null
+                        writeBinding.imgPortfolioEditCover.setImageBitmap(null)
+                        d.dismiss()
+                    }
+                    .setNegativeButton(R.string.cancel) { d, _ -> d.dismiss() }
+                    .show()
+            } else {
+                // 이미지 가져오면 ImageView에 가져온 이미지 표시
+                onCoverImageResult = { filename ->
+                    writeBinding.imgPortfolioEditCover.setImageBitmap(
+                        coverImageHelper.read(filename)
+                    )
+                    imageFilename = filename
+                }
+
+                val intent = Intent(Intent.ACTION_PICK)
+                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
+                coverImageLauncher.launch(intent)
+            }
         }
 
         val dialog = AlertDialog.Builder(this)
@@ -220,10 +264,11 @@ class PortfolioManageActivity : AppCompatActivity(), ProfileEditRequest, Portfol
                     portfolio.title = title
                     portfolio.content = content
                     portfolio.url = github
+                    portfolio.image = imageFilename
                     dao.update(portfolio)
                     onFinish(portfolio)
                 } else {
-                    val p = Portfolio(0, member.id, title, content, github)
+                    val p = Portfolio(0, member.id, title, content, github, imageFilename)
                     if (dao.insert(p)) {
                         dao.selectLast(member.id)
                         onFinish(p)
@@ -238,10 +283,40 @@ class PortfolioManageActivity : AppCompatActivity(), ProfileEditRequest, Portfol
             .show()
     }
 
+    private var onCoverImageResult: ((String) -> Unit)? = null
+
+    private val coverImageLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            val uri = it.data?.data
+            if (uri != null) {
+                // Uri로부터 Bitmap 가져옴
+                val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    ImageDecoder.decodeBitmap(ImageDecoder.createSource(contentResolver, uri))
+                } else {
+                    MediaStore.Images.Media.getBitmap(contentResolver, uri)
+                }
+
+                // CoverImageHelper로 이미지 저장
+                val helper = CoverImageHelper(this)
+                val filename = helper.save(bitmap) ?: return@registerForActivityResult
+
+                // 이미지 결과 리턴
+                onCoverImageResult?.let {
+                    it(filename)
+                }
+            }
+        }
+
     private fun makeSnackBar(stringRes: Int) {
         Snackbar.make(binding.root, stringRes, Snackbar.LENGTH_LONG)
             .setAction(R.string.confirm) {}
             .show()
+    }
+
+    private fun makeToast(stringRes: Int) {
+        Toast.makeText(this, stringRes, Toast.LENGTH_LONG).show()
     }
 
     override fun onDestroy() {

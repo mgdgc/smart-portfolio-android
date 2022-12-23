@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.mgchoi.smartportfolio.value.DBName
 
-class MemberDBHelper(private val context: Context) : SQLiteOpenHelper(context, DBName.name, null, 1) {
+class MemberDBHelper(private val context: Context) : SQLiteOpenHelper(context, DBName.name, null, 2212230) {
 
     companion object {
         const val TABLE_NAME = "Member"
@@ -21,7 +21,7 @@ class MemberDBHelper(private val context: Context) : SQLiteOpenHelper(context, D
         val sql = "CREATE TABLE IF NOT EXISTS $TABLE_NAME (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "name TEXT," +
-                "image INTEGER," +
+                "image TEXT," +
                 "url TEXT," +
                 "viewStyle INTEGER," +
                 "destroyable INTEGER DEFAULT 1" + // (1: true, 0: false)

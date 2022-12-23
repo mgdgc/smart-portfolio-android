@@ -103,6 +103,10 @@
     <string name="edit_portfolio_link">링크</string>
     <string name="portfolio_edit_title">포트폴리오 수정</string>
     <string name="portfolio_write_title">포트폴리오 작성</string>
+    <string name="portfolio_write_image_add">사진 추가</string>
+    <string name="portfolio_write_cover_image_desc">Cover Image</string>
+    <string name="portfolio_write_image_remove">사진 제거</string>
+    <string name="portfolio_write_image_remove_message">사진을 제거하시겠습니까?</string>
     <string name="portfolio_write_title_not_valid">제목을 작성해주세요</string>
     <string name="portfolio_write_content_not_valid">내용을 작성해주세요</string>
     <string name="portfolio_write_url_not_valid">주소를 작성해주세요</string>
