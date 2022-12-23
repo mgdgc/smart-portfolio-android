@@ -18,6 +18,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
 import androidx.core.view.contains
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
+import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import com.mgchoi.smartportfolio.adapter.MainAdapter
 import com.mgchoi.smartportfolio.databinding.ActivityMainBinding
@@ -97,7 +98,16 @@ class MainActivity : AppCompatActivity() {
             binding.drawerMain.closeDrawer(GravityCompat.START)
         }
 
+        // 로그아웃 버튼
         headerBinding.imgBtnNavLogout.setOnClickListener {
+            // 로그인 정보 삭제
+            MyApplication.login = false
+
+            // 자동로그인 끄기
+            val pref = PreferenceManager.getDefaultSharedPreferences(this)
+            pref.edit().putBoolean("auto_login", false).apply()
+
+            // 로그인 Activity로 이동
             val intent = Intent(this@MainActivity, LoginActivity::class.java)
             startActivity(intent)
             this@MainActivity.finish()
@@ -181,11 +191,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Member 추가 혹은 제거 메뉴
-        val portfolioManage = binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_manage)
-        portfolioManage.add(0, ACTION_ADD, 0, R.string.main_nav_menu_add)
-            .setIcon(R.drawable.ic_baseline_add_black_24)
-        portfolioManage.add(0, ACTION_REMOVE, 0, R.string.main_nav_menu_remove)
-            .setIcon(R.drawable.ic_baseline_delete_24)
+        // 로그인일 때만 나타남
+        if (MyApplication.login) {
+            val portfolioManage = binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_manage)
+            portfolioManage.add(0, ACTION_ADD, 0, R.string.main_nav_menu_add)
+                .setIcon(R.drawable.ic_baseline_add_black_24)
+            portfolioManage.add(0, ACTION_REMOVE, 0, R.string.main_nav_menu_remove)
+                .setIcon(R.drawable.ic_baseline_delete_24)
+        }
 
         // Application menu
         val appGroup = binding.navMain.menu.addSubMenu(R.string.main_nav_submenu_app)
@@ -290,9 +303,11 @@ class MainActivity : AppCompatActivity() {
             binding.cardToolbarMain.visibility = View.VISIBLE
             binding.imgToolbarMain.setImageBitmap(image)
             binding.imgToolbarMain.setOnClickListener {
-                val intent = Intent(this, PortfolioManageActivity::class.java)
-                intent.putExtra(PortfolioManageActivity.EXTRA_MEMBER, member.id)
-                startActivity(intent)
+                if (MyApplication.login) {
+                    val intent = Intent(this, PortfolioManageActivity::class.java)
+                    intent.putExtra(PortfolioManageActivity.EXTRA_MEMBER, member.id)
+                    startActivity(intent)
+                }
             }
         }
     }

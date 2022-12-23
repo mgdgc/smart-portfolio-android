@@ -36,6 +36,7 @@ class LaunchActivity : AppCompatActivity() {
 
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         if (pref.getBoolean(SharedPreferenceKeys.BOOL_AUTO_LOGIN, false)) {
+            MyApplication.login = true
             launchMainActivity()
         } else {
             launchLoginActivity()
