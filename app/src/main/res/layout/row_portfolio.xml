@@ -44,6 +44,7 @@
                 android:layout_marginTop="16dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/row_portfolio_github_image"
+                android:maxHeight="240dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

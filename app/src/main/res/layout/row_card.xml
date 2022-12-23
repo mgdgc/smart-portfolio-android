@@ -57,7 +57,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
+                    android:maxHeight="240dp"
+                    android:scaleType="centerCrop"
                     tools:ignore="ContentDescription">
 
                 </ImageView>
