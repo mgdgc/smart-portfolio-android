@@ -1,14 +1,21 @@
+<div>
 <img src="/screenshots/00.png" width="128px"/>
+<img src="/screenshots/fg_animation.gif" width="128px"/>
+</div>
 
 # SmartPortfolio
 
-[예상 산출물 프로토타입](https://ovenapp.io/view/llTtDQBich8oWVQasgAksGQNBdnbzqJk/)
+여러 멤버의 개발 이력과 프로젝트를 관리하고 확인할 수 있는 포트폴리오 애플리케이션
 
 ## 인트로 화면
 
+<div>
 <img src="/screenshots/01.png" width="180px"/>
+<img src="/screenshots/01a.png" width="180px"/>
+</div>
 
 - 앱의 이름과 다음화면으로 넘어갈 수 있는 'Start' 버튼을 제공한다.
+- 로그인 인증 방식을 제공하며, Biometric 로그인을 지원한다.
 
 ## 스플래시 화면
 
