@@ -83,6 +83,11 @@
     <string name="settings_auto_login_summary_on">앱을 시작할 때 자동으로 로그인합니다.</string>
     <string name="settings_auto_login_summary_off">앱을 시작하면 로그인 화면으로 이동합니다.</string>
     <string name="settings_logout">로그아웃</string>
+    <string name="settings_admin_id">관리자 ID</string>
+    <string name="settings_admin_pw">비밀번호 변경</string>
+    <string name="settings_admin_pw_current">현재 비밀번호</string>
+    <string name="settings_admin_pw_new">새 비밀번호</string>
+    <string name="settings_admin_pw_check">비밀번호 확인</string>
     <string name="settings_category_app">애플리케이션</string>
     <string name="settings_db_reset">DB 초기화</string>
     <string name="settings_db_reset_summary">DB에 저장된 데이터를 모두 삭제합니다.</string>
@@ -99,7 +104,14 @@
     <string name="settings_developer_github">Github</string>
     <string name="settings_developer_portfolio">포트폴리오</string>
     <string name="settings_github">Github</string>
-    <string name="settings_db_reset_dialog"><font color='#ff0000'>저장된 모든 데이터가 삭제됩니다.</font>\n\n이 작업에는 삭제할 수 없는 사전 DB 데이터도 포함됩니다.\n\n(사전 DB 데이터를 설치하려면 \'사전 DB 생성\'을 진행하십시오.) \n\n초기화하시겠습니까?</string>
+
+    <!--  SettingsActivity+AlertDialog  -->
+    <string name="settings_admin_id_dialog">변경할 관리자 ID를 입력해주세요.</string>
+    <string name="settings_admin_id_not_valid">새 관리자 ID를 입력해야 저장됩니다.</string>
+    <string name="settings_admin_pw_not_valid">현재 비밀번호가 맞지 않습니다.</string>
+    <string name="settings_admin_pw_check_not_valid">비밀번호 확인이 다릅니다.</string>
+    <string name="settings_admin_pw_success">비밀번호가 변경되었습니다.</string>
+    <string name="settings_db_reset_dialog"><font color='#F44336'>저장된 모든 데이터가 삭제됩니다.</font>\n\n이 작업에는 삭제할 수 없는 사전 DB 데이터도 포함됩니다.\n\n(사전 DB 데이터를 설치하려면 \'사전 DB 생성\'을 진행하십시오.) \n\n초기화하시겠습니까?</string>
     <string name="settings_db_init_dialog">최초 DB를 설치하시겠습니까?</string>
 
     <!--  PortfolioManageActivity  -->

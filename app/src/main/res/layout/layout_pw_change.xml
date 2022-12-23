@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <EditText
+        android:id="@+id/edit_settings_admin_pw_current"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:autofillHints="password"
+        android:background="@drawable/bg_edit_text"
+        android:drawableStart="@drawable/ic_baseline_key_24_70"
+        android:drawablePadding="8dp"
+        android:hint="@string/settings_admin_pw_current"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp">
+
+    </EditText>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/bg_tertiary">
+
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/edit_settings_admin_pw_new"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:autofillHints="password"
+        android:background="@drawable/bg_edit_text"
+        android:drawableStart="@drawable/ic_baseline_key_24_70"
+        android:drawablePadding="8dp"
+        android:hint="@string/settings_admin_pw_new"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/edit_settings_admin_pw_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:autofillHints="password"
+        android:background="@drawable/bg_edit_text"
+        android:drawableStart="@drawable/ic_baseline_key_24_70"
+        android:drawablePadding="8dp"
+        android:hint="@string/settings_admin_pw_check"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp">
+
+    </EditText>
+
+</LinearLayout>

@@ -6,13 +6,19 @@ import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
+import com.google.android.material.snackbar.Snackbar
 import com.mgchoi.smartportfolio.databinding.ActivitySettingsBinding
+import com.mgchoi.smartportfolio.databinding.LayoutPwChangeBinding
 import com.mgchoi.smartportfolio.tool.DBManager
+import com.mgchoi.smartportfolio.tool.EncryptedAdminAccountTool
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -68,15 +74,116 @@ class SettingsActivity : AppCompatActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.preferences, rootKey)
 
-            // Logout
-            findPreference<Preference>(KEY_LOGOUT)?.setOnPreferenceClickListener {
-                findPreference<SwitchPreferenceCompat>(KEY_AUTO_LOGIN)?.isChecked = false
-                val intent = Intent(requireContext(), LoginActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                startActivity(intent)
-                true
+            // 로그인이 되어 있지 않으면 로그인 카테고리 숨김
+            if (!MyApplication.login) {
+                val catAccount = findPreference<PreferenceCategory>("category_account")
+                catAccount?.isVisible = false
+            } else {
+                // 저장된 ID 및 비밀번호
+                val accountTool = EncryptedAdminAccountTool(requireContext())
+
+                // Admin ID
+                val prefAdminId = findPreference<Preference>("admin_id")
+                prefAdminId?.summary = accountTool.getAdminId()
+                prefAdminId?.setOnPreferenceClickListener {
+                    // 변경할 ID 입력칸
+                    val editText = EditText(requireContext())
+                    // ID 변경 다이얼로그
+                    val dialog = AlertDialog.Builder(requireContext())
+                    dialog.apply {
+                        setTitle(R.string.settings_admin_id)
+                        setMessage(R.string.settings_admin_id_dialog)
+                        setView(editText)
+                        setPositiveButton(R.string.confirm) { d, _ ->
+                            val newId = editText.text.toString().trim()
+
+                            // 빈칸 확인
+                            if (newId.isEmpty()) {
+                                Snackbar.make(
+                                    requireView(),
+                                    R.string.settings_admin_id_not_valid,
+                                    Snackbar.LENGTH_LONG
+                                ).setAction(R.string.confirm) { }.show()
+                                return@setPositiveButton
+                            }
+
+                            // 새 ID 저장
+                            accountTool.setAdminId(newId)
+                            prefAdminId.summary = newId
+                            d.dismiss()
+                        }
+                        setNegativeButton(R.string.cancel) { d, _ -> d.dismiss() }
+                        show()
+                    }
+                    true
+                }
+
+                // Admin PW
+                val prefAdminPw = findPreference<Preference>("admin_pw")
+                prefAdminPw?.setOnPreferenceClickListener {
+                    // 비밀번호 변경 레이아웃
+                    val formBinding = LayoutPwChangeBinding.inflate(layoutInflater)
+                    // 비밀번호 변경 다이얼로그
+                    val dialog = AlertDialog.Builder(requireContext())
+                    dialog.apply {
+                        setTitle(R.string.settings_admin_pw)
+                        setView(formBinding.root)
+                        setPositiveButton(R.string.confirm) { d, _ ->
+                            // 입력된 비밀번호 가져오기
+                            val currPw =
+                                formBinding.editSettingsAdminPwCurrent.text.toString().trim()
+                            val newPw = formBinding.editSettingsAdminPwNew.text.toString().trim()
+                            val chkPw = formBinding.editSettingsAdminPwCheck.text.toString().trim()
+
+                            // 현재 비밀번호 확인
+                            if (accountTool.getAdminPw() != currPw) {
+                                Snackbar.make(
+                                    requireView(),
+                                    R.string.settings_admin_pw_not_valid,
+                                    Snackbar.LENGTH_LONG
+                                ).setAction(R.string.confirm) { }.show()
+                                return@setPositiveButton
+                            }
+
+                            // 비밀번호 확인
+                            if (newPw != chkPw) {
+                                Snackbar.make(
+                                    requireView(),
+                                    R.string.settings_admin_pw_check_not_valid,
+                                    Snackbar.LENGTH_LONG
+                                ).setAction(R.string.confirm) { }.show()
+                                return@setPositiveButton
+                            }
+
+                            // 새 비밀번호 저장
+                            accountTool.setAdminPw(newPw)
+
+                            // 비밀번호 변경 알림
+                            Snackbar.make(
+                                requireView(),
+                                R.string.settings_admin_pw_success,
+                                Snackbar.LENGTH_LONG
+                            ).setAction(R.string.confirm) { }.show()
+
+                            d.dismiss()
+                        }
+                        setNegativeButton(R.string.cancel) { d, _ -> d.dismiss() }
+                        show()
+                    }
+
+                    true
+                }
+
+                // Logout
+                findPreference<Preference>(KEY_LOGOUT)?.setOnPreferenceClickListener {
+                    findPreference<SwitchPreferenceCompat>(KEY_AUTO_LOGIN)?.isChecked = false
+                    val intent = Intent(requireContext(), LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
+                    true
+                }
             }
 
             // DB reset

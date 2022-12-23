@@ -1,13 +1,23 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <PreferenceCategory app:title="@string/settings_category_login">
+    <PreferenceCategory
+        app:key="category_account"
+        app:title="@string/settings_category_login">
 
         <SwitchPreferenceCompat
             app:key="auto_login"
             app:summaryOff="@string/settings_auto_login_summary_off"
             app:summaryOn="@string/settings_auto_login_summary_on"
             app:title="@string/settings_auto_login" />
+
+        <Preference
+            app:key="admin_id"
+            app:title="@string/settings_admin_id" />
+
+        <Preference
+            app:key="admin_pw"
+            app:title="@string/settings_admin_pw" />
 
         <Preference
             app:key="logout"
@@ -67,11 +77,11 @@
 
         <Preference
             app:selectable="false"
-            app:title=""/>
+            app:title="" />
 
         <Preference
             app:selectable="false"
-            app:title=""/>
+            app:title="" />
 
     </PreferenceCategory>
 
