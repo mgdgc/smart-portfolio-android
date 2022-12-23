@@ -1,13 +1,11 @@
 package com.mgchoi.smartportfolio.db
 
-import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.mgchoi.smartportfolio.model.Portfolio
 import com.mgchoi.smartportfolio.value.DBName
 
-class PortfolioDBHelper(private val context: Context) : SQLiteOpenHelper(context, DBName.name, null, 1) {
+class PortfolioDBHelper(private val context: Context) : SQLiteOpenHelper(context, DBName.name, null, 2212230) {
 
     companion object {
         const val TABLE_NAME = "Portfolio"
@@ -16,6 +14,7 @@ class PortfolioDBHelper(private val context: Context) : SQLiteOpenHelper(context
         const val COL_TITLE = "title"
         const val COL_CONTENT = "content"
         const val COL_URL = "url"
+        const val COL_IMAGE = "image"
     }
 
     init {
@@ -28,7 +27,8 @@ class PortfolioDBHelper(private val context: Context) : SQLiteOpenHelper(context
                 "$COL_MEMBER_ID INTEGER," +
                 "$COL_TITLE TEXT," +
                 "$COL_CONTENT TEXT," +
-                "$COL_URL TEXT" +
+                "$COL_URL TEXT," +
+                "$COL_IMAGE TEXT" +
                 ");"
         db?.execSQL(sql)
     }

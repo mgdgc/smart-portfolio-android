@@ -23,6 +23,7 @@ class PortfolioDAO(private val context: Context) {
         contentValues.put(PortfolioDBHelper.COL_TITLE, portfolio.title)
         contentValues.put(PortfolioDBHelper.COL_CONTENT, portfolio.content)
         contentValues.put(PortfolioDBHelper.COL_URL, portfolio.url)
+        contentValues.put(PortfolioDBHelper.COL_IMAGE, portfolio.image)
 
         val result = db.insert(PortfolioDBHelper.TABLE_NAME, null, contentValues) != -1L
         db.close()
@@ -47,9 +48,10 @@ class PortfolioDAO(private val context: Context) {
             val title = cursor.getString(2)
             val content = cursor.getString(3)
             val url = cursor.getString(4)
+            val image = cursor.getString(5)
 
             data.add(
-                Portfolio(id, mId, title, content, url)
+                Portfolio(id, mId, title, content, url, image)
             )
         }
 
@@ -75,10 +77,11 @@ class PortfolioDAO(private val context: Context) {
             val title = cursor.getString(2)
             val content = cursor.getString(3)
             val url = cursor.getString(4)
+            val image = cursor.getString(5)
 
             db.close()
 
-            return Portfolio(_id, mId, title, content, url)
+            return Portfolio(_id, mId, title, content, url, image)
         }
 
         db.close()
@@ -113,6 +116,7 @@ class PortfolioDAO(private val context: Context) {
         contentValues.put(PortfolioDBHelper.COL_TITLE, portfolio.title)
         contentValues.put(PortfolioDBHelper.COL_CONTENT, portfolio.content)
         contentValues.put(PortfolioDBHelper.COL_URL, portfolio.url)
+        contentValues.put(PortfolioDBHelper.COL_IMAGE, portfolio.image)
 
         val result = db.update(
             PortfolioDBHelper.TABLE_NAME,
