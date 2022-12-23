@@ -25,7 +25,7 @@ import com.mgchoi.smartportfolio.db.PortfolioDAO
 import com.mgchoi.smartportfolio.model.Member
 import com.mgchoi.smartportfolio.model.Portfolio
 import com.mgchoi.smartportfolio.model.ViewStyle
-import com.mgchoi.smartportfolio.tool.ProfileImageManager
+import com.mgchoi.smartportfolio.tool.ProfileImageHelper
 
 class PortfolioManageActivity : AppCompatActivity(), ProfileEditRequest, PortfolioEditRequest {
 
@@ -119,7 +119,7 @@ class PortfolioManageActivity : AppCompatActivity(), ProfileEditRequest, Portfol
                 MediaStore.Images.Media.getBitmap(contentResolver, uri)
             }
 
-            val manager = ProfileImageManager(this)
+            val manager = ProfileImageHelper(this)
             val filename = manager.save(bitmap)
             member.image = filename
 

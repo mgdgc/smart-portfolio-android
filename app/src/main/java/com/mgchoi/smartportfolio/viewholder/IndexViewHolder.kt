@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mgchoi.smartportfolio.R
 import com.mgchoi.smartportfolio.databinding.RowIndexBinding
 import com.mgchoi.smartportfolio.model.Member
-import com.mgchoi.smartportfolio.tool.ProfileImageManager
+import com.mgchoi.smartportfolio.tool.ProfileImageHelper
 
 class IndexViewHolder(val binding: RowIndexBinding) :
     RecyclerView.ViewHolder(binding.root) {
@@ -17,7 +17,7 @@ class IndexViewHolder(val binding: RowIndexBinding) :
         binding.txtRowIndexName.text = member.name
         binding.txtRowIndexUrl.text = member.url
 
-        val manager = ProfileImageManager(binding.root.context)
+        val manager = ProfileImageHelper(binding.root.context)
         val profileImage = member.image?.let { manager.read(it) }
             ?: manager.defaultProfileImage(member.name)
         binding.imgRowIndex.setImageBitmap(profileImage)

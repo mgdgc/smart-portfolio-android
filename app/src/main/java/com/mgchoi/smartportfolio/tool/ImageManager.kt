@@ -11,12 +11,12 @@ import java.io.File
 import java.io.FileOutputStream
 import kotlin.math.abs
 
-class ProfileImageManager(private val context: Context) {
+class ImageManager(private val context: Context) {
 
-    fun save(image: Bitmap): String? {
+    fun save(directory: String, image: Bitmap): String? {
         val externalDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val absolutePath = externalDir?.absolutePath
-        val path = "$absolutePath/profile"
+        val path = "$absolutePath/$directory"
         val dir = File(path)
 
         if (!dir.exists()) {
@@ -40,10 +40,10 @@ class ProfileImageManager(private val context: Context) {
         return null
     }
 
-    fun read(filename: String): Bitmap? {
+    fun read(directory: String, filename: String): Bitmap? {
         val externalDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val absolutePath = externalDir?.absolutePath
-        val path = "$absolutePath/profile"
+        val path = "$absolutePath/$directory"
         val dir = File(path)
 
         if (!dir.exists()) {
@@ -65,6 +65,24 @@ class ProfileImageManager(private val context: Context) {
         return null
     }
 
+}
+
+class ProfileImageHelper(private val context: Context) {
+
+    companion object {
+        private const val DIRECTORY = "profile"
+    }
+
+    private val imageManager: ImageManager = ImageManager(context)
+
+    fun save(image: Bitmap): String? {
+        return imageManager.save(DIRECTORY, image)
+    }
+
+    fun read(filename: String): Bitmap? {
+        return imageManager.read(DIRECTORY, filename)
+    }
+
     fun defaultProfileImage(memberName: String? = null): Bitmap {
         val imageRes = intArrayOf(
             R.drawable.ic_avatar_01,
@@ -75,6 +93,23 @@ class ProfileImageManager(private val context: Context) {
         val index = abs((memberName ?: 0).hashCode() % imageRes.size)
 
         return ContextCompat.getDrawable(context, imageRes[index])!!.toBitmap()
+    }
+}
+
+class CoverImageHelper(private val context: Context) {
+
+    companion object {
+        private const val DIRECTORY = "cover"
+    }
+
+    private val imageManager: ImageManager = ImageManager(context)
+
+    fun save(image: Bitmap): String? {
+        return imageManager.save(DIRECTORY, image)
+    }
+
+    fun read(filename: String): Bitmap? {
+        return imageManager.read(DIRECTORY, filename)
     }
 
 }

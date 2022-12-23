@@ -5,20 +5,18 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
 import com.mgchoi.smartportfolio.MainActivity
 import com.mgchoi.smartportfolio.adapter.PortfolioAdapter
 import com.mgchoi.smartportfolio.databinding.FragmentPortfolioBinding
 import com.mgchoi.smartportfolio.db.MemberDAO
 import com.mgchoi.smartportfolio.db.PortfolioDAO
 import com.mgchoi.smartportfolio.model.Member
-import com.mgchoi.smartportfolio.tool.ProfileImageManager
+import com.mgchoi.smartportfolio.tool.ProfileImageHelper
 import com.mgchoi.smartportfolio.value.IntentFilterActions
 
 class PortfolioFragment(private var member: Member) : Fragment() {
@@ -99,7 +97,7 @@ class PortfolioFragment(private var member: Member) : Fragment() {
         // Set Image & Text for MainActivity
         val activity = requireActivity() as MainActivity
         activity.setToolbarText(member.name, member.url)
-        val manager = ProfileImageManager(requireContext())
+        val manager = ProfileImageHelper(requireContext())
         val profileImage = member.image?.let { manager.read(it) }
             ?: manager.defaultProfileImage(member.name)
 

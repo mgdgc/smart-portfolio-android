@@ -8,7 +8,7 @@ import com.mgchoi.smartportfolio.R
 import com.mgchoi.smartportfolio.model.ViewStyle
 import com.mgchoi.smartportfolio.databinding.RowProfileBinding
 import com.mgchoi.smartportfolio.model.Member
-import com.mgchoi.smartportfolio.tool.ProfileImageManager
+import com.mgchoi.smartportfolio.tool.ProfileImageHelper
 
 class ProfileViewHolder(val context: Context, val binding: RowProfileBinding) :
     RecyclerView.ViewHolder(binding.root) {
@@ -41,7 +41,7 @@ class ProfileViewHolder(val context: Context, val binding: RowProfileBinding) :
             }
 
         // 프로필 이미지 관리
-        val manager = ProfileImageManager(context)
+        val manager = ProfileImageHelper(context)
         // 선택된 이미지가 있으면 해당 이미지를 설정하고, 없으면 이름의 해시값에 대응된 기본 이미지 출력
         val profileImage = member.image?.let { manager.read(it) }
             ?: manager.defaultProfileImage(member.name)
