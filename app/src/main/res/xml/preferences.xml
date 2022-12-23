@@ -11,6 +11,14 @@
             app:summaryOn="@string/settings_auto_login_summary_on"
             app:title="@string/settings_auto_login" />
 
+        <SwitchPreferenceCompat
+            app:dependency="auto_login"
+            app:key="biometric_login"
+            app:summary="@string/settings_biometric_summary"
+            app:title="@string/settings_biometric">
+
+        </SwitchPreferenceCompat>
+
         <Preference
             app:key="admin_id"
             app:title="@string/settings_admin_id" />

@@ -1,15 +1,10 @@
 package com.mgchoi.smartportfolio
 
-import android.app.Activity
 import android.content.Intent
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.view.ViewTreeObserver.OnPreDrawListener
-import androidx.core.splashscreen.SplashScreen
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.preference.PreferenceManager
 import com.mgchoi.smartportfolio.tool.DBManager
@@ -35,7 +30,8 @@ class LaunchActivity : AppCompatActivity() {
         initializer.initDB()
 
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
-        if (pref.getBoolean(SharedPreferenceKeys.BOOL_AUTO_LOGIN, false)) {
+        if (pref.getBoolean(SharedPreferenceKeys.BOOL_AUTO_LOGIN, false)
+            && !pref.getBoolean(SharedPreferenceKeys.BOOL_BIOMETRIC, false)) {
             MyApplication.login = true
             launchMainActivity()
         } else {

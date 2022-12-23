@@ -1,13 +1,20 @@
 package com.mgchoi.smartportfolio
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import com.mgchoi.smartportfolio.databinding.ActivityLoginBinding
 import com.mgchoi.smartportfolio.tool.EncryptedAdminAccountTool
+import com.mgchoi.smartportfolio.value.SharedPreferenceKeys
 
 class LoginActivity : AppCompatActivity() {
 
@@ -20,6 +27,13 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initView()
+
+        // 생체인증 로그인이 활성화 되어있으면 생체인증으로 로그인
+        val pref = PreferenceManager.getDefaultSharedPreferences(this)
+        if (pref.getBoolean(SharedPreferenceKeys.BOOL_BIOMETRIC, false)
+        ) {
+            biometric()
+        }
     }
 
     private fun initView() {
@@ -82,4 +96,45 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun biometric() {
+        val executer = ContextCompat.getMainExecutor(this)
+        val biometricPrompt =
+            BiometricPrompt(this, executer, object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    Toast.makeText(this@LoginActivity, errString, Toast.LENGTH_LONG).show()
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    // 로그인 정보 저장
+                    MyApplication.login = true
+
+                    // 로딩화면으로 이동
+                    val intent = Intent(this@LoginActivity, LoadingActivity::class.java)
+                    startActivity(intent)
+                    this@LoginActivity.finish()
+                }
+            })
+
+        biometricPrompt.authenticate(getPromptInfo())
+    }
+
+    private fun getPromptInfo(): BiometricPrompt.PromptInfo {
+        return BiometricPrompt.PromptInfo.Builder().apply {
+            setTitle(getString(R.string.login_biometric_title))
+            setSubtitle(getString(R.string.login_biometric_subtitle))
+            // 안드로이드 11 이상의 얼굴인식 사용
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                setAllowedAuthenticators(
+                    BiometricManager.Authenticators.BIOMETRIC_STRONG or
+                            BiometricManager.Authenticators.DEVICE_CREDENTIAL
+                )
+            } else {
+                setNegativeButtonText(getString(R.string.login_biometric_negative))
+            }
+        }.build()
+    }
+
 }

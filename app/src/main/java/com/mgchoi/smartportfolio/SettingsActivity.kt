@@ -7,9 +7,9 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
-import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
@@ -171,6 +171,31 @@ class SettingsActivity : AppCompatActivity() {
                         show()
                     }
 
+                    true
+                }
+
+                // Biometric login
+                val bioPref = findPreference<SwitchPreferenceCompat>("biometric_login")
+                val bioManager = BiometricManager.from(requireContext())
+                // 생체인증을 할 수 있는지 여부 확인
+                val canAuth =
+                    bioManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)
+                if (canAuth != BiometricManager.BIOMETRIC_SUCCESS
+                    && canAuth != BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED
+                ) {
+                    bioPref?.isVisible = false
+                }
+                // 생체인증을 켰을 때
+                bioPref?.setOnPreferenceChangeListener { preference, newValue ->
+                    // 생체인증 정보가 등록되지 않았으면 스위치 변경 무력화
+                    if (canAuth == BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED) {
+                        Snackbar.make(
+                            requireView(),
+                            R.string.settings_biometric_none_enrolled,
+                            Snackbar.LENGTH_LONG
+                        ).setAction(R.string.confirm) { }.show()
+                        return@setOnPreferenceChangeListener false
+                    }
                     true
                 }
 
