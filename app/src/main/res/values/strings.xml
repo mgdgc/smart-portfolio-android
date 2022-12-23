@@ -47,6 +47,7 @@
     <string name="main_member_add_url_hint">URL</string>
     <string name="main_member_remove_confirm">정말 삭제하시겠습니까?</string>
     <string name="main_member_remove_not_destroyable">초기 데이터는 삭제할 수 없습니다.</string>
+    <string name="main_portfolio_list">포트폴리오 목록</string>
 
     <!--  IndexFragment  -->
     <string name="main_index">Index</string>
@@ -104,7 +105,7 @@
     <string name="portfolio_edit_title">포트폴리오 수정</string>
     <string name="portfolio_write_title">포트폴리오 작성</string>
     <string name="portfolio_write_image_add">사진 추가</string>
-    <string name="portfolio_write_cover_image_desc">Cover Image</string>
+    <string name="portfolio_write_cover_image_desc">커버 이미지</string>
     <string name="portfolio_write_image_remove">사진 제거</string>
     <string name="portfolio_write_image_remove_message">사진을 제거하시겠습니까?</string>
     <string name="portfolio_write_title_not_valid">제목을 작성해주세요</string>
@@ -121,6 +122,7 @@
     <string name="row_profile_view_style">뷰 스타일</string>
     <string name="row_card_open_link">Open Link</string>
 
-    <string name="main_portfolio_list">포트폴리오 목록</string>
+    <!--  PortfolioDetailActivity  -->
+    <string name="portfolio_detail_cover">포트폴리오 커버 이미지</string>
 
 </resources>
