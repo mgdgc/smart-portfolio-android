@@ -173,36 +173,47 @@ class SettingsFragment(private val scrollToPreference: String? = null) :
             }
         }
 
+        // App Category
+        val appCategory = findPreference<PreferenceCategory>("category_app")
         // DB reset
-        findPreference<Preference>(KEY_RESET)?.setOnPreferenceClickListener {
-            AlertDialog.Builder(requireContext()).apply {
-                setTitle(R.string.settings_db_reset)
-                    .setMessage(R.string.settings_db_reset_dialog)
-                    .setPositiveButton(R.string.cancel) { d, _ -> d.dismiss() } // 실수 삭제 방지를 위해 Positive/ Negative 반대로 사용
-                    .setNegativeButton(R.string.reset) { d, i ->
-                        val manager = DBManager(requireContext())
-                        manager.resetDB()
-                        d.dismiss()
-                    }
-                    .show()
-            }
-            true
-        }
-
+        val dbResetPref = findPreference<Preference>(KEY_RESET)
         // DB init
-        findPreference<Preference>(KEY_INIT)?.setOnPreferenceClickListener {
-            AlertDialog.Builder(requireContext()).apply {
-                setTitle(R.string.settings_db_init)
-                    .setMessage(R.string.settings_db_init_dialog)
-                    .setNegativeButton(R.string.cancel) { d, _ -> d.dismiss() }
-                    .setPositiveButton(R.string.confirm) { d, i ->
-                        val manager = DBManager(requireContext())
-                        manager.initDB()
-                        d.dismiss()
-                    }
-                    .show()
+        val dbInitPref = findPreference<Preference>(KEY_INIT)
+        if (!MyApplication.login) {
+            appCategory?.isVisible = false
+            dbInitPref?.isVisible = false
+            dbResetPref?.isVisible = false
+        } else {
+            dbResetPref?.setOnPreferenceClickListener {
+                AlertDialog.Builder(requireContext()).apply {
+                    setTitle(R.string.settings_db_reset)
+                        .setMessage(R.string.settings_db_reset_dialog)
+                        .setPositiveButton(R.string.cancel) { d, _ -> d.dismiss() } // 실수 삭제 방지를 위해 Positive/ Negative 반대로 사용
+                        .setNegativeButton(R.string.reset) { d, i ->
+                            val manager = DBManager(requireContext())
+                            manager.resetDB()
+                            d.dismiss()
+                        }
+                        .show()
+                }
+                true
             }
-            true
+
+            dbInitPref?.setOnPreferenceClickListener {
+                AlertDialog.Builder(requireContext()).apply {
+                    setTitle(R.string.settings_db_init)
+                        .setMessage(R.string.settings_db_init_dialog)
+                        .setNegativeButton(R.string.cancel) { d, _ -> d.dismiss() }
+                        .setPositiveButton(R.string.confirm) { d, i ->
+                            val manager = DBManager(requireContext())
+                            manager.initDB()
+                            d.dismiss()
+                        }
+                        .show()
+                }
+
+                true
+            }
         }
 
         // Version and build

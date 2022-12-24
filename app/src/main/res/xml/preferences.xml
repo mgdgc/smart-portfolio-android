@@ -33,7 +33,9 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/settings_category_app">
+    <PreferenceCategory
+        app:key="category_app"
+        app:title="@string/settings_category_app">
 
         <Preference
             app:key="reset_db"
