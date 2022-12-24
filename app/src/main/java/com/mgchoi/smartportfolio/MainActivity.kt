@@ -105,7 +105,10 @@ class MainActivity : AppCompatActivity() {
 
             // 자동로그인 끄기
             val pref = PreferenceManager.getDefaultSharedPreferences(this)
-            pref.edit().putBoolean("auto_login", false).apply()
+            pref.edit()
+                .putBoolean("auto_login", false)
+                .putBoolean("biometric_login", false)
+                .apply()
 
             // 로그인 Activity로 이동
             val intent = Intent(this@MainActivity, LoginActivity::class.java)
