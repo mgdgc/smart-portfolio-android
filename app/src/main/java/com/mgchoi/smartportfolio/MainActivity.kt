@@ -27,6 +27,7 @@ import com.mgchoi.smartportfolio.databinding.LayoutMemberAddBinding
 import com.mgchoi.smartportfolio.db.MemberDAO
 import com.mgchoi.smartportfolio.frament.IndexFragment
 import com.mgchoi.smartportfolio.frament.PortfolioFragment
+import com.mgchoi.smartportfolio.frament.SettingsFragment
 import com.mgchoi.smartportfolio.model.Member
 import com.mgchoi.smartportfolio.model.ViewStyle
 import com.mgchoi.smartportfolio.value.IntentFilterActions
@@ -396,7 +397,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this@MainActivity, SettingsActivity::class.java)
                 intent.putExtra(
                     SettingsActivity.EXTRA_SCROLL,
-                    SettingsActivity.SettingsFragment.KEY_VERSION
+                    SettingsFragment.KEY_VERSION
                 )
                 startActivity(intent)
             }
