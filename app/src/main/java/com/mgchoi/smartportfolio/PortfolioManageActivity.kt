@@ -259,7 +259,7 @@ class PortfolioManageActivity : AppCompatActivity(), ProfileEditRequest, Portfol
                     return@setPositiveButton
                 }
 
-                if (!github.startsWith("https://") || !github.startsWith("http://")) {
+                if (!github.startsWith("https://") && !github.startsWith("http://")) {
                     github = "https://${github}"
                 }
 
