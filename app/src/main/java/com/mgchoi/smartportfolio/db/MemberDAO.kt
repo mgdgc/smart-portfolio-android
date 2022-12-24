@@ -58,12 +58,17 @@ class MemberDAO(private val context: Context) {
         return false
     }
 
-    fun selectAll(): ArrayList<Member> {
+    fun selectAll(includesInitialDB: Boolean = true): ArrayList<Member> {
         try {
             val db = MemberDBHelper(context).writableDatabase
 
-            val sql = "SELECT * FROM ${MemberDBHelper.TABLE_NAME};"
-            val cursor = db.rawQuery(sql, null)
+            var sql = "SELECT * FROM ${MemberDBHelper.TABLE_NAME}"
+            val cursor = if (includesInitialDB) {
+                db.rawQuery(sql, null)
+            } else {
+                sql += " WHERE destroyable = ?;"
+                db.rawQuery(sql, arrayOf(false.toString()))
+            }
 
             val data: ArrayList<Member> = arrayListOf()
             while (cursor.moveToNext()) {
