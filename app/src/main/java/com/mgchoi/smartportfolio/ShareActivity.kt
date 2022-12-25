@@ -299,8 +299,8 @@ class ShareActivity : AppCompatActivity() {
         return Gson().toJson(grouped)
     }
 
-    override fun onNavigateUp(): Boolean {
-        super.onNavigateUp()
+    override fun onSupportNavigateUp(): Boolean {
+        super.onSupportNavigateUp()
         onBackPressedDispatcher.onBackPressed()
         return true
     }
