@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         private const val ACTION_SETTINGS = 2003
         private const val ACTION_ADD = 2004
         private const val ACTION_REMOVE = 2005
+        private const val ACTION_RECEIVE = 2006
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -202,6 +203,8 @@ class MainActivity : AppCompatActivity() {
                 .setIcon(R.drawable.ic_baseline_add_black_24)
             portfolioManage.add(0, ACTION_REMOVE, 0, R.string.main_nav_menu_remove)
                 .setIcon(R.drawable.ic_baseline_delete_24)
+            portfolioManage.add(0, ACTION_RECEIVE, 0, R.string.main_nav_menu_receive)
+                .setIcon(R.drawable.ic_baseline_share_24)
         }
 
         // Application menu
@@ -406,6 +409,9 @@ class MainActivity : AppCompatActivity() {
             }
             ACTION_REMOVE -> {
                 handleRemove()
+            }
+            ACTION_RECEIVE -> {
+                startActivity(Intent(this, ReceiveActivity::class.java))
             }
         }
 
