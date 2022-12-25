@@ -13,6 +13,11 @@
     <string name="remove">Remove</string>
     <string name="edit">Edit</string>
     <string name="reset">Reset</string>
+    <string name="enable">Enable</string>
+    <string name="disable">Disable</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="unknown_error_message">Unknown error</string>
 
     <!--  DrawerLayout  -->
     <string name="drawer_open">Open Drawer</string>
@@ -50,6 +55,7 @@
     <string name="main_nav_submenu_manage">Manage</string>
     <string name="main_nav_menu_add">Add Member</string>
     <string name="main_nav_menu_remove">Remove Member</string>
+    <string name="main_nav_menu_receive">Receive Member</string>
     <string name="main_member_add_title">Add Member</string>
     <string name="main_member_add_name">Name</string>
     <string name="main_member_add_name_hint">Profile name</string>
@@ -74,6 +80,7 @@
     <string name="portfolio_browser_internal">Internal</string>
     <string name="portfolio_browser_chrome">Chrome</string>
     <string name="portfolio_browser_remember">Remember my preference</string>
+    <string name="portfolio_share">Share Portfolio</string>
 
     <!--  WebViewActivity  -->
     <string name="menu_open_external">Open in browser</string>
@@ -150,5 +157,33 @@
 
     <!--  PortfolioDetailActivity  -->
     <string name="portfolio_detail_cover">Portfolio Cover Image</string>
+
+    <!--  ShareActivity  -->
+    <string name="share_title">Sharing</string>
+    <string name="share_bt_not_supported">Bluetooth Error</string>
+    <string name="share_bt_not_supported_message">Bluetooth is not available for this device.</string>
+    <string name="share_bt_off">Bluetooth Off</string>
+    <string name="share_bt_off_message">Please try again after enable the Bluetooth.</string>
+    <string name="share_bt_permission">Bluetooth permission has denied.</string>
+    <string name="share_bt_connect">Bluetooth</string>
+    <string name="share_bt_bond">Connect</string>
+    <string name="share_bt_bond_message">Please connect the device to share.\n\nIf the device is already connected, press <b>Select Device</b>.</string>
+    <string name="share_bt_choose">Select Device</string>
+    <string name="share_bt_connect_error">Connect refused</string>
+    <string name="share_data">Sharing Data</string>
+    <string name="share_data_member">Member</string>
+    <string name="share_data_count">Data Count</string>
+    <string name="share_data_warning">Please note that the sharing data <b>does not include images</b>.</string>
+    <string name="share_send">Transfer</string>
+    <string name="share_bt_connect_required">Please connect the device.</string>
+    <string name="share_bt_send_fail">Failed to transfer data</string>
+    <string name="share_transfer_success">Transfer Success</string>
+    <string name="share_transfer_success_message">Data has been transferred successfully.</string>
+
+    <!--  ReceiveActivity  -->
+    <string name="share_bt_bond_message_for_client">Please connect the device.\n\nIf the device is already connected, press <b>Standby</b>.</string>
+    <string name="share_bt_standby">Standby</string>
+    <string name="share_receive_success">Receive Success</string>
+    <string name="share_receive_success_message">Data has been received successfully.\n\nWould you like to save the data?</string>
 
 </resources>

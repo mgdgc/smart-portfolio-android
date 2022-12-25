@@ -93,6 +93,11 @@ class MemberDAO(private val context: Context) {
         }
     }
 
+    fun selectLast(): Member {
+        val members = selectAll()
+        return members.last()
+    }
+
     fun select(id: Int): Member? {
         try {
 
