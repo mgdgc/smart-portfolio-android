@@ -9,20 +9,20 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
+import com.mgchoi.smartportfolio.MyApplication
 import com.mgchoi.smartportfolio.R
+import com.mgchoi.smartportfolio.ShareActivity
 import com.mgchoi.smartportfolio.model.ViewStyle
 import com.mgchoi.smartportfolio.WebViewActivity
 import com.mgchoi.smartportfolio.databinding.RowCardBinding
 import com.mgchoi.smartportfolio.databinding.RowFooterBinding
 import com.mgchoi.smartportfolio.databinding.RowMessageBinding
+import com.mgchoi.smartportfolio.databinding.RowPortfolioShareBinding
 import com.mgchoi.smartportfolio.databinding.RowTimelineBinding
 import com.mgchoi.smartportfolio.model.Member
 import com.mgchoi.smartportfolio.model.Portfolio
 import com.mgchoi.smartportfolio.value.SharedPreferenceKeys
-import com.mgchoi.smartportfolio.viewholder.CardViewHolder
-import com.mgchoi.smartportfolio.viewholder.FooterViewHolder
-import com.mgchoi.smartportfolio.viewholder.MessageViewHolder
-import com.mgchoi.smartportfolio.viewholder.TimelineViewHolder
+import com.mgchoi.smartportfolio.viewholder.*
 
 interface DetailViewRequestListener {
     fun cardView(binding: RowCardBinding, portfolioId: Int)
@@ -66,6 +66,11 @@ class PortfolioAdapter(private val context: Context, private var member: Member)
                 context,
                 RowCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
+            PortfolioShareViewHolder.VIEW_TYPE -> PortfolioShareViewHolder(
+                RowPortfolioShareBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                )
+            )
             else -> FooterViewHolder(
                 RowFooterBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
@@ -96,6 +101,16 @@ class PortfolioAdapter(private val context: Context, private var member: Member)
                     detailViewRequestListener?.let { it.cardView(b, p) }
                 }
                 holder.bind(this.data[position])
+            }
+            is PortfolioShareViewHolder -> {
+                // 공유 버튼이 눌렸을 때 리스너
+                holder.onShareClick = {
+                    // 공유 액티비티 시작
+                    val intent = Intent(context, ShareActivity::class.java)
+                    intent.putExtra(ShareActivity.EXTRA_MEMBER_ID, member.id)
+                    context.startActivity(intent)
+                }
+                holder.bind()
             }
         }
     }
@@ -149,18 +164,22 @@ class PortfolioAdapter(private val context: Context, private var member: Member)
 
     override fun getItemViewType(position: Int): Int {
         super.getItemViewType(position)
+        val loggedIn = if (MyApplication.login) 1 else 0
         return if (position < this.data.size) {
             when (member.viewStyle) {
                 ViewStyle.TIMELINE -> TimelineViewHolder.VIEW_TYPE
                 ViewStyle.MESSAGE -> MessageViewHolder.VIEW_TYPE
                 ViewStyle.CARD -> CardViewHolder.VIEW_TYPE
             }
+        } else if (position < this.data.size + loggedIn) {
+            PortfolioShareViewHolder.VIEW_TYPE
         } else {
             FooterViewHolder.VIEW_TYPE
         }
     }
 
     override fun getItemCount(): Int {
-        return this.data.size + 1
+        val loggedIn = if (MyApplication.login) 1 else 0
+        return this.data.size + loggedIn + 1
     }
 }
