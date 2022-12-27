@@ -10,8 +10,8 @@ android {
         applicationId "com.mgchoi.smartportfolio"
         minSdk 24
         targetSdk 33
-        versionCode 202209190
-        versionName '1.0.0-SNAPSHOT01'
+        versionCode 202212260
+        versionName '1.0.0-RELEASE01'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
