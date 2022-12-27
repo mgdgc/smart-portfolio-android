@@ -82,3 +82,13 @@
 - 내부 웹브라우저에서 최초이동한 URL을 외부 웹브라우저로 이동하는 기능을 제공한다.
 - (내부) WebView, (외부) Chrome Custom Tab
   
+
+## 포트폴리오 전송(공유)
+<div>
+<img src="/screenshots/15.png" width="180px"/>
+<img src="/screenshots/16.png" width="180px"/>
+<div>
+  
+- 블루투스로 두 기기를 페어링하면 포트폴리오를 공유할 수 있다.
+  
+  
