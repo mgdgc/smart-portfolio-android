@@ -8,6 +8,15 @@
 여러 멤버의 개발 이력과 프로젝트를 관리하고 확인할 수 있는 포트폴리오 애플리케이션
 
 
+| min SDK | target SDK |
+|----------------------|----------------------|
+| API 24 (Android 7.0) | API 33 (Android 13) |
+
+<a href="https://developer.android.com"><img src="https://img.shields.io/badge/Android-3DDC84?style=flat&logo=Android&logoColor=ffffff"/></a>
+<a href="https://kotlinlang.org/"><img src="https://img.shields.io/badge/Kotlin-7F52FF?style=flat&logo=Kotlin&logoColor=ffffff"/></a>
+<a href="https://www.sqlite.org/index.html"><img src="https://img.shields.io/badge/SQLite-003B57?style=flat&logo=SQLite&logoColor=ffffff"/></a>
+
+
 ## 목차
 
 1. [인트로 화면](#인트로-화면)
